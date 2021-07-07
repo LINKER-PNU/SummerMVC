@@ -1,4 +1,4 @@
-package kr.co.linker.linker;
+package kr.co.linker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

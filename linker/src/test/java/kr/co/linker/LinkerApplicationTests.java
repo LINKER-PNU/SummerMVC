@@ -1,4 +1,4 @@
-package kr.co.linker.linker;
+package kr.co.linker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
