@@ -14,15 +14,15 @@ USE summer;
 
 
 /*
-    관리 정보
+    관리 정보 / 단일
 */
-CREATE TABLE management{
+CREATE TABLE management{ 
     id INT PRIMARY KEY AUTO_INCREMENT,
     join_dt DATETIME NOT NULL
 }/*Engine?*/;
 
 /*
-    소셜 로그인 정보
+    소셜 로그인 정보 / 단일? 복수?
 */
 CREATE TABLE sns_info{
     sns_platform VARCHAR(10) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE sns_info{
 };
 
 /*
-    유저 프로필 정보
+    유저 프로필 정보 / 단일
 */
 CREATE TABLE user_profile{
     user_photo BLOB,
@@ -48,7 +48,7 @@ CREATE TABLE user_profile{
 }
 
 /*
-    언어 테이블
+    언어 테이블 / 단일
 */
 CREATE TABLE languages{
     korean CHAR(1) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE languages{
 
 
 /*
-    로그 테이블
+    로그 테이블 / 단일? 복수?
 */
 CREATE TABLE logs{
     login_time DATETIME,
