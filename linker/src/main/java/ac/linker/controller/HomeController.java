@@ -20,11 +20,17 @@ public class HomeController {
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public @ResponseBody String method(@RequestBody Map<String,Object> param) {
         
-        String id = param.get("id").toString();
-        String pw = param.get("pw").toString();
+        String authToken = param.get("authToken").toString();
+        String displayName = param.get("displayName").toString();
+        String newPlayer = param.get("newPlayer").toString();
+        String userId = param.get("userId").toString();
+
         
-        System.out.println("id" + id);
-        System.out.println("pw" + pw);
+        System.out.println("authToken : " + authToken);
+        System.out.println("displayName : " + displayName);
+        System.out.println("newPlayer : " + newPlayer);
+        System.out.println("userId : " + userId);
+        
         return "hello";
     }
 }
