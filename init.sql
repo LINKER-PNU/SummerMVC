@@ -1,6 +1,6 @@
 /***********************************************************
-    Summer MVC member information table initializer 
-    2021-07-07
+    Summer MVC Eggcation table initializer
+    2021-07-17
 ************************************************************/
 
 
@@ -12,53 +12,37 @@ USE summer;
 
 /* 권한설정? */
 
-
-/*
-    관리 정보 / 단일
-*/
-CREATE TABLE management{ 
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    join_dt DATETIME NOT NULL
-}/*Engine?*/;
-
-/*
-    소셜 로그인 정보 / 단일? 복수?
-*/
-CREATE TABLE sns_info{
-    sns_platform VARCHAR(10) NOT NULL,
-    sns_token NOT NULL,
-    sns_id INT,
-    FOREIGN KEY (sns_id) REFERENCES management (id)
-};
-
-/*
-    유저 프로필 정보 / 단일
-*/
-CREATE TABLE user_profile{
-    user_photo BLOB,
-    user_name NVARCHAR(20) NOT NULL,
-    user_nickname NVARCHAR(40),
+CREATE TABLE user{
+    global_user_no INT PRIMARY KEY AUTO_INCREMENT,
+    user_id NVARCHAR(20) NOT NULL,
+    user_pw NVARCHAR(20) NOT NULL,
+    user_name NVARCHAR(20) NOTNULL,
     user_email NVARCHAR(40),
-    user_country CHAR(3) NOT NULL,
     user_gender CHAR(1) NOT NULL,
-    user_live VARCHAR(100), /* 비공개 가능 */
-    user_desc NVARCHAR(4000) /* 미입력 가능 */,
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES management (id)
+    user_birthday_year INT,
+    user_birthday_month INT,
+    user_birthday_day INT,
+    user_join_dt DATETIME NOT NULL
+    /*joined room list?*/
 }
 
-/*
-    언어 테이블 / 단일
-*/
-CREATE TABLE languages{
-    korean CHAR(1) NOT NULL,
-    english CHAR(1) NOT NULL,
-    french CHAR(1) NOT NULL,
-    japanese CHAR(1) NOT NULL,
-    chinese  CHAR(1) NOT NULL
-    lang_id INT,
-    FOREIGN KEY (lang_id) REFERENCES management (id)
+CREATE TABLE skin{
+    skin_user_no INT,
+    FOREIGN KEY (skin_user_no) REFERENCES user (global_user_no),
+    skin_color INT NOT NULL,
+    skin_role CHAR(1) NOT NULL, /*student or teacher*/
+
 }
+
+CREATE TABLE room{
+    global_room_no INT PRIMARY KEY AUTO_INCREMENT,
+    room_name NVARCHAR(20) NOT NULL,
+    room_present INT NOT NULL,
+    room_max INT NOT NULL,
+    room_create_dt DATETIME NOT NULL
+    /*room member list?*/
+}
+
 
 
 /*

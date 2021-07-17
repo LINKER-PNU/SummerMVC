@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -68,5 +69,51 @@ public class KakaoAPI {
         }
 
         return accessToken;
+    }
+
+    public HashMap<String, Object> getUserInfo (String accessToken){
+
+        HashMap<String,Object> userInfo = new HashMap<>();
+        String reqURL = "https://kapi.kakao.com/v2/user/me";
+
+        try{
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+
+            conn.setRequestProperty("Authorization", "Bearer "+accessToken);
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("API::responseCode : " + responseCode);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String line = "";
+            String result = "";
+
+            while((line = br.readLine()) != null) {
+                result += line;
+            }
+
+            System.out.println("API::response body : " + result);
+
+            JsonObject element = JsonParser.parseString(result).getAsJsonObject();
+
+            JsonObject properties = element.get("properties").getAsJsonObject();
+            JsonObject kakao_account = element.get("kakao_account").getAsJsonObject();
+            
+            String nickname = properties.get("nickname").getAsString();
+            String email = kakao_account.get("email").getAsString();
+
+            userInfo.put("nickname",nickname);
+            userInfo.put("email",email);
+
+            br.close();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return userInfo;
+
     }
 }
