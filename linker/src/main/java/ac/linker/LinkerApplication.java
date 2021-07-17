@@ -1,4 +1,4 @@
-package kr.co.linker;
+package ac.linker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class LinkerApplication {
 
 	public static void main(String[] args) {
+		System.out.println("###################server start###################");
 		SpringApplication.run(LinkerApplication.class, args);
 	}
 

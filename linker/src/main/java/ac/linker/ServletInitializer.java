@@ -1,4 +1,4 @@
-package kr.co.linker;
+package ac.linker;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
