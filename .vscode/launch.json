@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LinkerApplication<linker>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "ac.linker.LinkerApplication",
+            "projectName": "linker",
+            "args": ""
+        }
+    ]
+}
