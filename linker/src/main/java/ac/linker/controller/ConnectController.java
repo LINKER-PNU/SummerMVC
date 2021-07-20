@@ -14,13 +14,13 @@ public class ConnectController {
     private ConnectService connectService;
 
     @Autowired
-    ConnectController(ConnectService connectService){
+    ConnectController(ConnectService connectService) {
         this.connectService = connectService;
     }
 
     @RequestMapping(value = "/user")
-    public List<Map<String,Object>> getUser()
-    {
+    public List<Map<String, Object>> getUser() {
+        System.out.println("################getuser##################");
         return connectService.getUser();
     }
 }

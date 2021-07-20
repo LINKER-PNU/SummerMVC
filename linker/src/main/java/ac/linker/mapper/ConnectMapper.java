@@ -9,6 +9,6 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface ConnectMapper {
-    List<Map<String,Object>> getUser();
-    
+    List<Map<String, Object>> getUser();
+
 }

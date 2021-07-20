@@ -11,12 +11,12 @@ public class ConnectionTests {
     private ConnectService connectService;
 
     @Autowired
-    ConnectionTests(ConnectService connectService){
+    ConnectionTests(ConnectService connectService) {
         this.connectService = connectService;
     }
 
     @Test
-    public void test(){
+    public void test() {
         System.out.println("############test############");
         System.out.println(connectService.getUser());
     }
