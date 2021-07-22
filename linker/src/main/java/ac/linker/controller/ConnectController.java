@@ -19,8 +19,9 @@ public class ConnectController {
     }
 
     @RequestMapping(value = "/user")
-    public List<Map<String, Object>> getUser() {
+    public String getUser() {
         System.out.println("################getuser##################");
-        return connectService.getUser();
+        System.out.println(connectService.getUser());
+        return "hello";
     }
 }
