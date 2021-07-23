@@ -13,7 +13,7 @@ public class ConnectionTests {
 
     @Autowired
     ConnectionTests(ConnectService connectService) {
-    this.connectService = connectService;
+        this.connectService = connectService;
     }
 
     @Test
