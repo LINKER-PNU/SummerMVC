@@ -6,4 +6,8 @@
   <select id="getUser" resultType="java.util.HashMap">
     SELECT * FROM user;
   </select>
+  
+  <insert id="insertUser">
+    INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt) VALUES (#{authToken},#{displayName},#{userId},#{joinDate})
+  </insert>
 </mapper>

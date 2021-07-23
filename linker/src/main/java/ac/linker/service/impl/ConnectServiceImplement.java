@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ac.linker.dto.UserDto;
 import ac.linker.mapper.ConnectMapper;
 import ac.linker.service.ConnectService;
 
@@ -20,6 +21,10 @@ public class ConnectServiceImplement implements ConnectService{
 
     public List<Map<String,Object>> getUser(){
         return connectMapper.getUser();
+    }
+
+    public void insertUser(UserDto user){
+        connectMapper.insertUser(user);
     }
     
 }
