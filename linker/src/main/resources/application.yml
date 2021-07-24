@@ -8,6 +8,3 @@ spring:
 mybatis:
   type-aliases-package: ac.linker.mapper
   mapper-locations: mybatis/mapper/**/*.xml
-
-server:
-  port: 80
