@@ -60,6 +60,10 @@ CREATE TABLE logs(
     FOREIGN KEY (logs_id) REFERENCES user (global_user_no)
 );
 
+USE mysql;
+CREATE user 'ghimmk'@'%' identified BY '5857';
+GRANT all privileges ON summer.* TO ghimmk@'%' identified BY '5857' WITH GRANT OPTION;
+
 /*
 CREATE TABLE user(
     global_user_no INT PRIMARY KEY AUTO_INCREMENT,
