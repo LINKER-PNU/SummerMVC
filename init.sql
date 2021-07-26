@@ -33,14 +33,14 @@ CREATE TABLE joining( /*match user and room*/
     joining_user_no INT,
     FOREIGN KEY (joining_user_no) REFERENCES user (global_user_no),
     joining_room_no INT,
-    FOREIGN KEY (joining_room_no) REFERENCES room (global_room_no),
+    FOREIGN KEY (joining_room_no) REFERENCES room (global_room_no)
 );
 
 CREATE TABLE skin(
     skin_color INT NOT NULL,
     skin_role CHAR(1) NOT NULL, /*student or teacher*/
     skin_user_no INT,
-    FOREIGN KEY (skin_user_no) REFERENCES user (global_user_no),
+    FOREIGN KEY (skin_user_no) REFERENCES user (global_user_no)
 );
 
 CREATE TABLE timer(
@@ -50,7 +50,7 @@ CREATE TABLE timer(
     timer_user_no INT,
     FOREIGN KEY (timer_user_no) REFERENCES user (global_user_no),
     timer_room_no INT,
-    FOREIGN KEY (timer_room_no) REFERENCES room (global_room_no),
+    FOREIGN KEY (timer_room_no) REFERENCES room (global_room_no)
 );
 
 CREATE TABLE logs(
@@ -59,6 +59,12 @@ CREATE TABLE logs(
     logs_id INT,
     FOREIGN KEY (logs_id) REFERENCES user (global_user_no)
 );
+
+USE mysql;
+CREATE user 'ghimmk'@'%' identified BY '5857';
+GRANT all privileges ON summer.* TO ghimmk@'%';
+flush privileges;
+
 
 /*
 CREATE TABLE user(
