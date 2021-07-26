@@ -1,10 +1,10 @@
 spring:
-    datasource:
-        url: jdbc:mysql://localhost:3306/summer?characterEncoding=utf8?allowMultiQueries=true
-        username: ghimmk
-        password: 5857
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://localhost:3306/summer?characterEncoding=utf8&allowMultiQueries=true
+    username: ghimmk
+    password: 5857
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
-    type-aliases-package: ac.linker.mapper
-    mapper-locations: mybatis/mapper/**/*.xml
+  type-aliases-package: ac.linker.mapper
+  mapper-locations: mybatis/mapper/**/*.xml

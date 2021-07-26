@@ -3,15 +3,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ac.linker.mapper.ConnectMapper">
-  <select id="getUser" resultType="java.util.HashMap">
-    SELECT * FROM room;
+  <select id="getAllUser" resultType="java.util.HashMap">
+    SELECT * 
+    FROM user;
+  </select>
+  
+  <select id="getUserName" resultType="java.util.HashMap">
+    SELECT user_name
+    FROM user
+    WHERE user_id=#{userId};
+  </select>
+
+  <select id="getSkin" resultType="java.util.HashMap">
+    SELECT skin_color,skin_role
+    FROM skin
+    WHERE skin_user_no = (
+      SELECT global_user_no
+      FROM user
+      WHERE user_id = #{userId});
+  </select>
+
+  <select id="getRoom" resultType="java.util.HashMap">
+    SELECT * 
+    FROM room 
+    WHERE global_room_no in (
+      SELECT joining_room_no 
+      FROM joining 
+      WHERE joining_user_no = (
+        SELECT global_user_no 
+        FROM user 
+        WHERE user_id = #{userId})
+      ) group by global_room_no;
   </select>
   
   <insert id="insertUser">
-    INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt) VALUES (#{authToken},#{displayName},#{userId},#{joinDate})
+    INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt)
+    VALUES (#{authToken},#{displayName},#{userId},#{joinDate})
   </insert>
 
   <update id="updateToken">
-    UPDATE user SET auth_token=#{authToken} WHERE user_id=#{userId}
+    UPDATE user
+    SET auth_token=#{authToken}
+    WHERE user_id=#{userId}
   </update>
+
 </mapper>

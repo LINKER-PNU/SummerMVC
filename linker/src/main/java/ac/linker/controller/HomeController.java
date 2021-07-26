@@ -21,7 +21,7 @@ public class HomeController {
     private ConnectService connectService;
 
     @Autowired
-    HomeController(ConnectService connectService){
+    HomeController(ConnectService connectService) {
         this.connectService = connectService;
     }
 
@@ -30,11 +30,10 @@ public class HomeController {
         System.out.println("###############GotoIndex################");
         return "hello";
     }
-    
-    
+
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void method(@RequestBody Map<String,Object> param, HttpServletResponse response) {
-        
+    public void method(@RequestBody Map<String, Object> param, HttpServletResponse response) {
+
         String authToken = param.get("authToken").toString();
         String displayName = param.get("displayName").toString();
         String userId = param.get("userId").toString();
@@ -45,13 +44,13 @@ public class HomeController {
         System.out.println("displayName : " + displayName);
         System.out.println("userId : " + userId);
         System.out.println("newPlayer : " + newPlayer);
-        
+
         UserDto user = new UserDto(authToken, displayName, userId);
 
-        if(newPlayer){
+        if (newPlayer) {
             connectService.insertUser(user);
             // insert the informations
-            
+
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("result", true);
             try {
@@ -60,12 +59,14 @@ public class HomeController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        else{
-            // update token and response user info
+        } else {
             connectService.updateToken(user);
-            // update auth token
-            // select
+            // update token and response user info
+
+            System.out.println(connectService.getUserName(user));
+            System.out.println(connectService.getSkin(user));
+            System.out.println(connectService.getRoom(user));
+            // select username, skin, roomlists
         }
     }
 }

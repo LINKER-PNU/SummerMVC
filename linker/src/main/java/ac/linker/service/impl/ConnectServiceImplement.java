@@ -11,24 +11,36 @@ import ac.linker.mapper.ConnectMapper;
 import ac.linker.service.ConnectService;
 
 @Service
-public class ConnectServiceImplement implements ConnectService{
+public class ConnectServiceImplement implements ConnectService {
     private ConnectMapper connectMapper;
 
     @Autowired
-    ConnectServiceImplement(ConnectMapper connectMapper){
+    ConnectServiceImplement(ConnectMapper connectMapper) {
         this.connectMapper = connectMapper;
     }
 
-    public List<Map<String,Object>> getUser(){
-        return connectMapper.getUser();
+    public List<Map<String, Object>> getAllUser() {
+        return connectMapper.getAllUser();
     }
 
-    public void insertUser(UserDto user){
+    public List<Map<String, Object>> getUserName(UserDto user) {
+        return connectMapper.getUserName(user);
+    }
+
+    public List<Map<String, Object>> getSkin(UserDto user) {
+        return connectMapper.getSkin(user);
+    }
+
+    public List<Map<String, Object>> getRoom(UserDto user) {
+        return connectMapper.getRoom(user);
+    }
+
+    public void insertUser(UserDto user) {
         connectMapper.insertUser(user);
     }
 
-    public void updateToken(UserDto user){
+    public void updateToken(UserDto user) {
         connectMapper.updateToken(user);
     }
-    
+
 }
