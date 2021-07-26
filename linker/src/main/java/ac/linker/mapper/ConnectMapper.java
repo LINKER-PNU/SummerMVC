@@ -13,4 +13,5 @@ import java.util.Map;
 public interface ConnectMapper {
     List<Map<String, Object>> getUser();
     void insertUser(UserDto user);
+    void updateToken(UserDto user);
 }

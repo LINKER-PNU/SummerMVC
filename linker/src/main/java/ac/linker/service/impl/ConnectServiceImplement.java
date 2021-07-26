@@ -26,5 +26,9 @@ public class ConnectServiceImplement implements ConnectService{
     public void insertUser(UserDto user){
         connectMapper.insertUser(user);
     }
+
+    public void updateToken(UserDto user){
+        connectMapper.updateToken(user);
+    }
     
 }

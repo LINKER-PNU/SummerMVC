@@ -15,14 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ac.linker.dto.UserDto;
 import ac.linker.service.ConnectService;
-import ac.linker.service.WaitService;
 
 @Controller
 public class HomeController {
     private ConnectService connectService;
 
     @Autowired
-    HomeController(ConnectService connectService, WaitService waitService){
+    HomeController(ConnectService connectService){
         this.connectService = connectService;
     }
 
@@ -47,8 +46,10 @@ public class HomeController {
         System.out.println("userId : " + userId);
         System.out.println("newPlayer : " + newPlayer);
         
+        UserDto user = new UserDto(authToken, displayName, userId);
+
         if(newPlayer){
-            connectService.insertUser(new UserDto(authToken, displayName, userId));
+            connectService.insertUser(user);
             // insert the informations
             
             JsonObject jsonObject = new JsonObject();
@@ -61,7 +62,10 @@ public class HomeController {
             }
         }
         else{
-            // update token
+            // update token and response user info
+            connectService.updateToken(user);
+            // update auth token
+            // select
         }
     }
 }

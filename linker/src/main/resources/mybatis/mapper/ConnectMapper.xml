@@ -4,10 +4,14 @@
 
 <mapper namespace="ac.linker.mapper.ConnectMapper">
   <select id="getUser" resultType="java.util.HashMap">
-    SELECT * FROM user;
+    SELECT * FROM room;
   </select>
   
   <insert id="insertUser">
     INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt) VALUES (#{authToken},#{displayName},#{userId},#{joinDate})
   </insert>
+
+  <update id="updateToken">
+    UPDATE user SET auth_token=#{authToken} WHERE user_id=#{userId}
+  </update>
 </mapper>
