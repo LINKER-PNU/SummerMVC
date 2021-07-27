@@ -19,7 +19,7 @@ public class ConnectionTests {
     @Test
     public void getUserTest() {
         System.out.println("############getUserTest############");
-        System.out.println(connectService.getUser());
+        System.out.println(connectService.getAllUser());
     }
 
     @Test

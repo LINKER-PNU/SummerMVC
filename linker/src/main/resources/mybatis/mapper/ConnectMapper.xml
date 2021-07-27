@@ -43,7 +43,7 @@
 
   <update id="updateToken">
     UPDATE user
-    SET auth_token=#{authToken}
+    SET user_auth_token=#{authToken}
     WHERE user_id=#{userId}
   </update>
 

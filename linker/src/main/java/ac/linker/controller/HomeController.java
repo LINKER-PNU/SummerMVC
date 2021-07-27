@@ -1,10 +1,13 @@
 package ac.linker.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +35,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void method(@RequestBody Map<String, Object> param, HttpServletResponse response) {
+    public void method(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
 
         String authToken = param.get("authToken").toString();
         String displayName = param.get("displayName").toString();
@@ -53,20 +56,33 @@ public class HomeController {
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("result", true);
-            try {
-                response.getWriter().print(jsonObject);
-                // send the result by json
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            
+            response.getWriter().print(jsonObject);
+            // send the result by json
+            
         } else {
             connectService.updateToken(user);
             // update token and response user info
 
-            System.out.println(connectService.getUserName(user));
-            System.out.println(connectService.getSkin(user));
-            System.out.println(connectService.getRoom(user));
+            List<Map<String, Object>> userName = connectService.getUserName(user);
+            List<Map<String, Object>> userSkin = connectService.getSkin(user);
+            List<Map<String, Object>> userRoom = connectService.getRoom(user);
             // select username, skin, roomlists
+            
+            // System.out.println(userName);
+            // System.out.println(userSkin);
+            // System.out.println(userRoom);
+            
+            Map<String, Object> userInfo = new HashMap<String, Object>();
+            userInfo.put("user_name", userName.get(0).get("user_name"));
+            userInfo.put("skin_color", userSkin.get(0).get("skin_color"));
+            userInfo.put("skin_role", userSkin.get(0).get("skin_role"));
+            userInfo.put("rooms",userRoom);
+
+            Gson gson = new Gson();
+            String userInfoJson = gson.toJson(userInfo);
+            System.out.println(userInfoJson);
+            response.getWriter().print(userInfoJson);
         }
     }
 }

@@ -1,0 +1,50 @@
+[
+    {
+        "user_name": "display_name1",
+        "skin_color": "1",
+        "skin_role": "T",
+        "rooms": [
+            {
+                "room_present": "4",
+                "room_max": "5",
+                "room_name": "20",
+                "room_code": "30"
+            },
+            {
+                "room_present": "4",
+                "room_max": "5",
+                "room_name": "20",
+                "room_code": "30"
+            }
+        ]
+    },
+    {
+        "rooms": [
+            {
+                "room_present": 4,
+                "room_max": 5,
+                "room_name": "2",
+                "room_code": "3",
+                "room_create_dt": {
+                    "date": { "year": 2021, "month": 7, "day": 26 },
+                    "time": { "hour": 11, "minute": 42, "second": 0, "nano": 0 }
+                },
+                "global_room_no": 1
+            },
+            {
+                "room_present": 40,
+                "room_max": 50,
+                "room_name": "20",
+                "room_code": "30",
+                "room_create_dt": {
+                    "date": { "year": 2021, "month": 7, "day": 26 },
+                    "time": { "hour": 11, "minute": 42, "second": 0, "nano": 0 }
+                },
+                "global_room_no": 10
+            }
+        ],
+        "skin_color": 1,
+        "user_name": "display_name1",
+        "skin_role": "T"
+    }
+]
