@@ -56,10 +56,10 @@ public class HomeController {
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("result", true);
-            
+
             response.getWriter().print(jsonObject);
             // send the result by json
-            
+
         } else {
             connectService.updateToken(user);
             // update token and response user info
@@ -68,16 +68,16 @@ public class HomeController {
             List<Map<String, Object>> userSkin = connectService.getSkin(user);
             List<Map<String, Object>> userRoom = connectService.getRoom(user);
             // select username, skin, roomlists
-            
+
             // System.out.println(userName);
             // System.out.println(userSkin);
             // System.out.println(userRoom);
-            
+
             Map<String, Object> userInfo = new HashMap<String, Object>();
             userInfo.put("user_name", userName.get(0).get("user_name"));
             userInfo.put("skin_color", userSkin.get(0).get("skin_color"));
             userInfo.put("skin_role", userSkin.get(0).get("skin_role"));
-            userInfo.put("rooms",userRoom);
+            userInfo.put("rooms", userRoom);
 
             Gson gson = new Gson();
             String userInfoJson = gson.toJson(userInfo);
@@ -91,5 +91,11 @@ public class HomeController {
         String info = param.toString();
 
         System.out.println(info);
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("State", "");
+        jsonObject.addProperty("ResultCode", 0);
+
+        response.getWriter().print(jsonObject);
     }
 }
