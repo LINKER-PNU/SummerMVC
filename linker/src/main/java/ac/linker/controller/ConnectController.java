@@ -32,7 +32,7 @@ public class ConnectController {
     }
 
     @RequestMapping(value = "/close", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void pathCreate(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+    public void pathClose(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
         String info = param.toString();
 
         System.out.println("PathClose : " + info);
@@ -45,7 +45,7 @@ public class ConnectController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void pathClose(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+    public void pathCreate(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
         String info = param.toString();
 
         System.out.println("PathCreate : " + info);
