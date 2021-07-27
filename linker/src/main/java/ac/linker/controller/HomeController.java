@@ -87,7 +87,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/photon", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public String webHook(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+    public void webHook(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
         String info = param.toString();
 
         System.out.println(info);
@@ -96,6 +96,6 @@ public class HomeController {
         jsonObject.addProperty("State", "");
         jsonObject.addProperty("ResultCode", 0);
 
-        return jsonObject.toString();
+        response.getWriter().print(jsonObject);
     }
 }
