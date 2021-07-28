@@ -154,6 +154,6 @@ public class ConnectController {
 
         System.out.println("roomName : " + roomName);
 
-        response.getWriter().print(connectService.getRoomByCode(new RoomDto(roomName, "", 0, 0)).get(0).get("room_code").toString());        
+        response.getWriter().print(connectService.getCodeByName(new RoomDto(roomName, "", 0, 0)).get(0).get("room_code").toString());        
     }
 }
