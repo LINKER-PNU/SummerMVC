@@ -61,23 +61,39 @@ public class HomeController {
             // send the result by json
 
         } else {
+            Map<String, Object> userInfo = new HashMap<String, Object>();
+
             connectService.updateToken(user);
             // update token and response user info
 
-            List<Map<String, Object>> userName = connectService.getUserName(user);
-            List<Map<String, Object>> userSkin = connectService.getSkin(user);
-            List<Map<String, Object>> userRoom = connectService.getRoom(user);
+            List<Map<String, Object>> userNameResult = connectService.getUserName(user);
+            if (!userNameResult.isEmpty()){
+                userInfo.put("user_name", userNameResult.get(0).get("user_name"));
+            }
+            else{
+                userInfo.put("user_name", "");
+            }
+
+            List<Map<String, Object>> userSkinResult = connectService.getSkin(user);
+            if (!userSkinResult.isEmpty()){
+                userInfo.put("user_skin", userSkinResult.get(0).get("user_skin"));
+            }
+            else{
+                userInfo.put("user_skin", "");
+            }
+            
+            List<Map<String, Object>> userRoomResult = connectService.getRoom(user);
+            if (!userRoomResult.isEmpty()){
+                userInfo.put("user_room", userRoomResult.get(0).get("user_room"));
+            }
+            else{
+                userInfo.put("user_room", "");
+            }
             // select username, skin, roomlists
 
             // System.out.println(userName);
             // System.out.println(userSkin);
             // System.out.println(userRoom);
-
-            Map<String, Object> userInfo = new HashMap<String, Object>();
-            userInfo.put("user_name", userName.get(0).get("user_name"));
-            userInfo.put("skin_color", userSkin.get(0).get("skin_color"));
-            userInfo.put("skin_role", userSkin.get(0).get("skin_role"));
-            userInfo.put("rooms", userRoom);
 
             Gson gson = new Gson();
             String userInfoJson = gson.toJson(userInfo);

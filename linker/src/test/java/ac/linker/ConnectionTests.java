@@ -37,4 +37,22 @@ public class ConnectionTests {
     //         System.out.println("not exist");
     // }
 
+
+    static final char[] BASE62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+
+    public static String encoding(int value) {
+        final StringBuilder sb = new StringBuilder();
+        do {
+            int i = value % 62;
+            sb.append(BASE62[i]);
+            value /= 62;
+        } while (value > 0);
+        return sb.toString();
+    }
+
+    @Test
+    public void baseTest(){
+        System.out.println(encoding(2101010002));
+
+    }
 }
