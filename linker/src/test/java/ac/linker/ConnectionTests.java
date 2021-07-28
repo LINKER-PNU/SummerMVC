@@ -1,11 +1,16 @@
 package ac.linker;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ac.linker.dto.RoomDto;
 import ac.linker.dto.UserDto;
 import ac.linker.service.ConnectService;
+import ch.qos.logback.core.joran.conditional.ElseAction;
 
 @SpringBootTest
 public class ConnectionTests {
@@ -23,9 +28,14 @@ public class ConnectionTests {
     }
 
     @Test
-    public void insertUserTest(){
-        System.out.println("############insertUserTest############");
-        connectService.insertUser(new UserDto("authToken1", "displayName2", "userId3"));
+    public void connectionTest(){
+        System.out.println("############connectionTest############");
+        List<Map<String,Object>> roomName = connectService.getRoomByCode(new RoomDto("", "aa", 0,0));
+
+        if(roomName.size() > 0)
+            System.out.println(roomName.get(0).get("room_name").toString());
+        else
+            System.out.println("not exist");
     }
 
 }

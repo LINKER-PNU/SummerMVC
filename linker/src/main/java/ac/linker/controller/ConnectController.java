@@ -1,6 +1,7 @@
 package ac.linker.controller;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -132,13 +133,20 @@ public class ConnectController {
     @RequestMapping(value = "/auth_room", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void authRoom(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
         String roomCode = param.get("joinCode").toString();
+        String roomName;
 
         System.out.println("roomCode : " + roomCode);
 
-        // List<Map<String, Object>> roomName = connectService.getRoomByCode(new RoomDto("", roomCode, 0, 0));
-        
+        List<Map<String, Object>> queryResult = connectService.getRoomByCode(new RoomDto("", roomCode, 0, 0));
 
-        response.getWriter().print(connectService.getRoomByCode(new RoomDto("", roomCode, 0, 0)).get(0).get("room_name").toString());
+        if (!queryResult.isEmpty()){
+            roomName = queryResult.get(0).get("room_name").toString();
+        }
+        else{
+            roomName = "";
+        }
+
+        response.getWriter().print(roomName);
     }
 
     @RequestMapping(value = "/room_code", method = RequestMethod.POST, produces = "application/json; charset=utf8")
