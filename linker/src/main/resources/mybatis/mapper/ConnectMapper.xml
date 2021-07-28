@@ -55,7 +55,7 @@
   
   <insert id="insertRoom">
     INSERT INTO room(room_name,room_code,room_max,room_create_dt)
-    VALUES (#{roomName},#{room_code},#{roomMax},#{createDate})
+    VALUES (#{roomName},#{roomCode},#{roomMax},#{createDate})
   </insert>
 
   <insert id="insertJoin">
