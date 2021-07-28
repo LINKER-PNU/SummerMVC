@@ -36,9 +36,37 @@
       ) group by global_room_no;
   </select>
   
+  <select id="getRoomByCode" resultType="java.util.HashMap">
+    SELECT room_name 
+    FROM room 
+    WHERE room_code = #{roomCode}
+  </select>
+
+  <select id="getCodeByName" resultType="java.util.HashMap">
+    SELECT room_code 
+    FROM room 
+    WHERE room_name = #{roomName}
+  </select>
+
   <insert id="insertUser">
     INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt)
     VALUES (#{authToken},#{displayName},#{userId},#{joinDate})
+  </insert>
+  
+  <insert id="insertRoom">
+    INSERT INTO room(room_name,room_max,room_create_dt)
+    VALUES (#{roomName},#{roomMax},#{createDate})
+  </insert>
+
+  <insert id="insertJoin">
+    INSERT INTO joining VALUES((
+      SELECT global_user_no 
+      FROM user 
+      WHERE user_id = #{userId}),(
+      SELECT global_room_no 
+      FROM room 
+      WHERE room_name = #{roomName})
+    )
   </insert>
 
   <update id="updateToken">

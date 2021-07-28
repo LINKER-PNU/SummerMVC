@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ac.linker.dto.JoinDto;
+import ac.linker.dto.RoomDto;
 import ac.linker.dto.UserDto;
 import ac.linker.mapper.ConnectMapper;
 import ac.linker.service.ConnectService;
@@ -35,8 +37,24 @@ public class ConnectServiceImplement implements ConnectService {
         return connectMapper.getRoom(user);
     }
 
+    public List<Map<String, Object>> getRoomByCode(RoomDto room){
+        return connectMapper.getRoomByCode(room);
+    }
+
+    public List<Map<String, Object>> getCodeByName(RoomDto room){
+        return connectMapper.getCodeByName(room);
+    }
+
     public void insertUser(UserDto user) {
         connectMapper.insertUser(user);
+    }
+
+    public void insertRoom(RoomDto room) {
+        connectMapper.insertRoom(room);
+    }
+
+    public void insertJoin(JoinDto join) {
+        connectMapper.insertJoin(join);
     }
 
     public void updateToken(UserDto user) {
