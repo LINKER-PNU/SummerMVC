@@ -47,6 +47,7 @@ public class ConnectController {
         // room insert
         connectService.insertRoom(new RoomDto(roomName,"temp_code",0,(int)((Map<String,Object>)param.get("CreateOptions")).get("MaxPlayers")));
         // user join
+        
         connectService.insertJoin(new JoinDto(userId, roomName));
 
         JsonObject jsonObject = new JsonObject();
@@ -134,7 +135,7 @@ public class ConnectController {
         String roomCode = param.get("joinCode").toString();
         String roomName;
 
-        System.out.println("roomCode : " + roomCode);
+        System.out.println("Received roomCode : " + roomCode);
 
         List<Map<String, Object>> queryResult = connectService.getRoomByCode(new RoomDto("", roomCode, 0, 0));
 
@@ -144,16 +145,20 @@ public class ConnectController {
         else{
             roomName = "";
         }
-
+        System.out.println("Response roomName : " + roomName + "\n");
         response.getWriter().print(roomName);
     }
 
     @RequestMapping(value = "/room_code", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void responseRoomCode(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
         String roomName = param.get("roomName").toString();
-
-        System.out.println("roomName : " + roomName);
-
-        response.getWriter().print(connectService.getCodeByName(new RoomDto(roomName, "", 0, 0)).get(0).get("room_code").toString());        
+        String roomCode;
+        
+        System.out.println("Received roomName : " + roomName);
+        
+        roomCode = connectService.getCodeByName(new RoomDto(roomName, "", 0, 0)).get(0).get("room_code").toString();
+        System.out.println("Response roomCode : " + roomCode + "\n");
+        
+        response.getWriter().print(roomCode);        
     }
 }
