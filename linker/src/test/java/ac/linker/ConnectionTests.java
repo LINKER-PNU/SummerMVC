@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ac.linker.dto.RoomDto;
 import ac.linker.dto.UserDto;
 import ac.linker.service.ConnectService;
-import ch.qos.logback.core.joran.conditional.ElseAction;
 
 @SpringBootTest
 public class ConnectionTests {
@@ -21,21 +20,21 @@ public class ConnectionTests {
         this.connectService = connectService;
     }
 
-    @Test
-    public void getUserTest() {
-        System.out.println("############getUserTest############");
-        System.out.println(connectService.getAllUser());
-    }
+    // @Test
+    // public void getUserTest() {
+    //     System.out.println("############getUserTest############");
+    //     System.out.println(connectService.getAllUser());
+    // }
 
-    @Test
-    public void connectionTest(){
-        System.out.println("############connectionTest############");
-        List<Map<String,Object>> roomName = connectService.getRoomByCode(new RoomDto("", "aa", 0,0));
+    // @Test
+    // public void connectionTest(){
+    //     System.out.println("############connectionTest############");
+    //     List<Map<String,Object>> roomName = connectService.getRoomByCode(new RoomDto("", "aa", 0,0));
 
-        if(roomName.size() > 0)
-            System.out.println(roomName.get(0).get("room_name").toString());
-        else
-            System.out.println("not exist");
-    }
+    //     if(roomName.size() > 0)
+    //         System.out.println(roomName.get(0).get("room_name").toString());
+    //     else
+    //         System.out.println("not exist");
+    // }
 
 }
