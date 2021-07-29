@@ -76,7 +76,7 @@ public class HomeController {
 
             List<Map<String, Object>> userSkinResult = connectService.getSkin(user);
             if (!userSkinResult.isEmpty()){
-                userInfo.put("user_skin", userSkinResult.get(0).get("user_skin"));
+                userInfo.put("user_skin", userSkinResult.get(0));
             }
             else{
                 userInfo.put("user_skin", "");
@@ -84,16 +84,12 @@ public class HomeController {
             
             List<Map<String, Object>> userRoomResult = connectService.getRoom(user);
             if (!userRoomResult.isEmpty()){
-                userInfo.put("user_room", userRoomResult.get(0).get("user_room"));
+                userInfo.put("user_room", userRoomResult);
             }
             else{
                 userInfo.put("user_room", "");
             }
             // select username, skin, roomlists
-
-            // System.out.println(userName);
-            // System.out.println(userSkin);
-            // System.out.println(userRoom);
 
             Gson gson = new Gson();
             String userInfoJson = gson.toJson(userInfo);

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,20 @@ import ac.linker.service.ConnectService;
 
 @Controller
 public class ConnectController {
+    private Gson gson = new Gson();
     private ConnectService connectService;
 
     @Autowired
     ConnectController(ConnectService connectService) {
         this.connectService = connectService;
+    }
+
+    private JsonObject getSucceed(){
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("State", "");
+        jsonObject.addProperty("ResultCode", 0);
+
+        return jsonObject;
     }
 
     @RequestMapping(value = "/user")
@@ -37,71 +47,63 @@ public class ConnectController {
     
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathCreate(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        String info = param.toString();
-        
-        System.out.println("PathCreate : " + info + "\n");
+        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+
+        System.out.println("PathCreate : " + requestObject + "\n");
         String roomName = param.get("GameId").toString();
-        
         String userId = param.get("UserId").toString();
         
         // room insert
-        connectService.insertRoom(new RoomDto(roomName,"temp_code",0,(int)((Map<String,Object>)param.get("CreateOptions")).get("MaxPlayers")));
+        
+        ;
+        connectService.insertRoom(new RoomDto(
+            roomName,
+            "temp_code",
+            0,
+            requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt())
+        );
         // user join
         
         connectService.insertJoin(new JoinDto(userId, roomName));
-
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", 0);
         
-        response.getWriter().print(jsonObject);
+        response.getWriter().print(getSucceed());
     }
     
     @RequestMapping(value = "/close", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathClose(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        String info = param.toString();
+        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
-        System.out.println("PathClose : " + info + "\n");
+        System.out.println("PathClose : " + requestObject + "\n");
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", 0);
+        // delete room
 
-        response.getWriter().print(jsonObject);
+        response.getWriter().print(getSucceed());
     }
 
     @RequestMapping(value = "/event", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathEvent(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        String info = param.toString();
+        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
-        System.out.println("PathEvent : " + info + "\n");
+        System.out.println("PathEvent : " + requestObject + "\n");
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", 0);
-
-        response.getWriter().print(jsonObject);
+        response.getWriter().print(getSucceed());
     }
 
     @RequestMapping(value = "/game_properties", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathGameProperties(@RequestBody Map<String, Object> param, HttpServletResponse response)
             throws IOException {
-        String info = param.toString();
+        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
-        System.out.println("PathGameProperites : " + info + "\n");
+        System.out.println("PathGameProperites : " + requestObject + "\n");
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", 0);
-
-        response.getWriter().print(jsonObject);
+        response.getWriter().print(getSucceed());
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathJoin(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        String info = param.toString();
+        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
-        System.out.println("PathJoin : " + info + "\n");
+        System.out.println("PathJoin : " + requestObject + "\n");
         
         String roomName = param.get("GameId").toString();
         
@@ -110,24 +112,16 @@ public class ConnectController {
         // user join
         connectService.insertJoin(new JoinDto(userId, roomName));
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", 0);
-
-        response.getWriter().print(jsonObject);
+        response.getWriter().print(getSucceed());
     }
 
     @RequestMapping(value = "/leave", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathLeave(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        String info = param.toString();
+        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
-        System.out.println("PathLeave : " + info + "\n");
+        System.out.println("PathLeave : " + requestObject + "\n");
         
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", 0);
-
-        response.getWriter().print(jsonObject);
+        response.getWriter().print(getSucceed());
     }
 
     @RequestMapping(value = "/auth_room", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -146,6 +140,7 @@ public class ConnectController {
             roomName = "";
         }
         System.out.println("Response roomName : " + roomName + "\n");
+
         response.getWriter().print(roomName);
     }
 
