@@ -10,6 +10,7 @@ public class RoomDto {
     private int roomPresent;
     private int roomMax;
     private String createDate;
+    private int roomNo;
 
     public RoomDto(String roomName,String roomCode,int roomPresent, int roomMax){
         this.roomName = roomName;
@@ -21,5 +22,13 @@ public class RoomDto {
         String createDate = dateFormat.format(new Date());
         // System.out.println(createDate);
         this.createDate = createDate;
+    }
+
+    public int getNo(){
+        return roomNo;
+    }
+
+    public void setCode(String roomCode){
+        this.roomCode = roomCode;
     }
 }

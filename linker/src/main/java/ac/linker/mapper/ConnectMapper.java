@@ -32,4 +32,6 @@ public interface ConnectMapper {
     void insertJoin(JoinDto join);
 
     void updateToken(UserDto user);
+
+    void updateRoomCode(RoomDto room);
 }

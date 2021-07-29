@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ac.linker.dto.JoinDto;
 import ac.linker.dto.RoomDto;
+import ac.linker.service.CodeGenerator;
 import ac.linker.service.ConnectService;
 
 @Controller
@@ -53,15 +54,20 @@ public class ConnectController {
         String roomName = param.get("GameId").toString();
         String userId = param.get("UserId").toString();
         
-        // room insert
-        
-        ;
-        connectService.insertRoom(new RoomDto(
+        final RoomDto userRoom = new RoomDto(
             roomName,
             "temp_code",
             0,
-            requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt())
+            requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt()
         );
+        // room insert
+        connectService.insertRoom(userRoom);
+
+        userRoom.setCode(CodeGenerator.getCode(userRoom.getNo()));
+
+        connectService.updateRoomCode(userRoom);
+        // update room code
+
         // user join
         
         connectService.insertJoin(new JoinDto(userId, roomName));

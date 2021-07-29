@@ -1,5 +1,7 @@
 package ac.linker;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +12,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ac.linker.dto.RoomDto;
 import ac.linker.dto.UserDto;
+import ac.linker.service.CodeGenerator;
 import ac.linker.service.ConnectService;
 
 @SpringBootTest
@@ -25,20 +29,21 @@ public class ConnectionTests {
 
     @Test
     public void connectionTest(){
-        System.out.println("############connectionTest############");
-        JsonObject userInfo = new JsonObject();
+        System.out.println("###############ConnectionTest##############");
 
-        UserDto user = new UserDto("authToken", "displayName", "user_id1");
+        final RoomDto userRoom = new RoomDto(
+            "roomName",
+            "temp_code",
+            6,
+            20
+        );
 
-        List<Map<String, Object>> userNameResult = connectService.getUserName(user);
+        connectService.insertRoom(userRoom);
 
-        JsonObject jsonString = gson.toJsonTree(userNameResult.get(0)).getAsJsonObject();
+        userRoom.setCode(CodeGenerator.getCode(userRoom.getNo()));
 
-        userInfo.add("property", jsonString);
-
-        
-
-        System.out.println(userInfo.getAsJsonObject("property").get("user_name").getAsString());
-
+        connectService.updateRoomCode(userRoom);
     }
 }
+
+

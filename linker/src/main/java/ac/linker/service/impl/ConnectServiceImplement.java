@@ -61,4 +61,7 @@ public class ConnectServiceImplement implements ConnectService {
         connectMapper.updateToken(user);
     }
 
+    public void updateRoomCode(RoomDto room){
+        connectMapper.updateRoomCode(room);
+    }
 }
