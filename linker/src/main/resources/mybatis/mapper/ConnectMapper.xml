@@ -82,4 +82,16 @@
       AND room_name=#{roomName}
   </update>
 
+  <update id="updateRoomJoin">
+    UPDATE room
+    SET room_present = room_present+1
+    WHERE room_name=#{roomName}
+  </update>
+
+  <update id="updateRoomLeave">
+    UPDATE room
+    SET room_present = room_present-1
+    WHERE room_name=#{roomName}
+  </update>
+
 </mapper>

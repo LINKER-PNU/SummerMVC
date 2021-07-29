@@ -49,11 +49,12 @@ public class ConnectController {
     
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathCreate(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
         System.out.println("PathCreate : " + requestObject + "\n");
-        String roomName = param.get("GameId").toString();
-        String userId = param.get("UserId").toString();
+        final String roomName = param.get("GameId").toString();
+        final String userId = param.get("UserId").toString();
+        final String userName = param.get("Nickname").toString();
         
         final RoomDto userRoom = new RoomDto(
             roomName,
@@ -67,23 +68,25 @@ public class ConnectController {
         userRoom.setCode(CodeGenerator.getCode(userRoom.getNo()));
 
         connectService.updateRoomCode(userRoom);
-        // update room code
-
-        // user join
+        // create and update room code
         
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
-            System.out.println(userId + "joined" + roomName + "\n");
+            System.out.println(userId + " joined " + roomName + "\n");
+            connectService.updateRoomJoin(new RoomDto(roomName, "", 0, 0));
         } catch (DuplicateKeyException e) {
-            System.out.println("Member "+userId+" exists on room "+roomName+"! Duplicated pair is prevented.\n");
+            System.out.println("Member "+userId+" is already in room "+roomName+"! Duplicated pair is prevented.\n");
         } 
-        
+        // join room
+
         response.getWriter().print(getSucceed());
+
+        
     }
     
     @RequestMapping(value = "/close", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathClose(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
         System.out.println("PathClose : " + requestObject + "\n");
 
@@ -94,7 +97,7 @@ public class ConnectController {
 
     @RequestMapping(value = "/event", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathEvent(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
         System.out.println("PathEvent : " + requestObject + "\n");
 
@@ -102,9 +105,8 @@ public class ConnectController {
     }
 
     @RequestMapping(value = "/game_properties", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void pathGameProperties(@RequestBody Map<String, Object> param, HttpServletResponse response)
-            throws IOException {
-        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+    public void pathGameProperties(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
         System.out.println("PathGameProperites : " + requestObject + "\n");
 
@@ -113,41 +115,47 @@ public class ConnectController {
 
     @RequestMapping(value = "/join", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathJoin(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
         System.out.println("PathJoin : " + requestObject + "\n");
         
-        String roomName = param.get("GameId").toString();
+        final String roomName = param.get("GameId").toString();
         
-        String userId = param.get("UserId").toString();
+        final String userId = param.get("UserId").toString();
         
         // user join
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
+            connectService.updateRoomJoin(new RoomDto(roomName, "", 0, 0));
             System.out.println(userId + "joined" + roomName + "\n");
+
         } catch (DuplicateKeyException e) {
-            System.out.println("Member "+userId+" exists on room "+roomName+"! Duplicated pair is prevented.\n");
+            System.out.println("Member "+userId+" is already in room "+roomName+"! Duplicated pair is prevented.\n");
         } 
         response.getWriter().print(getSucceed());
     }
 
     @RequestMapping(value = "/leave", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathLeave(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        
+        final String roomName = param.get("GameId").toString();
 
         System.out.println("PathLeave : " + requestObject + "\n");
+
+        connectService.updateRoomLeave(new RoomDto(roomName, "", 0, 0));
         
         response.getWriter().print(getSucceed());
     }
 
     @RequestMapping(value = "/auth_room", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void authRoom(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        String roomCode = param.get("joinCode").toString();
-        String roomName;
+        final String roomCode = param.get("joinCode").toString();
+        final String roomName;
 
         System.out.println("Received roomCode : " + roomCode);
 
-        List<Map<String, Object>> queryResult = connectService.getRoomByCode(new RoomDto("", roomCode, 0, 0));
+        final List<Map<String, Object>> queryResult = connectService.getRoomByCode(new RoomDto("", roomCode, 0, 0));
 
         if (!queryResult.isEmpty()){
             roomName = queryResult.get(0).get("room_name").toString();
@@ -162,8 +170,8 @@ public class ConnectController {
 
     @RequestMapping(value = "/room_code", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void responseRoomCode(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        String roomName = param.get("roomName").toString();
-        String roomCode;
+        final String roomName = param.get("roomName").toString();
+        final String roomCode;
         
         System.out.println("Received roomName : " + roomName);
         

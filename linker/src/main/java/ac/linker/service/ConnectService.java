@@ -29,4 +29,8 @@ public interface ConnectService {
     void updateToken(UserDto user);
 
     void updateRoomCode(RoomDto room);
+
+    void updateRoomJoin(RoomDto room);
+
+    void updateRoomLeave(RoomDto room);
 }
