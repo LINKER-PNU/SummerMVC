@@ -122,8 +122,12 @@ public class ConnectController {
         String userId = param.get("UserId").toString();
         
         // user join
-        connectService.insertJoin(new JoinDto(userId, roomName));
-
+        try {
+            connectService.insertJoin(new JoinDto(userId, roomName));
+            System.out.println(userId + "joined" + roomName + "\n");
+        } catch (DuplicateKeyException e) {
+            System.out.println("Member "+userId+" exists on room "+roomName+"! Duplicated pair is prevented.\n");
+        } 
         response.getWriter().print(getSucceed());
     }
 
