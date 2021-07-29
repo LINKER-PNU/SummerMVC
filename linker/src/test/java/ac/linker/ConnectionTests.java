@@ -33,11 +33,7 @@ public class ConnectionTests {
     public void connectionTest(){
         System.out.println("###############ConnectionTest##############");
 
-        try {
-            connectService.insertJoin(new JoinDto("user_id1", "roomName"));    
-        } catch (DuplicateKeyException e) {
-            System.out.println("Member exist on room! Duplicated pair is prevented.");
-        }
+        System.out.println(CodeGenerator.getCode(8));
         
     }
 }

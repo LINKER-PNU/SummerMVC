@@ -23,19 +23,23 @@ public class CodeGenerator {
     public static String getCode(int index){
         SimpleDateFormat format = new SimpleDateFormat("HHmmss");
 		
-        String time = format.format(new Date());
+        final String time = format.format(new Date());
 		
         String indexStr = Integer.toString(index);
 
         final StringBuilder sb = new StringBuilder();
+
+        sb.append(time);
         for(int i = 0; i < 4 - indexStr.length(); i++){
             sb.append('0');
         }
-        sb.append(indexStr);    
+        sb.append(indexStr);
 
-        final String cipher = base62Encode(Integer.parseInt(time + indexStr));
+        indexStr = sb.toString();
 
-        System.out.println(time + indexStr + " => " + cipher + "\n");
+        final String cipher = base62Encode(Integer.parseInt(indexStr));
+
+        System.out.println(indexStr + " => " + cipher + "\n");
         
         return cipher;
     } 
