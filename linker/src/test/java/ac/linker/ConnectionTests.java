@@ -11,7 +11,9 @@ import com.google.gson.JsonObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DuplicateKeyException;
 
+import ac.linker.dto.JoinDto;
 import ac.linker.dto.RoomDto;
 import ac.linker.dto.UserDto;
 import ac.linker.service.CodeGenerator;
@@ -31,18 +33,12 @@ public class ConnectionTests {
     public void connectionTest(){
         System.out.println("###############ConnectionTest##############");
 
-        final RoomDto userRoom = new RoomDto(
-            "roomName",
-            "temp_code",
-            6,
-            20
-        );
-
-        connectService.insertRoom(userRoom);
-
-        userRoom.setCode(CodeGenerator.getCode(userRoom.getNo()));
-
-        connectService.updateRoomCode(userRoom);
+        try {
+            connectService.insertJoin(new JoinDto("user_id1", "roomName"));    
+        } catch (DuplicateKeyException e) {
+            System.out.println("Member exist on room! Duplicated pair is prevented.");
+        }
+        
     }
 }
 

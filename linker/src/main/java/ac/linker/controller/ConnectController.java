@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +71,12 @@ public class ConnectController {
 
         // user join
         
-        connectService.insertJoin(new JoinDto(userId, roomName));
+        try {
+            connectService.insertJoin(new JoinDto(userId, roomName));
+            System.out.println(userId + "joined" + roomName + "\n");
+        } catch (DuplicateKeyException e) {
+            System.out.println("Member "+userId+" exists on room "+roomName+"! Duplicated pair is prevented.\n");
+        } 
         
         response.getWriter().print(getSucceed());
     }

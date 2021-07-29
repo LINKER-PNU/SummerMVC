@@ -10,21 +10,19 @@
 CREATE DATABASE summer default CHARACTER SET UTF8;
 USE summer;
 
-/* 권한설정? */
-
 CREATE TABLE user(
     global_user_no INT PRIMARY KEY AUTO_INCREMENT,
-    user_auth_token NVARCHAR(40),
-    user_name NVARCHAR(20) NOT NULL,
-    user_id NVARCHAR(20) NOT NULL,
+    user_auth_token NVARCHAR(50),
+    user_name NVARCHAR(50) NOT NULL,
+    user_id NVARCHAR(50) NOT NULL,
     user_join_dt DATETIME NOT NULL
 );
 
 CREATE TABLE room(
     global_room_no INT PRIMARY KEY AUTO_INCREMENT,
     room_name NVARCHAR(20) NOT NULL,
-    room_code CHAR(5) NOT NULL,
-    room_present INT NOT NULL,
+    room_code VARCHAR(6) NOT NULL,
+    room_present INT NOT NULL DEFAULT 0,
     room_max INT NOT NULL,
     room_create_dt DATETIME NOT NULL
 );
@@ -35,6 +33,7 @@ CREATE TABLE joining( /*match user and room*/
     joining_room_no INT,
     FOREIGN KEY (joining_room_no) REFERENCES room (global_room_no)
 );
+ALTER TABLE joining ADD PRIMARY KEY (joining_room_no,joining_user_no);/*prevent duplicated pair*/
 
 CREATE TABLE skin(
     skin_color INT NOT NULL,
@@ -52,6 +51,8 @@ CREATE TABLE timer(
     timer_room_no INT,
     FOREIGN KEY (timer_room_no) REFERENCES room (global_room_no)
 );
+
+/* ADD NOTICE!*/
 
 CREATE TABLE logs(
     logs_time DATETIME,
