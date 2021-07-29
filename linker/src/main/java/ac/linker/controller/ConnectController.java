@@ -61,7 +61,7 @@ public class ConnectController {
 
         // requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt()
         
-        if(reqType == "Create"){
+        if(reqType.equals("Create") ){
             // room insert
             connectService.insertRoom(roomDto);
 
@@ -72,7 +72,7 @@ public class ConnectController {
                 break;
             } catch (DuplicateKeyException e) {
                 System.out.println("Warning! Invite code duplicated!");
-            }}            
+            }} 
             // create and update room code
 
             connectService.insertJoin(new JoinDto(userId, roomName));
@@ -81,7 +81,7 @@ public class ConnectController {
             // join room
         }
 
-        if(reqType == "Load"){
+        if(reqType.equals("Load")){
             System.out.println(userId + " recreated " + roomName + "\n");
             connectService.updateRoomJoin(roomDto);
         }

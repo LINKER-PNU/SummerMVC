@@ -48,10 +48,10 @@ public class HomeController {
         System.out.println("userId : " + userId);
         System.out.println("newPlayer : " + newPlayer);
 
-        UserDto user = new UserDto(authToken, displayName, userId);
+        UserDto userDto = new UserDto(authToken, displayName, userId);
 
         if (newPlayer) {
-            connectService.insertUser(user);
+            connectService.insertUser(userDto);
             // insert the informations
 
             JsonObject jsonObject = new JsonObject();
@@ -63,10 +63,10 @@ public class HomeController {
         } else {
             Map<String, Object> userInfo = new HashMap<String, Object>();
 
-            connectService.updateToken(user);
-            // update token and response user info
+            connectService.updateToken(userDto);
+            // update token and response userDto info
 
-            List<Map<String, Object>> userNameResult = connectService.getUserName(user);
+            List<Map<String, Object>> userNameResult = connectService.getUserName(userDto);
             if (!userNameResult.isEmpty()){
                 userInfo.put("user_name", userNameResult.get(0).get("user_name"));
             }
@@ -74,7 +74,7 @@ public class HomeController {
                 userInfo.put("user_name", "");
             }
 
-            List<Map<String, Object>> userSkinResult = connectService.getSkin(user);
+            List<Map<String, Object>> userSkinResult = connectService.getSkin(userDto);
             if (!userSkinResult.isEmpty()){
                 userInfo.put("user_skin", userSkinResult.get(0));
             }
@@ -82,7 +82,7 @@ public class HomeController {
                 userInfo.put("user_skin", "");
             }
             
-            List<Map<String, Object>> userRoomResult = connectService.getRoom(user);
+            List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);
             if (!userRoomResult.isEmpty()){
                 userInfo.put("user_room", userRoomResult);
             }
