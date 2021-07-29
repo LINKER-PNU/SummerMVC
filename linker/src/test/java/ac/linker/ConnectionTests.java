@@ -33,9 +33,9 @@ public class ConnectionTests {
     public void connectionTest(){
         System.out.println("###############ConnectionTest##############");
 
-        // connectService.updateRoomJoin(new RoomDto("roomName", "roomCode", 0, 0));
+        connectService.updateRoomJoin(new RoomDto("roomName", "roomCode", 0, 0));
 
-        connectService.updateRoomLeave(new RoomDto("roomName", "roomCode", 0, 0));
+        // connectService.updateRoomLeave(new RoomDto("roomName", "roomCode", 0, 0));
         
     }
 }

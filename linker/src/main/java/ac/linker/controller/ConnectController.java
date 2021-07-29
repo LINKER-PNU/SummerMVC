@@ -56,12 +56,10 @@ public class ConnectController {
         final String userId = param.get("UserId").toString();
         final String userName = param.get("Nickname").toString();
         
-        final RoomDto userRoom = new RoomDto(
-            roomName,
-            "temp_code",
-            0,
-            requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt()
-        );
+        final RoomDto userRoom = new RoomDto(roomName,"temp_code",0,0);
+
+        // requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt()
+        
         // room insert
         connectService.insertRoom(userRoom);
 

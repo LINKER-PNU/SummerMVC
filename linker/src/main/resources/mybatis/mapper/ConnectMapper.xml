@@ -54,8 +54,8 @@
   </insert>
   
   <insert id="insertRoom" parameterType="ac.linker.dto.RoomDto" useGeneratedKeys="true" keyProperty="roomNo" keyColumn="global_room_no">
-    INSERT INTO room(room_name,room_code,room_max,room_create_dt)
-    VALUES (#{roomName},#{roomCode},#{roomMax},#{createDate})
+    INSERT INTO room(room_name,room_create_dt)
+    VALUES (#{roomName},#{createDate})
   </insert>
 
   <insert id="insertJoin">
@@ -84,8 +84,9 @@
 
   <update id="updateRoomJoin">
     UPDATE room
-    SET room_present = room_present+1
-    WHERE room_name=#{roomName}
+    SET room_present = room_present+1,
+    room_max = room_max+1
+    WHERE room_name=#{roomName};
   </update>
 
   <update id="updateRoomLeave">
