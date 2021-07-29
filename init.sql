@@ -20,8 +20,8 @@ CREATE TABLE user(
 
 CREATE TABLE room(
     global_room_no INT PRIMARY KEY AUTO_INCREMENT,
-    room_name NVARCHAR(20) NOT NULL,
-    room_code VARCHAR(6) NOT NULL,
+    room_name NVARCHAR(20) NOT NULL UNIQUE,
+    room_code VARCHAR(6) UNIQUE,
     room_present INT NOT NULL DEFAULT 0,
     room_max INT NOT NULL DEFAULT 0,
     room_create_dt DATETIME NOT NULL

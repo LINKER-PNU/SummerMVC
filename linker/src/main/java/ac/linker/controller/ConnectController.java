@@ -54,32 +54,39 @@ public class ConnectController {
         System.out.println("PathCreate : " + requestObject + "\n");
         final String roomName = param.get("GameId").toString();
         final String userId = param.get("UserId").toString();
-        final String userName = param.get("Nickname").toString();
+        // final String userName = param.get("Nickname").toString();
+        final String reqType = param.get("Type").toString();
         
-        final RoomDto userRoom = new RoomDto(roomName,"temp_code",0,0);
+        final RoomDto roomDto = new RoomDto(roomName);
 
         // requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt()
         
-        // room insert
-        connectService.insertRoom(userRoom);
+        if(reqType == "Create"){
+            // room insert
+            connectService.insertRoom(roomDto);
 
-        userRoom.setCode(CodeGenerator.getCode(userRoom.getNo()));
+            while(true){ // prevent duplicated code.
+            try {
+                roomDto.setCode(CodeGenerator.getCode(roomDto.getNo()));
+                connectService.updateRoomCode(roomDto);
+                break;
+            } catch (DuplicateKeyException e) {
+                System.out.println("Warning! Invite code duplicated!");
+            }}            
+            // create and update room code
 
-        connectService.updateRoomCode(userRoom);
-        // create and update room code
-        
-        try {
             connectService.insertJoin(new JoinDto(userId, roomName));
             System.out.println(userId + " joined " + roomName + "\n");
-            connectService.updateRoomJoin(new RoomDto(roomName, "", 0, 0));
-        } catch (DuplicateKeyException e) {
-            System.out.println("Member "+userId+" is already in room "+roomName+"! Duplicated pair is prevented.\n");
-        } 
-        // join room
+            connectService.updateRoomNewJoin(roomDto);
+            // join room
+        }
+
+        if(reqType == "Load"){
+            System.out.println(userId + " recreated " + roomName + "\n");
+            connectService.updateRoomJoin(roomDto);
+        }
 
         response.getWriter().print(getSucceed());
-
-        
     }
     
     @RequestMapping(value = "/close", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -124,12 +131,12 @@ public class ConnectController {
         // user join
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
-            connectService.updateRoomJoin(new RoomDto(roomName, "", 0, 0));
+            connectService.updateRoomNewJoin(new RoomDto(roomName));
             System.out.println(userId + "joined" + roomName + "\n");
-
         } catch (DuplicateKeyException e) {
             System.out.println("Member "+userId+" is already in room "+roomName+"! Duplicated pair is prevented.\n");
-        } 
+        }
+
         response.getWriter().print(getSucceed());
     }
 
@@ -153,7 +160,9 @@ public class ConnectController {
 
         System.out.println("Received roomCode : " + roomCode);
 
-        final List<Map<String, Object>> queryResult = connectService.getRoomByCode(new RoomDto("", roomCode, 0, 0));
+        RoomDto roomDto = new RoomDto();
+        roomDto.setCode(roomCode);
+        final List<Map<String, Object>> queryResult = connectService.getRoomByCode(roomDto);
 
         if (!queryResult.isEmpty()){
             roomName = queryResult.get(0).get("room_name").toString();
@@ -173,9 +182,9 @@ public class ConnectController {
         
         System.out.println("Received roomName : " + roomName);
         
-        roomCode = connectService.getCodeByName(new RoomDto(roomName, "", 0, 0)).get(0).get("room_code").toString();
+        roomCode = connectService.getCodeByName(new RoomDto(roomName)).get(0).get("room_code").toString();
         System.out.println("Response roomCode : " + roomCode + "\n");
         
-        response.getWriter().print(roomCode);        
+        response.getWriter().print(roomCode);
     }
 }

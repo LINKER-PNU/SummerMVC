@@ -37,5 +37,7 @@ public interface ConnectMapper {
 
     void updateRoomJoin(RoomDto room);
 
+    void updateRoomNewJoin(RoomDto room);
+
     void updateRoomLeave(RoomDto room);
 }

@@ -84,6 +84,12 @@
 
   <update id="updateRoomJoin">
     UPDATE room
+    SET room_present = room_present+1
+    WHERE room_name=#{roomName}
+  </update>
+
+  <update id="updateRoomNewJoin">
+    UPDATE room
     SET room_present = room_present+1,
     room_max = room_max+1
     WHERE room_name=#{roomName};

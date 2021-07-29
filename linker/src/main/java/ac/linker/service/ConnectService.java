@@ -31,6 +31,8 @@ public interface ConnectService {
     void updateRoomCode(RoomDto room);
 
     void updateRoomJoin(RoomDto room);
+    
+    void updateRoomNewJoin(RoomDto room);
 
     void updateRoomLeave(RoomDto room);
 }
