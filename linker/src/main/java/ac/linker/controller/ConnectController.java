@@ -31,21 +31,13 @@ public class ConnectController {
         this.connectService = connectService;
     }
 
-    private JsonObject getSucceed(){
-        JsonObject jsonObject = new JsonObject();
+    private JsonObject getResponseJson(final int status){
+        final JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", 0);
+        jsonObject.addProperty("ResultCode", status);
 
         return jsonObject;
     }
-
-    @RequestMapping(value = "/user")
-    public String getUser() {
-        System.out.println("################getAllUser##################");
-        System.out.println(connectService.getAllUser());
-        return "hello";
-    }
-
     
     @RequestMapping(value = "/create", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathCreate(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
@@ -54,7 +46,7 @@ public class ConnectController {
         System.out.println("PathCreate : " + requestObject + "\n");
         final String roomName = param.get("GameId").toString();
         final String userId = param.get("UserId").toString();
-        // final String userName = param.get("Nickname").toString();
+        final String userName = param.get("Nickname").toString();
         final String reqType = param.get("Type").toString();
         
         final RoomDto roomDto = new RoomDto(roomName);
@@ -64,30 +56,36 @@ public class ConnectController {
         
         if(reqType.equals("Create") ){
             // room insert
-            connectService.insertRoom(roomDto);
+            try {
+                connectService.insertRoom(roomDto);
+                response.getWriter().print(getResponseJson(1));
+            } catch (DuplicateKeyException e) {
+                System.out.println("Warning! RoomName " + roomName + "duplicated!");
+            }
 
             while(true){ // prevent duplicated code.
-            try {
-                roomDto.setCode(CodeGenerator.getCode(roomDto.getNo()));
-                connectService.updateRoomCode(roomDto);
-                break;
-            } catch (DuplicateKeyException e) {
-                System.out.println("Warning! Invite code duplicated!");
-            }} 
+                try {
+                    roomDto.setCode(CodeGenerator.getCode(roomDto.getNo()));
+                    connectService.updateRoomCode(roomDto);
+                    break;
+                } catch (DuplicateKeyException e) {
+                    System.out.println("Warning! Invite code " + roomDto.getNo() + " duplicated!");
+                }
+            }
             // create and update room code
 
             connectService.insertJoin(new JoinDto(userId, roomName));
-            System.out.println(userId + " joined " + roomName + "\n");
+            System.out.println(userId + " :: " + userName + " joined " + roomName + "\n");
             connectService.updateRoomNewJoin(roomDto);
             // join room
         }
 
         if(reqType.equals("Load")){
-            System.out.println(userId + " recreated " + roomName + "\n");
+            System.out.println(userId + " :: " + userName + " recreated " + roomName + "\n");
             connectService.updateRoomJoin(roomDto);
         }
 
-        response.getWriter().print(getSucceed());
+        response.getWriter().print(getResponseJson(0));
     }
     
     @RequestMapping(value = "/close", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -98,7 +96,7 @@ public class ConnectController {
 
         // delete room
 
-        response.getWriter().print(getSucceed());
+        response.getWriter().print(getResponseJson(0));
     }
 
     @RequestMapping(value = "/event", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -107,7 +105,7 @@ public class ConnectController {
 
         System.out.println("PathEvent : " + requestObject + "\n");
 
-        response.getWriter().print(getSucceed());
+        response.getWriter().print(getResponseJson(0));
     }
 
     @RequestMapping(value = "/game_properties", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -116,7 +114,7 @@ public class ConnectController {
 
         System.out.println("PathGameProperites : " + requestObject + "\n");
 
-        response.getWriter().print(getSucceed());
+        response.getWriter().print(getResponseJson(0));
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -126,19 +124,20 @@ public class ConnectController {
         System.out.println("PathJoin : " + requestObject + "\n");
         
         final String roomName = param.get("GameId").toString();
-        
         final String userId = param.get("UserId").toString();
+        final String userName = param.get("Nickname").toString();
         
         // user join
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(new RoomDto(roomName));
-            System.out.println(userId + "joined" + roomName + "\n");
+            System.out.println(userId + " :: " + userName + "joined" + roomName + "\n");
         } catch (DuplicateKeyException e) {
-            System.out.println("Member "+userId+" is already in room "+roomName+"! Duplicated pair is prevented.\n");
+            connectService.updateRoomJoin(new RoomDto(roomName));
+            System.out.println("Member "+ userId + " :: " + userName +" is already in room "+roomName+"! Duplicated pair is prevented.\n");
         }
 
-        response.getWriter().print(getSucceed());
+        response.getWriter().print(getResponseJson(0));
     }
 
     @RequestMapping(value = "/leave", method = RequestMethod.POST, produces = "application/json; charset=utf8")
@@ -151,7 +150,7 @@ public class ConnectController {
 
         connectService.updateRoomLeave(new RoomDto(roomName, "", 0, 0));
         
-        response.getWriter().print(getSucceed());
+        response.getWriter().print(getResponseJson(0));
     }
 
     @RequestMapping(value = "/auth_room", method = RequestMethod.POST, produces = "application/json; charset=utf8")
