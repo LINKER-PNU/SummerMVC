@@ -1,0 +1,55 @@
+[
+    {
+        "ActorNr": 1,
+        "AppVersion": "_2.33.3",
+        "AppId": "fe2db4b7-cd74-447d-9657-2c4c3eba0f96",
+        "CreateOptions": {
+            "MaxPlayers": 20,
+            "LobbyId": null,
+            "LobbyType": 0,
+            "CustomProperties": {},
+            "EmptyRoomTTL": 0,
+            "PlayerTTL": 0,
+            "CheckUserOnJoin": true,
+            "DeleteCacheOnLeave": true,
+            "SuppressRoomEvents": false,
+            "PublishUserId": false,
+            "ExpectedUsers": null
+        },
+        "GameId": "linker",
+        "Region": "KR",
+        "Type": "Create",
+        "UserId": "4e99714c-508b-4b99-8261-0a8e4f70b0c1",
+        "Nickname": ""
+    },
+    {
+        "ActorNr": 1,
+        "AppVersion": "_2.33.3",
+        "AppId": "fe2db4b7-cd74-447d-9657-2c4c3eba0f96",
+        "GameId": "linker",
+        "IsInactive": false,
+        "Reason": 0,
+        "Region": "KR",
+        "Type": "ClientDisconnect",
+        "UserId": "d2b7a5cf-6749-4cd8-8edd-5484ec6237ea",
+        "Nickname": ""
+    },
+    {
+        "ActorCount": 0,
+        "AppVersion": "_2.33.3",
+        "AppId": "fe2db4b7-cd74-447d-9657-2c4c3eba0f96",
+        "GameId": "linker",
+        "Region": "KR",
+        "Type": "Close"
+    },
+    {
+        "ActorNr": 3,
+        "AppVersion": "_2.33.3",
+        "AppId": "fe2db4b7-cd74-447d-9657-2c4c3eba0f96",
+        "GameId": "linker",
+        "Region": "KR",
+        "Type": "Join",
+        "UserId": "3fc1088f-fcc5-4ee8-b35f-020f2cb47b9c",
+        "Nickname": ""
+    }
+]
