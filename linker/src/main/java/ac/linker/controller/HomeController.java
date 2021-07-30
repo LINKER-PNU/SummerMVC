@@ -66,20 +66,14 @@ public class HomeController {
             connectService.updateToken(userDto);
             // update token and response userDto info
 
-            List<Map<String, Object>> userNameResult = connectService.getUserName(userDto);
-            if (!userNameResult.isEmpty()){
-                userInfo.put("user_name", userNameResult.get(0).get("user_name"));
+            List<Map<String, Object>> userResult = connectService.getUserName(userDto);
+            if (!userResult.isEmpty()){
+                userInfo.put("user_name", userResult.get(0).get("user_name"));
+                userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
+                userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
             }
             else{
                 userInfo.put("user_name", "");
-            }
-
-            List<Map<String, Object>> userSkinResult = connectService.getSkin(userDto);
-            if (!userSkinResult.isEmpty()){
-                userInfo.put("user_skin", userSkinResult.get(0));
-            }
-            else{
-                userInfo.put("user_skin", "");
             }
             
             List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);

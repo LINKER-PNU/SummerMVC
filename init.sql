@@ -15,6 +15,8 @@ CREATE TABLE user(
     user_auth_token NVARCHAR(50),
     user_name NVARCHAR(50) NOT NULL,
     user_id NVARCHAR(50) NOT NULL,
+    user_skin_color INT NOT NULL DEFAULT 0,
+    user_skin_role CHAR(1) NOT NULL DEFAULT "S",
     user_join_dt DATETIME NOT NULL
 );
 
@@ -34,13 +36,6 @@ CREATE TABLE joining( /*match user and room*/
     FOREIGN KEY (joining_room_no) REFERENCES room (global_room_no)
 );
 ALTER TABLE joining ADD PRIMARY KEY (joining_room_no,joining_user_no);/*prevent duplicated pair*/
-
-CREATE TABLE skin(
-    skin_color INT NOT NULL,
-    skin_role CHAR(1) NOT NULL, /*student or teacher*/
-    skin_user_no INT,
-    FOREIGN KEY (skin_user_no) REFERENCES user (global_user_no)
-);
 
 CREATE TABLE timer(
     timer_subject NVARCHAR(20) NOT NULL,
@@ -81,3 +76,11 @@ CREATE TABLE user(
     user_birthday_day INT,
 );
 */
+
+/*
+CREATE TABLE skin(
+    skin_color INT NOT NULL DEFAULT 0,
+    skin_role CHAR(1) NOT NULL DEFAULT "S",
+    skin_user_no INT,
+    FOREIGN KEY (skin_user_no) REFERENCES user (global_user_no)
+);*/

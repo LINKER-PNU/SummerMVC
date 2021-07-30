@@ -88,35 +88,6 @@ public class ConnectController {
         response.getWriter().print(getResponseJson(0));
     }
     
-    @RequestMapping(value = "/close", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void pathClose(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
-
-        System.out.println("PathClose : " + requestObject + "\n");
-
-        // delete room
-
-        response.getWriter().print(getResponseJson(0));
-    }
-
-    @RequestMapping(value = "/event", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void pathEvent(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
-
-        System.out.println("PathEvent : " + requestObject + "\n");
-
-        response.getWriter().print(getResponseJson(0));
-    }
-
-    @RequestMapping(value = "/game_properties", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void pathGameProperties(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
-
-        System.out.println("PathGameProperites : " + requestObject + "\n");
-
-        response.getWriter().print(getResponseJson(0));
-    }
-
     @RequestMapping(value = "/join", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void pathJoin(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
         final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
@@ -150,6 +121,35 @@ public class ConnectController {
 
         connectService.updateRoomLeave(new RoomDto(roomName, "", 0, 0));
         
+        response.getWriter().print(getResponseJson(0));
+    }
+
+    @RequestMapping(value = "/close", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+    public void pathClose(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+
+        System.out.println("PathClose : " + requestObject + "\n");
+
+        // delete room
+
+        response.getWriter().print(getResponseJson(0));
+    }
+
+    @RequestMapping(value = "/event", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+    public void pathEvent(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+
+        System.out.println("PathEvent : " + requestObject + "\n");
+
+        response.getWriter().print(getResponseJson(0));
+    }
+
+    @RequestMapping(value = "/game_properties", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+    public void pathGameProperties(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+
+        System.out.println("PathGameProperites : " + requestObject + "\n");
+
         response.getWriter().print(getResponseJson(0));
     }
 
