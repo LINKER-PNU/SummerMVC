@@ -10,6 +10,13 @@ public class UserDto {
     private String userId;
     private String joinDate;
 
+    public UserDto(String authToken,String displayName,String userId, String newPlayer){
+        this.authToken = authToken;
+        this.displayName = displayName;
+        this.userId = userId;
+    }
+
+
     public UserDto(String authToken,String displayName,String userId){
         this.authToken = authToken;
         this.displayName = displayName;
@@ -19,5 +26,9 @@ public class UserDto {
         String joinDate = dateFormat.format(new Date());
         System.out.println(joinDate);
         this.joinDate = joinDate;
+    }
+
+    public String getAuthToken(){
+        return this.authToken;
     }
 }

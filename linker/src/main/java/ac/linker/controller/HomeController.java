@@ -12,14 +12,16 @@ import com.google.gson.JsonObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.UserDto;
 import ac.linker.service.ConnectService;
 
-@Controller
+@RestController
 public class HomeController {
     private ConnectService connectService;
 
@@ -34,13 +36,13 @@ public class HomeController {
         return "hello";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void method(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+    @PostMapping(value = "/login", produces = "application/json; charset=utf8")
+    public void method(Map<String, Object> param, HttpServletResponse response) throws IOException {
 
-        String authToken = param.get("authToken").toString();
-        String displayName = param.get("displayName").toString();
-        String userId = param.get("userId").toString();
-        boolean newPlayer = Boolean.parseBoolean(param.get("newPlayer").toString());
+        final String authToken = param.get("authToken").toString();
+        final String displayName = param.get("displayName").toString();
+        final String userId = param.get("userId").toString();
+        final boolean newPlayer = Boolean.parseBoolean(param.get("newPlayer").toString());
         // make string or boolean from received information(post/json)
 
         System.out.println("authToken : " + authToken);
