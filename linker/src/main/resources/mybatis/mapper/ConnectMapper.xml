@@ -8,8 +8,8 @@
     FROM user;
   </select>
   
-  <select id="getUserName" resultType="java.util.HashMap">
-    SELECT user_name
+  <select id="getUser" resultType="java.util.HashMap">
+    SELECT user_name, user_skin_color, user_skin_role
     FROM user
     WHERE user_id=#{userId};
   </select>

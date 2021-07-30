@@ -66,7 +66,7 @@ public class HomeController {
             connectService.updateToken(userDto);
             // update token and response userDto info
 
-            List<Map<String, Object>> userResult = connectService.getUserName(userDto);
+            List<Map<String, Object>> userResult = connectService.getUser(userDto);
             if (!userResult.isEmpty()){
                 userInfo.put("user_name", userResult.get(0).get("user_name"));
                 userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));

@@ -15,7 +15,7 @@ import java.util.Map;
 public interface ConnectMapper {
     List<Map<String, Object>> getAllUser();
 
-    List<Map<String, Object>> getUserName(UserDto user);
+    List<Map<String, Object>> getUser(UserDto user);
 
     List<Map<String, Object>> getSkin(UserDto user);
 

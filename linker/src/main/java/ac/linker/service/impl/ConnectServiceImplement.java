@@ -25,8 +25,8 @@ public class ConnectServiceImplement implements ConnectService {
         return connectMapper.getAllUser();
     }
 
-    public List<Map<String, Object>> getUserName(UserDto user) {
-        return connectMapper.getUserName(user);
+    public List<Map<String, Object>> getUser(UserDto user) {
+        return connectMapper.getUser(user);
     }
 
     public List<Map<String, Object>> getSkin(UserDto user) {

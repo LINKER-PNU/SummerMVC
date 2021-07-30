@@ -19,6 +19,10 @@ CREATE TABLE user(
     user_skin_role CHAR(1) NOT NULL DEFAULT "S",
     user_join_dt DATETIME NOT NULL
 );
+/*
+alter table user add user_skin_role CHAR(1) NOT NULL DEFAULT "S";
+alter table user add user_skin_color INT NOT NULL DEFAULT 0;
+*/
 
 CREATE TABLE room(
     global_room_no INT PRIMARY KEY AUTO_INCREMENT,
