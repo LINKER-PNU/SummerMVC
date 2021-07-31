@@ -58,8 +58,9 @@ public class ConnectController {
             // room insert
             try {
                 connectService.insertRoom(roomDto);
-                response.getWriter().print(getResponseJson(1));
+                
             } catch (DuplicateKeyException e) {
+                response.getWriter().print(getResponseJson(1));
                 System.out.println("Warning! RoomName " + roomName + " duplicated!");
             }
 
@@ -85,11 +86,8 @@ public class ConnectController {
             connectService.updateRoomJoin(roomDto);
         }
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", 0);
-        System.out.println(jsonObject);
-        response.getWriter().print(jsonObject);
+    
+        response.getWriter().print(getResponseJson(0));
     }
     
     @RequestMapping(value = "/join", method = RequestMethod.POST, produces = "application/json; charset=utf8")
