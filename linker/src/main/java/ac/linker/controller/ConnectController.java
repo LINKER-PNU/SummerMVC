@@ -49,7 +49,7 @@ public class ConnectController {
         final String userName = param.get("Nickname").toString();
         final String reqType = param.get("Type").toString();
         
-        final RoomDto roomDto = new RoomDto(roomName);
+        RoomDto roomDto = new RoomDto(roomName);
 
         // requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt()
         System.out.println("reqType : " + reqType);
