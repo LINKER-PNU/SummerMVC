@@ -51,7 +51,19 @@ CREATE TABLE timer(
     FOREIGN KEY (timer_room_no) REFERENCES room (global_room_no)
 );
 
-/* ADD NOTICE!*/
+CREATE TABLE board(
+    global_board_no INT PRIMARY KEY AUTO_INCREMENT,
+    board_user_no INT,
+    FOREIGN KEY (board_user_no) REFERENCES user (global_user_no),
+    board_room_no INT,
+    FOREIGN KEY (board_room_no) REFERENCES room (global_room_no),
+    board_title VARCHAR(50) NOT NULL,
+    board_content TEXT NOT NULL,
+    board_write_dt DATETIME,
+    board_edit_dt DATETIME,
+    board_notice BOOLEAN NOT NULL,
+    board_activate BOOLEAN NOT NULL
+);
 
 CREATE TABLE logs(
     logs_time DATETIME,
