@@ -45,6 +45,10 @@ public class ConnectServiceImplement implements ConnectService {
         return connectMapper.getCodeByName(room);
     }
 
+    public List<Map<String, Object>> findRoom(RoomDto room){
+        return connectMapper.findRoom(room);
+    }
+
     public void insertUser(UserDto user) {
         connectMapper.insertUser(user);
     }

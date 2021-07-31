@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ac.linker.dto.UserDto;
 import ac.linker.service.ConnectService;
 
-@RestController
+@Controller
 public class HomeController {
     private ConnectService connectService;
 
@@ -36,8 +36,8 @@ public class HomeController {
         return "hello";
     }
 
-    @PostMapping(value = "/login", produces = "application/json; charset=utf8")
-    public void method(Map<String, Object> param, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+    public void method(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
 
         final String authToken = param.get("authToken").toString();
         final String displayName = param.get("displayName").toString();
@@ -68,7 +68,7 @@ public class HomeController {
             connectService.updateToken(userDto);
             // update token and response userDto info
 
-            List<Map<String, Object>> userResult = connectService.getUser(userDto);
+            final List<Map<String, Object>> userResult = connectService.getUser(userDto);
             if (!userResult.isEmpty()){
                 userInfo.put("user_name", userResult.get(0).get("user_name"));
                 userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
@@ -78,7 +78,7 @@ public class HomeController {
                 userInfo.put("user_name", "");
             }
             
-            List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);
+            final List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);
             if (!userRoomResult.isEmpty()){
                 userInfo.put("user_room", userRoomResult);
             }

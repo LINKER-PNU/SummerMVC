@@ -48,6 +48,12 @@
     WHERE room_name = #{roomName}
   </select>
 
+  <select id="findRoom" resultType="java.util.HashMap">
+    SELECT room_name
+    FROM room
+    WHERE room_name = #{roomName}
+  </select>
+
   <insert id="insertUser">
     INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt)
     VALUES (#{authToken},#{displayName},#{userId},#{joinDate})

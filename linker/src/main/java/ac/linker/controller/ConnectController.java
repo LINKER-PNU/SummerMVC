@@ -187,4 +187,14 @@ public class ConnectController {
         
         response.getWriter().print(roomCode);
     }
+
+    @RequestMapping(value = "/room_exist", method = RequestMethod.POST, produces = "application/json; charset=utf8")
+    public void checkRoomExist(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+        final String roomName = param.get("roomNam").toString();
+
+        response.getWriter().print(
+            !connectService.findRoom(new RoomDto(roomName)).isEmpty()
+        );
+
+    }
 }

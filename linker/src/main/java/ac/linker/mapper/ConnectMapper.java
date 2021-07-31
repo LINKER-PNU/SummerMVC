@@ -24,6 +24,8 @@ public interface ConnectMapper {
     List<Map<String, Object>> getRoomByCode(RoomDto room);
 
     List<Map<String, Object>> getCodeByName(RoomDto room);
+    
+    List<Map<String, Object>> findRoom(RoomDto room);
 
     void insertUser(UserDto user);
     

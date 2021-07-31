@@ -20,6 +20,8 @@ public interface ConnectService {
 
     List<Map<String, Object>> getCodeByName(RoomDto room);
 
+    List<Map<String, Object>> findRoom(RoomDto room);
+
     void insertUser(UserDto user);
 
     void insertRoom(RoomDto room);
