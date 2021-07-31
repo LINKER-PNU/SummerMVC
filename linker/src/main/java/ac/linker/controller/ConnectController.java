@@ -85,10 +85,10 @@ public class ConnectController {
             connectService.updateRoomJoin(roomDto);
         }
 
-        final JsonObject jsonObject = new JsonObject();
+        JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("State", "");
         jsonObject.addProperty("ResultCode", 0);
-
+        System.out.println(jsonObject);
         response.getWriter().print(jsonObject);
     }
     
