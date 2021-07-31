@@ -56,24 +56,24 @@ public class ConnectController {
         
         if(reqType.equals("Create") ){
             // room insert
-            try {
-                connectService.insertRoom(roomDto);
-                
+            
+            try { // prevent duplicated room name
+                connectService.insertRoom(roomDto);    
             } catch (DuplicateKeyException e) {
                 response.getWriter().print(getResponseJson(1));
-                System.out.println("Warning! RoomName " + roomName + " duplicated!");
+                System.out.println("Warning! Room name " + roomName + " duplicated!(from pathCreate)\n");
             }
 
-            while(true){ // prevent duplicated code.
+            while(true){ // create and update room code
                 try {
                     roomDto.setCode(CodeGenerator.getCode(roomDto.getNo()));
                     connectService.updateRoomCode(roomDto);
                     break;
-                } catch (DuplicateKeyException e) {
-                    System.out.println("Warning! Invite code " + roomDto.getNo() + " duplicated!");
+                } catch (DuplicateKeyException e) { // prevent duplicated code.
+                    System.out.println("Warning! Invite code " + roomDto.getNo() + " duplicated!\n");
                 }
             }
-            // create and update room code
+            
 
             connectService.insertJoin(new JoinDto(userId, roomName));
             System.out.println(userId + " :: " + userName + " joined " + roomName + "\n");
@@ -193,10 +193,18 @@ public class ConnectController {
     @RequestMapping(value = "/room_exist", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void checkRoomExist(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
         final String roomName = param.get("roomName").toString();
-        
-        response.getWriter().print(
-            !connectService.findRoom(new RoomDto(roomName)).isEmpty()
-        );
+        final List<Map<String,Object>> queryResult = connectService.findRoom(new RoomDto(roomName));
+        final boolean roomExist;
 
+        roomExist = !queryResult.isEmpty();
+        
+        if(roomExist){
+            System.out.println("Warning! Room name " + roomName + " duplicated!(from checkRoomExist)\n");
+        }
+        else{
+            System.out.println("Room name " + roomName + " is admitted!(from checkRoomExist)\n");
+        }
+
+        response.getWriter().print(roomExist);
     }
 }
