@@ -1,27 +1,23 @@
 package ac.linker.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.UserDto;
 import ac.linker.service.ConnectService;
+import ac.linker.vo.UserVO;
 
-@Controller
+@RestController
 public class HomeController {
     private ConnectService connectService;
 
@@ -36,30 +32,31 @@ public class HomeController {
         return "hello";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void method(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+    @PostMapping(value = "/login", produces = "application/json; charset=utf8")
+    public String method(@RequestBody UserVO userVO) {
 
-        final String authToken = param.get("authToken").toString();
-        final String displayName = param.get("displayName").toString();
-        final String userId = param.get("userId").toString();
-        final boolean newPlayer = Boolean.parseBoolean(param.get("newPlayer").toString());
+        final String authToken = userVO.getAuthToken();
+        final String displayName = userVO.getDisplayName();
+        final String userId = userVO.getUserId();
+        final boolean newPlayer = Boolean.parseBoolean(userVO.getNewPlayer());
         // make string or boolean from received information(post/json)
 
         System.out.println("authToken : " + authToken);
         System.out.println("displayName : " + displayName);
         System.out.println("userId : " + userId);
-        System.out.println("newPlayer : " + newPlayer);
+        System.out.println("newPlayer : " + newPlayer + "\n");
 
-        UserDto userDto = new UserDto(authToken, displayName, userId);
+        final UserDto userDto = new UserDto(authToken, displayName, userId);
 
         if (newPlayer) {
+
             connectService.insertUser(userDto);
             // insert the informations
 
-            JsonObject jsonObject = new JsonObject();
+            final JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("result", true);
 
-            response.getWriter().print(jsonObject);
+            return jsonObject.toString();
             // send the result by json
 
         } else {
@@ -90,7 +87,8 @@ public class HomeController {
             Gson gson = new Gson();
             String userInfoJson = gson.toJson(userInfo);
             System.out.println(userInfoJson);
-            response.getWriter().print(userInfoJson);
+
+            return userInfoJson;
         }
     }
 }
