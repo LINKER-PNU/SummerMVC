@@ -72,16 +72,15 @@ public class ConnectController {
             
 
             connectService.insertJoin(new JoinDto(userId, roomName));
-            System.out.println(userId + " :: " + userName + " joined " + roomName + "\n");
             connectService.updateRoomNewJoin(roomDto);
+            System.out.println(userId + " :: " + userName + " created and joined " + roomName + "\n");
             // join room
         }
 
         if(reqType.equals("Load")){
-            System.out.println(userId + " :: " + userName + " recreated " + roomName + "\n");
+            System.out.println(userId + " :: " + userName + " recreated and joined " + roomName + "\n");
             connectService.updateRoomJoin(roomDto);
         }
-
     
         return getResponseJson(0);
     }

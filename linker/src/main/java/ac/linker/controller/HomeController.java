@@ -44,7 +44,7 @@ public class HomeController {
         System.out.println("authToken : " + authToken);
         System.out.println("displayName : " + displayName);
         System.out.println("userId : " + userId);
-        System.out.println("newPlayer : " + newPlayer);
+        System.out.println("newPlayer : " + newPlayer + "\n");
 
         final UserDto userDto = new UserDto(authToken, displayName, userId);
 
