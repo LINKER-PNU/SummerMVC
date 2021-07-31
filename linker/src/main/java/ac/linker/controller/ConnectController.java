@@ -60,7 +60,7 @@ public class ConnectController {
                 connectService.insertRoom(roomDto);
                 response.getWriter().print(getResponseJson(1));
             } catch (DuplicateKeyException e) {
-                System.out.println("Warning! RoomName " + roomName + "duplicated!");
+                System.out.println("Warning! RoomName " + roomName + " duplicated!");
             }
 
             while(true){ // prevent duplicated code.
@@ -190,8 +190,8 @@ public class ConnectController {
 
     @RequestMapping(value = "/room_exist", method = RequestMethod.POST, produces = "application/json; charset=utf8")
     public void checkRoomExist(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
-        final String roomName = param.get("roomNam").toString();
-
+        final String roomName = param.get("roomName").toString();
+        
         response.getWriter().print(
             !connectService.findRoom(new RoomDto(roomName)).isEmpty()
         );
