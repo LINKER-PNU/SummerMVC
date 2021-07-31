@@ -20,6 +20,7 @@ import ac.linker.vo.UserVO;
 @RestController
 public class HomeController {
     private ConnectService connectService;
+    private Gson gson = new Gson();
 
     @Autowired
     HomeController(ConnectService connectService) {
@@ -84,7 +85,6 @@ public class HomeController {
             }
             // select username, skin, roomlists
 
-            Gson gson = new Gson();
             String userInfoJson = gson.toJson(userInfo);
             System.out.println(userInfoJson);
 
