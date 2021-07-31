@@ -85,7 +85,11 @@ public class ConnectController {
             connectService.updateRoomJoin(roomDto);
         }
 
-        response.getWriter().print(getResponseJson(0));
+        final JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("State", "");
+        jsonObject.addProperty("ResultCode", 0);
+
+        response.getWriter().print(jsonObject);
     }
     
     @RequestMapping(value = "/join", method = RequestMethod.POST, produces = "application/json; charset=utf8")
