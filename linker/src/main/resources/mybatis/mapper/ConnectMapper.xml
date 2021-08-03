@@ -39,7 +39,7 @@
   <select id="getUserByName" resultType="java.util.HashMap">
     SELECT user_id, user_skin_color, user_skin_role
     FROM user
-    WHERE user_name=#{userName};
+    WHERE user_name=#{displayName};
   </select>
 
   <select id="getRoomByName" resultType="java.util.HashMap">
@@ -51,7 +51,7 @@
       WHERE joining_user_no = (
         SELECT global_user_no 
         FROM user 
-        WHERE user_name = #{userName})
+        WHERE user_name = #{displayName})
       ) group by global_room_no;
   </select>
   
