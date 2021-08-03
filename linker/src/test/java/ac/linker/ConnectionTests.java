@@ -31,21 +31,26 @@ public class ConnectionTests {
     }
 
     @Test
-    public void connectionTest(){
+    public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        RoomDto room = new RoomDto("AAAAAAAAAAAAAAAAAAAAA");
-        
+        String roomName = "a";
+        RoomDto room = new RoomDto(roomName);
+
         // try {
-        //     connectService.insertRoom(room);    
+        // connectService.insertRoom(room);
         // } catch (Exception e) {
-        //     System.out.println("Except!" + e);
+        // System.out.println("Except!" + e);
         // }
-        connectService.insertRoom(room);    
-        
+        // connectService.insertRoom(room);
+
+        try { // prevent duplicated room name
+            connectService.insertRoom(room);
+        } catch (DuplicateKeyException e) {
+            System.out.println("Warning! Room name " + roomName + " duplicated!(from pathCreate)\n");
+
+        }
 
         // connectService.updateRoomLeave(new RoomDto("roomName", "roomCode", 0, 0));
-        
+
     }
 }
-
-

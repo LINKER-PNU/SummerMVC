@@ -67,20 +67,18 @@ public class HomeController {
             // update token and response userDto info
 
             final List<Map<String, Object>> userResult = connectService.getUser(userDto);
-            if (!userResult.isEmpty()){
+            if (!userResult.isEmpty()) {
                 userInfo.put("user_name", userResult.get(0).get("user_name"));
                 userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
                 userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
-            }
-            else{
+            } else {
                 userInfo.put("user_name", "");
             }
-            
+
             final List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);
-            if (!userRoomResult.isEmpty()){
+            if (!userRoomResult.isEmpty()) {
                 userInfo.put("user_room", userRoomResult);
-            }
-            else{
+            } else {
                 userInfo.put("user_room", "");
             }
             // select username, skin, roomlists
@@ -90,5 +88,35 @@ public class HomeController {
 
             return userInfoJson;
         }
+    }
+
+    @PostMapping(value = "/user", produces = "application/json; charset=utf8")
+    public String respInfo(@RequestBody Map<String, Object> param) {
+        final String userName = param.get("user_id").toString();
+        final UserDto userDto = new UserDto("", "", userName);
+        final List<Map<String, Object>> userResult = connectService.getUser(userDto);
+
+        Map<String, Object> userInfo = new HashMap<String, Object>();
+
+        if (!userResult.isEmpty()) {
+            userInfo.put("user_name", userResult.get(0).get("user_name"));
+            userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
+            userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
+        } else {
+            userInfo.put("user_name", "");
+        }
+
+        final List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);
+        if (!userRoomResult.isEmpty()) {
+            userInfo.put("user_room", userRoomResult);
+        } else {
+            userInfo.put("user_room", "");
+        }
+        // select username, skin, roomlists
+
+        String userInfoJson = gson.toJson(userInfo);
+        System.out.println(userInfoJson);
+
+        return userInfoJson;
     }
 }
