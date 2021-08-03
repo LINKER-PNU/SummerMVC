@@ -22,10 +22,14 @@ public interface ConnectService {
 
     List<Map<String, Object>> findRoom(RoomDto room);
 
+    List<Map<String, Object>> getUserByName(UserDto user);
+
+    List<Map<String, Object>> getRoomByName(UserDto user);
+
     void insertUser(UserDto user);
 
     void insertRoom(RoomDto room);
-    
+
     void insertJoin(JoinDto join);
 
     void updateToken(UserDto user);
@@ -33,7 +37,7 @@ public interface ConnectService {
     void updateRoomCode(RoomDto room);
 
     void updateRoomJoin(RoomDto room);
-    
+
     void updateRoomNewJoin(RoomDto room);
 
     void updateRoomLeave(RoomDto room);

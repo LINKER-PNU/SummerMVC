@@ -24,13 +24,17 @@ public interface ConnectMapper {
     List<Map<String, Object>> getRoomByCode(RoomDto room);
 
     List<Map<String, Object>> getCodeByName(RoomDto room);
-    
+
     List<Map<String, Object>> findRoom(RoomDto room);
 
+    List<Map<String, Object>> getUserByName(UserDto user);
+
+    List<Map<String, Object>> getRoomByName(UserDto user);
+
     void insertUser(UserDto user);
-    
+
     void insertRoom(RoomDto room);
-    
+
     void insertJoin(JoinDto join);
 
     void updateToken(UserDto user);

@@ -35,6 +35,25 @@
         WHERE user_id = #{userId})
       ) group by global_room_no;
   </select>
+
+  <select id="getUserByName" resultType="java.util.HashMap">
+    SELECT user_id, user_skin_color, user_skin_role
+    FROM user
+    WHERE user_name=#{userName};
+  </select>
+
+  <select id="getRoomByName" resultType="java.util.HashMap">
+    SELECT room_name, room_present, room_max
+    FROM room 
+    WHERE global_room_no in (
+      SELECT joining_room_no 
+      FROM joining 
+      WHERE joining_user_no = (
+        SELECT global_user_no 
+        FROM user 
+        WHERE user_name = #{userName})
+      ) group by global_room_no;
+  </select>
   
   <select id="getRoomByCode" resultType="java.util.HashMap">
     SELECT room_name 

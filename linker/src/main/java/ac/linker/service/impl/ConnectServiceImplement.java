@@ -37,16 +37,24 @@ public class ConnectServiceImplement implements ConnectService {
         return connectMapper.getRoom(user);
     }
 
-    public List<Map<String, Object>> getRoomByCode(RoomDto room){
+    public List<Map<String, Object>> getRoomByCode(RoomDto room) {
         return connectMapper.getRoomByCode(room);
     }
 
-    public List<Map<String, Object>> getCodeByName(RoomDto room){
+    public List<Map<String, Object>> getCodeByName(RoomDto room) {
         return connectMapper.getCodeByName(room);
     }
 
-    public List<Map<String, Object>> findRoom(RoomDto room){
+    public List<Map<String, Object>> findRoom(RoomDto room) {
         return connectMapper.findRoom(room);
+    }
+
+    public List<Map<String, Object>> getUserByName(UserDto user) {
+        return connectMapper.getUserByName(user);
+    }
+
+    public List<Map<String, Object>> getRoomByName(UserDto user) {
+        return connectMapper.getRoomByName(user);
     }
 
     public void insertUser(UserDto user) {
@@ -65,19 +73,19 @@ public class ConnectServiceImplement implements ConnectService {
         connectMapper.updateToken(user);
     }
 
-    public void updateRoomCode(RoomDto room){
+    public void updateRoomCode(RoomDto room) {
         connectMapper.updateRoomCode(room);
     }
 
-    public void updateRoomJoin(RoomDto room){
+    public void updateRoomJoin(RoomDto room) {
         connectMapper.updateRoomJoin(room);
     }
 
-    public void updateRoomNewJoin(RoomDto room){
+    public void updateRoomNewJoin(RoomDto room) {
         connectMapper.updateRoomNewJoin(room);
     }
 
-    public void updateRoomLeave(RoomDto room){
+    public void updateRoomLeave(RoomDto room) {
         connectMapper.updateRoomLeave(room);
     }
 }
