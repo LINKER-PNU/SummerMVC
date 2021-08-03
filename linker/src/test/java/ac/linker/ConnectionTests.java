@@ -33,7 +33,7 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        String roomName = "a";
+        String roomName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
         RoomDto room = new RoomDto(roomName);
 
         // try {
@@ -48,6 +48,8 @@ public class ConnectionTests {
         } catch (DuplicateKeyException e) {
             System.out.println("Warning! Room name " + roomName + " duplicated!(from pathCreate)\n");
 
+        } catch (DataIntegrityViolationException m) {
+            System.out.println("Warning! Room name " + roomName + " is over the max length!(from pathCreate)\n");
         }
 
         // connectService.updateRoomLeave(new RoomDto("roomName", "roomCode", 0, 0));
