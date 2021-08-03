@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,8 +32,12 @@ public class ConnectController {
         final JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("State", "");
         jsonObject.addProperty("ResultCode", status);
-
+        /*  0 : OK
+            1 : Duplicated
+            2 : Over the max length
+        */
         return jsonObject.toString();
+        
     }
     
     @PostMapping(value = "/create", produces = "application/json; charset=utf8")
@@ -59,6 +64,10 @@ public class ConnectController {
                 System.out.println("Warning! Room name " + roomName + " duplicated!(from pathCreate)\n");
                 return getResponseJson(1);
             }
+            catch (DataIntegrityViolationException m){
+                System.out.println("Warning! Room name " + roomName + " is over the max length!(from pathCreate)\n");
+                return getResponseJson(2);
+            } 
 
             while(true){ // create and update room code
                 try {

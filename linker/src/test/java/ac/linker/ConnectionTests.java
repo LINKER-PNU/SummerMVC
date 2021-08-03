@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
 import ac.linker.dto.JoinDto;
@@ -32,8 +33,15 @@ public class ConnectionTests {
     @Test
     public void connectionTest(){
         System.out.println("###############ConnectionTest##############");
-
-        connectService.updateRoomNewJoin(new RoomDto("roomName"));
+        RoomDto room = new RoomDto("AAAAAAAAAAAAAAAAAAAAA");
+        
+        // try {
+        //     connectService.insertRoom(room);    
+        // } catch (Exception e) {
+        //     System.out.println("Except!" + e);
+        // }
+        connectService.insertRoom(room);    
+        
 
         // connectService.updateRoomLeave(new RoomDto("roomName", "roomCode", 0, 0));
         
