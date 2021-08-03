@@ -92,6 +92,7 @@ public class HomeController {
 
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String respInfo(@RequestBody Map<String, Object> param) {
+        System.out.println("##########user#########");
         final String userName = param.get("user_id").toString();
         final UserDto userDto = new UserDto("", "", userName);
         final List<Map<String, Object>> userResult = connectService.getUser(userDto);
