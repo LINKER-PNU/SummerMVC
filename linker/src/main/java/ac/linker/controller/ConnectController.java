@@ -51,7 +51,6 @@ public class ConnectController {
 
         RoomDto roomDto = new RoomDto(roomName);
 
-        // requestObject.getAsJsonObject("CreateOptions").get("MaxPlayers").getAsInt()
         System.out.println("reqType : " + reqType);
 
         if (reqType.equals("Create")) {

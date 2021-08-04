@@ -55,7 +55,7 @@ public class HomeController {
             // insert the informations
 
             final JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("result", true);
+            jsonObject.addProperty("result", true); // is it used?
 
             return jsonObject.toString();
             // send the result by json
@@ -68,11 +68,12 @@ public class HomeController {
 
             final List<Map<String, Object>> userResult = connectService.getUser(userDto);
             if (!userResult.isEmpty()) {
+                userInfo.put("result_user", "success");
                 userInfo.put("user_name", userResult.get(0).get("user_name"));
                 userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
                 userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
             } else {
-                userInfo.put("user_name", "");
+                userInfo.put("result", "empty set");
             }
 
             final List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);
@@ -100,18 +101,20 @@ public class HomeController {
         Map<String, Object> userInfo = new HashMap<String, Object>();
 
         if (!userResult.isEmpty()) {
+            userInfo.put("result_user", "success");
             userInfo.put("user_id", userResult.get(0).get("user_id"));
             userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
             userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
         } else {
-            userInfo.put("user_name", "");
+            userInfo.put("result_user", "empty set");
         }
 
         final List<Map<String, Object>> userRoomResult = connectService.getRoomByName(userDto);
         if (!userRoomResult.isEmpty()) {
+            userInfo.put("result_room", "success");
             userInfo.put("user_room", userRoomResult);
         } else {
-            userInfo.put("user_room", "");
+            userInfo.put("result_room", "empty set");
         }
         // select username, skin, roomlists
 
