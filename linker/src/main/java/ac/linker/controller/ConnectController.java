@@ -2,6 +2,7 @@ package ac.linker.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -158,7 +159,8 @@ public class ConnectController {
 
     @PostMapping(value = "/auth_room", produces = "application/json; charset=utf8")
     public String authRoom(@RequestBody Map<String, Object> param) {
-        final String roomCode = param.get("joinCode").toString();
+        final Optional<String> optional = Optional.ofNullable(param.get("joinCode").toString());
+        final String roomCode = optional.orElse("");
         final String roomName;
 
         System.out.println("Received roomCode : " + roomCode);
@@ -179,7 +181,8 @@ public class ConnectController {
 
     @PostMapping(value = "/room_code", produces = "application/json; charset=utf8")
     public String responseRoomCode(@RequestBody Map<String, Object> param) {
-        final String roomName = param.get("roomName").toString();
+        final Optional<String> optional = Optional.ofNullable(param.get("roomName").toString());
+        final String roomName = optional.orElse("");
         final String roomCode;
 
         System.out.println("Received roomName : " + roomName);
@@ -192,7 +195,9 @@ public class ConnectController {
 
     @PostMapping(value = "/room_exist", produces = "application/json; charset=utf8")
     public String checkRoomExist(@RequestBody Map<String, Object> param) {
-        final String roomName = param.get("roomName").toString();
+        final Optional<String> optional = Optional.ofNullable(param.get("roomName").toString());
+        final String roomName = optional.orElse("");
+        // final String roomName = param.get("roomName").toString();
         final List<Map<String, Object>> queryResult = connectService.findRoom(new RoomDto(roomName));
         final boolean roomExist;
 

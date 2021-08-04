@@ -1,9 +1,12 @@
 package ac.linker;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -14,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
 
+import ac.linker.controller.ConnectController;
 import ac.linker.dto.JoinDto;
 import ac.linker.dto.RoomDto;
 import ac.linker.dto.UserDto;
@@ -33,26 +37,9 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        String roomName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-        RoomDto room = new RoomDto(roomName);
 
-        // try {
-        // connectService.insertRoom(room);
-        // } catch (Exception e) {
-        // System.out.println("Except!" + e);
-        // }
-        // connectService.insertRoom(room);
-
-        try { // prevent duplicated room name
-            connectService.insertRoom(room);
-        } catch (DuplicateKeyException e) {
-            System.out.println("Warning! Room name " + roomName + " duplicated!(from pathCreate)\n");
-
-        } catch (DataIntegrityViolationException m) {
-            System.out.println("Warning! Room name " + roomName + " is over the max length!(from pathCreate)\n");
-        }
-
-        // connectService.updateRoomLeave(new RoomDto("roomName", "roomCode", 0, 0));
+        final Optional<String> optional = Optional.ofNullable("");
+        System.out.println(optional.orElse("Null"));
 
     }
 }
