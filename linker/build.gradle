@@ -23,6 +23,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'mysql:mysql-connector-java'
 	implementation "org.mybatis:mybatis:3.5.7"
+
+	implementation "commons-codec:commons-codec:1.11"
+	implementation 'io.netty:netty-all:4.1.66.Final'
 }
 
 test {
