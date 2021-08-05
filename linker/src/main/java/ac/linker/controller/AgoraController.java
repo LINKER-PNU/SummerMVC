@@ -73,15 +73,12 @@ public class AgoraController {
         final JsonObject jsonObject = new JsonObject();
 
         final List<Map<String,Object>> tokenQueryResult = connectService.getAgoraToken(roomDto);
-        final List<Map<String,Object>> uidQueryResult = connectService.getAgoraUid(roomDto);
 
-        if(tokenQueryResult.get(0) == null || uidQueryResult.get(0) == null){
-            jsonObject.addProperty("result", false);
-            return jsonObject.toString();
+        if(tokenQueryResult.get(0) == null){
+            return "false";
         }
         else{
-            jsonObject.addProperty("result", true);
-            return jsonObject.toString();
+            return "true";
         }
         
     }
@@ -100,11 +97,9 @@ public class AgoraController {
         
         try {
             connectService.updateAgoraUid(roomDto);
-            jsonObject.addProperty("result", true);
-            return jsonObject.toString();
+            return "true";
         } catch (Exception e) {
-            jsonObject.addProperty("result", false);
-            return jsonObject.toString();
+            return "false";
         }
     }
 
@@ -118,11 +113,9 @@ public class AgoraController {
         final JsonObject jsonObject = new JsonObject();
         try {
             connectService.resetAgora(roomDto);
-            jsonObject.addProperty("result", true);
-            return jsonObject.toString();
+            return "true";
         } catch (Exception e) {
-            jsonObject.addProperty("result", false);
-            return jsonObject.toString();
+            return "false";
         }
     }
 
@@ -141,12 +134,10 @@ public class AgoraController {
         final List<Map<String,Object>> queryResult = connectService.getAgoraUid(roomDto);
 
         if (uid == (int)queryResult.get(0).get("room_agora_uid")){
-            jsonObject.addProperty("result", true);
-            return jsonObject.toString();
+            return "true";
         }
         else{
-            jsonObject.addProperty("result", false);
-            return jsonObject.toString();
+            return "false";
         }
     }
 }
