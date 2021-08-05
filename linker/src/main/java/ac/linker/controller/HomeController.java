@@ -7,6 +7,8 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,8 @@ import ac.linker.vo.UserVO;
 public class HomeController {
     private ConnectService connectService;
     private Gson gson = new Gson();
+    // private final Logger logger = LoggerFactory
+
 
     @Autowired
     HomeController(ConnectService connectService) {
@@ -30,6 +34,7 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String index() {
         System.out.println("###############GotoIndex################");
+        
         return "hello";
     }
 
