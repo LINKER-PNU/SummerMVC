@@ -1,0 +1,128 @@
+package ac.linker.controller;
+
+import java.util.List;
+import java.util.Map;
+
+import com.google.gson.JsonObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import ac.linker.dto.RoomDto;
+import ac.linker.media.RtcTokenBuilder;
+import ac.linker.media.RtcTokenBuilder.Role;
+import ac.linker.service.ConnectService;
+
+@RestController
+public class AgoraController {
+    static String appId = "ee7508ef6b2042e7b6dd141a6a11895a";
+    static String appCertificate = "c6903f1bcc1e4097abbb1352a8fed7d7";
+    static int expirationTimeInSeconds = 10;
+    RtcTokenBuilder token = new RtcTokenBuilder();
+
+    private ConnectController connectController;
+    private ConnectService connectService;
+
+    @Autowired
+    AgoraController(ConnectController connectController, ConnectService connectService) {
+        this.connectController = connectController;
+        this.connectService = connectService;
+    }
+
+    @PostMapping(value="/get_token", produces = "application/json; charset=utf8")
+    public String getToken(@RequestBody Map<String,Object> param){
+        final int uid = (int)param.get("classMaster");
+        final String channelName = param.get("roomName").toString();
+
+        RoomDto roomDto = new RoomDto(channelName);
+        roomDto.setAgoraUid(uid);
+        
+        final List<Map<String,Object>> queryResult = connectService.getAgoraToken(roomDto);
+
+        if(queryResult.get(0) != null){
+            // token exist
+            return queryResult.get(0).get("room_agora_uid").toString();
+        }
+        else{
+            // token not exist
+            try {
+                int timestamp = (int) (System.currentTimeMillis() / 1000 + expirationTimeInSeconds);
+        
+                final String roomAgoraToken = token.buildTokenWithUid(appId, appCertificate, channelName, uid, Role.Role_Publisher, timestamp);
+                roomDto.setAgoraToken(roomAgoraToken);
+                connectService.updateAgoraToken(roomDto);
+    
+                return roomAgoraToken;    
+            } catch (Exception e) {
+                return "-1";
+            }
+            
+        }
+    }
+
+    @PostMapping(value="/check_class_exist", produces = "application/json; charset=utf8")
+    public String checkClassExist(@RequestBody Map<String,Object> param){
+        return connectController.checkRoomExist(param);
+    }
+
+    @PostMapping(value="/insert_class_master", produces = "application/json; charset=utf8")
+    public String insertClassMaster(@RequestBody Map<String,Object> param){
+        final String channelName = param.get("roomName").toString();
+        final int uid = (int)param.get("classMaster");
+        
+        final JsonObject jsonObject = new JsonObject();
+
+        RoomDto roomDto = new RoomDto(channelName);
+        roomDto.setAgoraUid(uid);
+        
+        try {
+            connectService.updateAgoraUid(roomDto);
+            jsonObject.addProperty("result", true);
+            return jsonObject.toString();
+        } catch (Exception e) {
+            jsonObject.addProperty("result", false);
+            return jsonObject.toString();
+        }
+    }
+
+    @PostMapping(value="/delete_class_master", produces = "application/json; charset=utf8")
+    public String deleteClassMaster(@RequestBody Map<String,Object> param){
+        final String channelName = param.get("roomName").toString();
+        
+        RoomDto roomDto = new RoomDto(channelName);
+
+        final JsonObject jsonObject = new JsonObject();
+        try {
+            connectService.resetAgora(roomDto);
+            jsonObject.addProperty("result", true);
+            return jsonObject.toString();
+        } catch (Exception e) {
+            jsonObject.addProperty("result", false);
+            return jsonObject.toString();
+        }
+    }
+
+    @PostMapping(value="/is_class_master", produces = "application/json; charset=utf8")
+    public String isClassMaster(@RequestBody Map<String,Object> param){
+        final String channelName = param.get("roomName").toString();
+        final int uid = (int)param.get("classMaster");
+        
+        final JsonObject jsonObject = new JsonObject();
+
+        RoomDto roomDto = new RoomDto(channelName);
+        
+
+        final List<Map<String,Object>> queryResult = connectService.getAgoraUid(roomDto);
+
+        if (uid == (int)queryResult.get(0).get("room_agora_uid")){
+            jsonObject.addProperty("result", true);
+            return jsonObject.toString();
+        }
+        else{
+            jsonObject.addProperty("result", false);
+            return jsonObject.toString();
+        }
+    }
+}
