@@ -89,7 +89,7 @@ public class AgoraController {
     @PostMapping(value="/insert_class_master", produces = "application/json; charset=utf8")
     public String insertClassMaster(@RequestBody Map<String,Object> param){
         final String channelName = param.get("roomName").toString();
-        final int uid = (int)param.get("classMaster");
+        final int uid = Integer.parseInt(param.get("classMaster").toString());
 
         System.out.println("Insert class master :: " + channelName + " :: " + uid);
         
