@@ -4,7 +4,7 @@ public class UserVO {
     private String authToken;
     private String displayName;
     private String userId;
-    private String newPlayer;
+    private boolean newPlayer;
 
     public String getAuthToken(){
         return this.authToken;
@@ -27,10 +27,10 @@ public class UserVO {
         this.userId = userId;
     }
     
-    public String getNewPlayer(){
+    public boolean getNewPlayer(){
         return this.newPlayer;
     }
-    public void setNewPlayer(String newPlayer){
+    public void setNewPlayer(Boolean newPlayer){
         this.newPlayer = newPlayer;
     }
 

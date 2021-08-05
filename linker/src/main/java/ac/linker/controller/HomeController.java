@@ -34,12 +34,12 @@ public class HomeController {
     }
 
     @PostMapping(value = "/login", produces = "application/json; charset=utf8")
-    public String method(@RequestBody UserVO userVO) {
+    public String login(@RequestBody UserVO userVO) {
 
         final String authToken = userVO.getAuthToken();
         final String displayName = userVO.getDisplayName();
         final String userId = userVO.getUserId();
-        final boolean newPlayer = Boolean.parseBoolean(userVO.getNewPlayer());
+        final boolean newPlayer = userVO.getNewPlayer(); // Boolean.parseBoolean(userVO.getNewPlayer());
         // make string or boolean from received information(post/json)
 
         System.out.println("authToken : " + authToken);
@@ -92,7 +92,7 @@ public class HomeController {
     }
 
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
-    public String respInfo(@RequestBody Map<String, Object> param) {
+    public String getUserInfo(@RequestBody Map<String, Object> param) {
         System.out.println("##########user#########");
         final String userName = param.get("user_id").toString();
         final UserDto userDto = new UserDto("", userName, "");
