@@ -43,7 +43,7 @@ public class AgoraController {
         if(queryResult.get(0) != null){
             // token exist
             System.out.println("Token exist!");
-            return queryResult.get(0).get("room_agora_uid").toString();
+            return queryResult.get(0).get("room_agora_token").toString();
         }
         else{
             // token not exist
