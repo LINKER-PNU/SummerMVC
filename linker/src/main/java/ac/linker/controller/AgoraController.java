@@ -33,24 +33,26 @@ public class AgoraController {
 
     @PostMapping(value="/get_token", produces = "application/json; charset=utf8")
     public String getToken(@RequestBody Map<String,Object> param){
-        final int uid = (int)param.get("classMaster");
+        
         final String channelName = param.get("roomName").toString();
-
+        System.out.println("get_token :: " + channelName);
         RoomDto roomDto = new RoomDto(channelName);
-        roomDto.setAgoraUid(uid);
         
         final List<Map<String,Object>> queryResult = connectService.getAgoraToken(roomDto);
 
         if(queryResult.get(0) != null){
             // token exist
+            System.out.println("Token exist!");
             return queryResult.get(0).get("room_agora_uid").toString();
         }
         else{
             // token not exist
+            System.out.println("Token not exist! Generate token.");
             try {
+                
                 int timestamp = (int) (System.currentTimeMillis() / 1000 + expirationTimeInSeconds);
         
-                final String roomAgoraToken = token.buildTokenWithUid(appId, appCertificate, channelName, uid, Role.Role_Publisher, timestamp);
+                final String roomAgoraToken = token.buildTokenWithUid(appId, appCertificate, channelName, 0, Role.Role_Publisher, timestamp);
                 roomDto.setAgoraToken(roomAgoraToken);
                 connectService.updateAgoraToken(roomDto);
     
@@ -64,13 +66,32 @@ public class AgoraController {
 
     @PostMapping(value="/check_class_exist", produces = "application/json; charset=utf8")
     public String checkClassExist(@RequestBody Map<String,Object> param){
-        return connectController.checkRoomExist(param);
+        final String channelName = param.get("roomName").toString();
+        
+        System.out.println("Check class exist :: " + channelName);
+        RoomDto roomDto = new RoomDto(channelName);
+        final JsonObject jsonObject = new JsonObject();
+
+        final List<Map<String,Object>> tokenQueryResult = connectService.getAgoraToken(roomDto);
+        final List<Map<String,Object>> uidQueryResult = connectService.getAgoraUid(roomDto);
+
+        if(tokenQueryResult.get(0) == null || uidQueryResult.get(0) == null){
+            jsonObject.addProperty("result", false);
+            return jsonObject.toString();
+        }
+        else{
+            jsonObject.addProperty("result", true);
+            return jsonObject.toString();
+        }
+        
     }
 
     @PostMapping(value="/insert_class_master", produces = "application/json; charset=utf8")
     public String insertClassMaster(@RequestBody Map<String,Object> param){
         final String channelName = param.get("roomName").toString();
         final int uid = (int)param.get("classMaster");
+
+        System.out.println("Insert class master :: " + channelName + " :: " + uid);
         
         final JsonObject jsonObject = new JsonObject();
 
@@ -90,7 +111,8 @@ public class AgoraController {
     @PostMapping(value="/delete_class_master", produces = "application/json; charset=utf8")
     public String deleteClassMaster(@RequestBody Map<String,Object> param){
         final String channelName = param.get("roomName").toString();
-        
+        System.out.println("Delete class exist :: " + channelName);
+
         RoomDto roomDto = new RoomDto(channelName);
 
         final JsonObject jsonObject = new JsonObject();
@@ -108,6 +130,8 @@ public class AgoraController {
     public String isClassMaster(@RequestBody Map<String,Object> param){
         final String channelName = param.get("roomName").toString();
         final int uid = (int)param.get("classMaster");
+
+        System.out.println("Insert class master :: " + channelName + " :: " + uid);
         
         final JsonObject jsonObject = new JsonObject();
 

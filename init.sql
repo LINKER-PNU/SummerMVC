@@ -30,7 +30,9 @@ CREATE TABLE room(
     room_code VARCHAR(6) UNIQUE,
     room_present INT NOT NULL DEFAULT 0,
     room_max INT NOT NULL DEFAULT 0,
-    room_create_dt DATETIME NOT NULL
+    room_create_dt DATETIME NOT NULL,
+    room_agora_uid VARCHAR(20),
+    room_agora_token VARCHAR(139)
 );
 /*
 alter table room add room_agora_uid varchar(20);
