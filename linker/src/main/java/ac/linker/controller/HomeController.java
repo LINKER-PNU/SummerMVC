@@ -55,45 +55,18 @@ public class HomeController {
         final UserDto userDto = new UserDto(authToken, displayName, userId);
 
         if (newPlayer) {
-
             connectService.insertUser(userDto);
-            // insert the informations
-
-            final JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("result", true); // is it used?
-
-            return jsonObject.toString();
-            // send the result by json
-
+            // insert the informations, user registered
         } else {
-            Map<String, Object> userInfo = new HashMap<String, Object>();
-
             connectService.updateToken(userDto);
-            // update token and response userDto info
-
-            final List<Map<String, Object>> userResult = connectService.getUser(userDto);
-            if (!userResult.isEmpty()) {
-                userInfo.put("result_user", "success");
-                userInfo.put("user_name", userResult.get(0).get("user_name"));
-                userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
-                userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
-            } else {
-                userInfo.put("result", "empty set");
-            }
-
-            final List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);
-            if (!userRoomResult.isEmpty()) {
-                userInfo.put("user_room", userRoomResult);
-            } else {
-                userInfo.put("user_room", "");
-            }
-            // select username, skin, roomlists
-
-            String userInfoJson = gson.toJson(userInfo);
-            System.out.println(userInfoJson);
-
-            return userInfoJson;
+            // update token
         }
+
+        final JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("result_login", true);
+
+        return jsonObject.toString();
+        // send the result by json
     }
 
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
