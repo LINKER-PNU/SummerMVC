@@ -2,8 +2,7 @@ package ac.linker.controller;
 
 import java.util.List;
 import java.util.Map;
-
-import com.google.gson.JsonObject;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,8 +38,9 @@ public class AgoraController {
         RoomDto roomDto = new RoomDto(channelName);
         
         final List<Map<String,Object>> queryResult = connectService.getAgoraToken(roomDto);
+        Optional<Map<String,Object>> optional = Optional.ofNullable(queryResult.get(0));
 
-        if(queryResult.get(0) != null){
+        if(optional.isPresent()){
             // token exist
             System.out.println("Token exist!");
             return queryResult.get(0).get("room_agora_token").toString();
@@ -56,11 +56,11 @@ public class AgoraController {
                 roomDto.setAgoraToken(roomAgoraToken);
                 connectService.updateAgoraToken(roomDto);
     
-                return roomAgoraToken;    
+                return roomAgoraToken;
+
             } catch (Exception e) {
                 return "-1";
             }
-            
         }
     }
 
@@ -70,17 +70,20 @@ public class AgoraController {
         
         System.out.println("Check class exist :: " + channelName);
         RoomDto roomDto = new RoomDto(channelName);
-        final JsonObject jsonObject = new JsonObject();
 
-        final List<Map<String,Object>> tokenQueryResult = connectService.getAgoraToken(roomDto);
+        final List<Map<String,Object>> uidQueryResult = connectService.getAgoraUid(roomDto);
+        Optional<Map<String,Object>> optional = Optional.ofNullable(uidQueryResult.get(0));
+        
+        final boolean existResult = optional.isPresent();
 
-        if(tokenQueryResult.get(0) == null){
-            return "false";
+        if(existResult){
+            System.out.println("Class exist!");
         }
         else{
-            return "true";
+            System.out.println("Class not exist...");
         }
-        
+
+        return String.valueOf(existResult);
     }
 
     @PostMapping(value="/insert_class_master", produces = "application/json; charset=utf8")
@@ -90,7 +93,6 @@ public class AgoraController {
 
         System.out.println("Insert class master :: " + channelName + " :: " + uid);
         
-        final JsonObject jsonObject = new JsonObject();
 
         RoomDto roomDto = new RoomDto(channelName);
         roomDto.setAgoraUid(uid);
@@ -110,7 +112,6 @@ public class AgoraController {
 
         RoomDto roomDto = new RoomDto(channelName);
 
-        final JsonObject jsonObject = new JsonObject();
         try {
             connectService.resetAgora(roomDto);
             return "true";
@@ -126,7 +127,6 @@ public class AgoraController {
 
         System.out.println("Insert class master :: " + channelName + " :: " + uid);
         
-        final JsonObject jsonObject = new JsonObject();
 
         RoomDto roomDto = new RoomDto(channelName);
         

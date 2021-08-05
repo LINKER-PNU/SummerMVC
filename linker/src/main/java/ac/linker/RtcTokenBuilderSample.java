@@ -6,9 +6,9 @@ import ac.linker.media.RtcTokenBuilder.Role;
 public class RtcTokenBuilderSample {
     static String appId = "970CA35de60c44645bbae8a215061b32";
     static String appCertificate = "5CFd2fd1755d40ecb72977518be15d3b";
-    static String channelName = "7d72365eb983485397e3e3f9d460bddf";
+    static String channelName = "linker_test";
     static String userAccount = "2082341273";
-    static int uid = 2082341273;
+    static int uid = 0;
 
     static int expirationTimeInSeconds = 3600;
 

@@ -37,9 +37,11 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-
-        final Optional<String> optional = Optional.ofNullable("");
-        System.out.println(optional.orElse("Null"));
-
+        try {
+            RtcTokenBuilderSample.RtcTokenBuilderSampleMethod();    
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+        
     }
 }
