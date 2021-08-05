@@ -88,4 +88,24 @@ public class ConnectServiceImplement implements ConnectService {
     public void updateRoomLeave(RoomDto room) {
         connectMapper.updateRoomLeave(room);
     }
+
+    public List<Map<String, Object>> getAgoraToken(RoomDto room){
+        return connectMapper.getAgoraToken(room);
+    }
+
+    public void updateAgoraToken(RoomDto room){
+        connectMapper.updateAgoraToken(room);
+    }
+
+    public List<Map<String, Object>> getAgoraUid(RoomDto room){
+        return connectMapper.getAgoraUid(room);
+    }
+
+    public void updateAgoraUid(RoomDto room){
+        connectMapper.updateAgoraUid(room);
+    }
+
+    public void resetAgora(RoomDto room){
+        connectMapper.resetAgora(room);
+    }
 }

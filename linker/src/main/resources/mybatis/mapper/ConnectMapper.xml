@@ -126,4 +126,35 @@
     WHERE room_name=#{roomName}
   </update>
 
+  <select id="getAgoraToken" resultType="java.util.HashMap">
+    SELECT room_agora_token
+    FROM room
+    WHERE room_name=#{roomName}
+  </select>
+
+  <update id="updateAgoraToken">
+    UPDATE room
+    SET room_agora_token=#{roomAgoraToken}
+    WHERE room_name=#{roomName}
+  </update>
+
+  <select id="getAgoraUid" resultType="java.util.HashMap">
+    SELECT room_agora_uid
+    FROM room
+    WHERE room_name=#{roomName}
+  </select>
+
+  <update id="updateAgoraUid">
+    UPDATE room
+    SET room_agora_uid=#{roomAgoraUid}
+    WHERE room_name=#{roomName}
+  </update>
+
+  <update id="resetAgora">
+    UPDATE room
+    SET room_agora_uid=NULL,
+    room_agora_token=NULL
+    WHERE room_name=#{roomName}
+  </update>
+
 </mapper>

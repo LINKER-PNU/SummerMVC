@@ -32,6 +32,10 @@ CREATE TABLE room(
     room_max INT NOT NULL DEFAULT 0,
     room_create_dt DATETIME NOT NULL
 );
+/*
+alter table room add room_agora_uid varchar(20);
+alter table room add room_agora_token varchar(139);
+*/
 
 CREATE TABLE joining( /*match user and room*/
     joining_user_no INT,

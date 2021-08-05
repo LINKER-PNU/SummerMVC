@@ -41,4 +41,14 @@ public interface ConnectService {
     void updateRoomNewJoin(RoomDto room);
 
     void updateRoomLeave(RoomDto room);
+
+    List<Map<String, Object>> getAgoraToken(RoomDto room);
+
+    void updateAgoraToken(RoomDto room);
+
+    List<Map<String, Object>> getAgoraUid(RoomDto room);
+
+    void updateAgoraUid(RoomDto room);
+
+    void resetAgora(RoomDto room);
 }

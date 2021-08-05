@@ -33,11 +33,15 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        try {
-            RtcTokenBuilderSample.RtcTokenBuilderSampleMethod();
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+        // try {
+        //     RtcTokenBuilderSample.RtcTokenBuilderSampleMethod();
+        // } catch (Exception e) {
+        //     // TODO: handle exception
+        // }
+
+        // System.out.println(connectService.getAgoraToken(new RoomDto("1")).get(0) == null);
+
+        System.out.println("a" == "a");
 
     }
 }
