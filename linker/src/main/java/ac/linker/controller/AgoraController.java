@@ -18,7 +18,7 @@ import ac.linker.service.ConnectService;
 public class AgoraController {
     static String appId = "ee7508ef6b2042e7b6dd141a6a11895a";
     static String appCertificate = "c6903f1bcc1e4097abbb1352a8fed7d7";
-    static int expirationTimeInSeconds = 10;
+    static int expirationTimeInSeconds = 100;
     RtcTokenBuilder token = new RtcTokenBuilder();
 
     private ConnectController connectController;
@@ -101,6 +101,7 @@ public class AgoraController {
             connectService.updateAgoraUid(roomDto);
             return "true";
         } catch (Exception e) {
+            connectService.resetAgora(roomDto);
             return "false";
         }
     }
