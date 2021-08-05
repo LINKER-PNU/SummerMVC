@@ -89,7 +89,7 @@ public class AgoraController {
     @PostMapping(value="/insert_class_master", produces = "application/json; charset=utf8")
     public String insertClassMaster(@RequestBody Map<String,Object> param){
         final String channelName = param.get("roomName").toString();
-        final int uid = Integer.parseInt(param.get("classMaster").toString());
+        final String uid = param.get("classMaster").toString();
 
         System.out.println("Insert class master :: " + channelName + " :: " + uid);
         
@@ -123,7 +123,7 @@ public class AgoraController {
     @PostMapping(value="/is_class_master", produces = "application/json; charset=utf8")
     public String isClassMaster(@RequestBody Map<String,Object> param){
         final String channelName = param.get("roomName").toString();
-        final int uid = (int)param.get("classMaster");
+        final String uid = param.get("classMaster").toString();
 
         System.out.println("Insert class master :: " + channelName + " :: " + uid);
         
@@ -133,7 +133,7 @@ public class AgoraController {
 
         final List<Map<String,Object>> queryResult = connectService.getAgoraUid(roomDto);
 
-        if (uid == (int)queryResult.get(0).get("room_agora_uid")){
+        if (uid.equals(queryResult.get(0).get("room_agora_uid").toString())){
             return "true";
         }
         else{

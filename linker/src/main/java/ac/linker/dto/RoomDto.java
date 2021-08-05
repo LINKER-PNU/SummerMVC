@@ -12,7 +12,7 @@ public class RoomDto {
     private int roomMax = 0;
     private String createDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     
-    private int roomAgoraUid;
+    private String roomAgoraUid;
     private String roomAgoraToken;
 
     public RoomDto() {
@@ -37,7 +37,7 @@ public class RoomDto {
         this.roomCode = roomCode;
     }
 
-    public void setAgoraUid(int roomAgoraUid) {
+    public void setAgoraUid(String roomAgoraUid) {
         this.roomAgoraUid = roomAgoraUid;
     }
 

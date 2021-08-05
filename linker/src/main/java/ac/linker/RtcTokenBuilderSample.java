@@ -8,7 +8,7 @@ public class RtcTokenBuilderSample {
     static String appCertificate = "5CFd2fd1755d40ecb72977518be15d3b";
     static String channelName = "linker_test";
     static String userAccount = "2082341273";
-    static int uid = 0;
+    static int uid = 2082341273;
 
     static int expirationTimeInSeconds = 3600;
 

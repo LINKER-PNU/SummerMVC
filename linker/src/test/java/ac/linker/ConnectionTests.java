@@ -28,7 +28,7 @@ import ac.linker.service.ConnectService;
 public class ConnectionTests {
     private Gson gson = new Gson();
     private ConnectService connectService;
-
+    static int i = 92645;
     @Autowired
     ConnectionTests(ConnectService connectService) {
         this.connectService = connectService;
@@ -37,11 +37,12 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        try {
-            RtcTokenBuilderSample.RtcTokenBuilderSampleMethod();    
-        } catch (Exception e) {
-            //TODO: handle exception
-        }
+        // try {
+        //     RtcTokenBuilderSample.RtcTokenBuilderSampleMethod();    
+        // } catch (Exception e) {
+        //     //TODO: handle exception
+        // }
         
+        System.out.println(i);
     }
 }
