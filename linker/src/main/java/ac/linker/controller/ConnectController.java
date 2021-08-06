@@ -123,7 +123,7 @@ public class ConnectController {
 
         System.out.println("PathLeave : " + requestObject + "\n");
 
-        connectService.updateRoomLeave(new RoomDto(roomName, "", 0, 0));
+        connectService.updateRoomLeave(new RoomDto(roomName));
 
         return getResponseJson(0);
     }
@@ -197,7 +197,6 @@ public class ConnectController {
     public String checkRoomExist(@RequestBody Map<String, Object> param) {
         final Optional<String> optional = Optional.ofNullable(param.get("roomName").toString());
         final String roomName = optional.orElse("");
-        // final String roomName = param.get("roomName").toString();
         final List<Map<String, Object>> queryResult = connectService.findRoom(new RoomDto(roomName));
         final boolean roomExist;
 

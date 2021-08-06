@@ -22,7 +22,7 @@ public class RoomDto {
         this.roomName = roomName;
     }
 
-    public RoomDto(String roomName, String roomCode, int roomPresent, int roomMax) {
+    public RoomDto(final String roomName, final String roomCode, final int roomPresent, final int roomMax) {
         this.roomName = roomName;
         this.roomCode = roomCode;
         this.roomPresent = roomPresent;
@@ -33,15 +33,15 @@ public class RoomDto {
         return roomNo;
     }
 
-    public void setCode(String roomCode) {
+    public void setCode(final String roomCode) {
         this.roomCode = roomCode;
     }
 
-    public void setAgoraUid(String roomAgoraUid) {
+    public void setAgoraUid(final String roomAgoraUid) {
         this.roomAgoraUid = roomAgoraUid;
     }
 
-    public void setAgoraToken(String roomAgoraToken) {
+    public void setAgoraToken(final String roomAgoraToken) {
         this.roomAgoraToken = roomAgoraToken;
     }
 }

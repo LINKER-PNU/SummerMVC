@@ -21,12 +21,10 @@ public class AgoraController {
     static int expirationTimeInSeconds = 100;
     RtcTokenBuilder token = new RtcTokenBuilder();
 
-    private ConnectController connectController;
     private ConnectService connectService;
 
     @Autowired
-    AgoraController(ConnectController connectController, ConnectService connectService) {
-        this.connectController = connectController;
+    AgoraController(ConnectService connectService) {
         this.connectService = connectService;
     }
 
@@ -69,9 +67,8 @@ public class AgoraController {
         final String channelName = param.get("roomName").toString();
         
         System.out.println("Check class exist :: " + channelName);
-        RoomDto roomDto = new RoomDto(channelName);
 
-        final List<Map<String,Object>> uidQueryResult = connectService.getAgoraUid(roomDto);
+        final List<Map<String,Object>> uidQueryResult = connectService.getAgoraUid(new RoomDto(channelName));
         Optional<Map<String,Object>> optional = Optional.ofNullable(uidQueryResult.get(0));
         
         final boolean existResult = optional.isPresent();
@@ -111,10 +108,8 @@ public class AgoraController {
         final String channelName = param.get("roomName").toString();
         System.out.println("Delete class exist :: " + channelName);
 
-        RoomDto roomDto = new RoomDto(channelName);
-
         try {
-            connectService.resetAgora(roomDto);
+            connectService.resetAgora(new RoomDto(channelName));
             return "true";
         } catch (Exception e) {
             return "false";
@@ -126,19 +121,19 @@ public class AgoraController {
         final String channelName = param.get("roomName").toString();
         final String uid = param.get("classMaster").toString();
 
-        System.out.println("Insert class master :: " + channelName + " :: " + uid);
+        System.out.println("Is class master :: " + channelName + " :: " + uid);
         
+        final List<Map<String,Object>> queryResult = connectService.getAgoraUid(new RoomDto(channelName));
 
-        RoomDto roomDto = new RoomDto(channelName);
-        
+        final boolean equalsResult =  uid.equals(queryResult.get(0).get("room_agora_uid").toString());
 
-        final List<Map<String,Object>> queryResult = connectService.getAgoraUid(roomDto);
-
-        if (uid.equals(queryResult.get(0).get("room_agora_uid").toString())){
-            return "true";
+        if (equalsResult){
+            System.out.println(uid + " is class master of " + channelName + "!");
         }
         else{
-            return "false";
+            System.out.println(uid + " is not class master of " + channelName + "...");
         }
+
+        return String.valueOf(equalsResult);
     }
 }

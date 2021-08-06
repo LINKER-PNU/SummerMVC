@@ -39,18 +39,18 @@ public class HomeController {
     }
 
     @PostMapping(value = "/login", produces = "application/json; charset=utf8")
-    public String login(@RequestBody UserVO userVO) {
+    public String userLogin(@RequestBody UserVO userVO) {
 
         final String authToken = userVO.getAuthToken();
         final String displayName = userVO.getDisplayName();
         final String userId = userVO.getUserId();
-        final boolean newPlayer = userVO.getNewPlayer(); // Boolean.parseBoolean(userVO.getNewPlayer());
+        final boolean newPlayer = userVO.getNewPlayer();
         // make string or boolean from received information(post/json)
-
-        System.out.println("authToken : " + authToken);
-        System.out.println("displayName : " + displayName);
-        System.out.println("userId : " + userId);
-        System.out.println("newPlayer : " + newPlayer + "\n");
+        
+        System.out.println("userLogin :: " + 
+            displayName + " :: " + 
+            userId + " :: " + 
+            (newPlayer ? "newPlayer" : "oldPlayer") + "\n");
 
         final UserDto userDto = new UserDto(authToken, displayName, userId);
 
@@ -71,10 +71,11 @@ public class HomeController {
 
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String getUserInfo(@RequestBody Map<String, Object> param) {
-        System.out.println("##########user#########");
         final String userName = param.get("user_id").toString();
-        final UserDto userDto = new UserDto("", userName, "");
+        final UserDto userDto = new UserDto(userName);
         final List<Map<String, Object>> userResult = connectService.getUserByName(userDto);
+
+        System.out.println("getUserInfo :: " + userName);
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
 
@@ -96,8 +97,8 @@ public class HomeController {
         }
         // select username, skin, roomlists
 
-        String userInfoJson = gson.toJson(userInfo);
-        System.out.println(userInfoJson);
+        final String userInfoJson = gson.toJson(userInfo);
+        System.out.println(userInfoJson + "\n");
 
         return userInfoJson;
     }
