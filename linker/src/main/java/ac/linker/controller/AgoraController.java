@@ -13,6 +13,7 @@ import ac.linker.dto.RoomDto;
 import ac.linker.media.RtcTokenBuilder;
 import ac.linker.media.RtcTokenBuilder.Role;
 import ac.linker.service.ConnectService;
+import ac.linker.vo.AgoraVO;
 
 @RestController
 public class AgoraController {
@@ -29,9 +30,9 @@ public class AgoraController {
     }
 
     @PostMapping(value="/get_token", produces = "application/json; charset=utf8")
-    public String getToken(@RequestBody Map<String,Object> param){
+    public String getToken(@RequestBody AgoraVO agoraVO){
         
-        final String channelName = param.get("roomName").toString();
+        final String channelName = agoraVO.getRoomName();
         System.out.println("get_token :: " + channelName);
         RoomDto roomDto = new RoomDto(channelName);
         
@@ -63,8 +64,8 @@ public class AgoraController {
     }
 
     @PostMapping(value="/check_class_exist", produces = "application/json; charset=utf8")
-    public String checkClassExist(@RequestBody Map<String,Object> param){
-        final String channelName = param.get("roomName").toString();
+    public String checkClassExist(@RequestBody AgoraVO agoraVO){
+        final String channelName = agoraVO.getRoomName();
         
         System.out.println("Check class exist :: " + channelName);
 
@@ -84,9 +85,9 @@ public class AgoraController {
     }
 
     @PostMapping(value="/insert_class_master", produces = "application/json; charset=utf8")
-    public String insertClassMaster(@RequestBody Map<String,Object> param){
-        final String channelName = param.get("roomName").toString();
-        final String uid = param.get("classMaster").toString();
+    public String insertClassMaster(@RequestBody AgoraVO agoraVO){
+        final String channelName = agoraVO.getRoomName();
+        final String uid = agoraVO.getClassMaster();
 
         System.out.println("Insert class master :: " + channelName + " :: " + uid);
         
@@ -104,8 +105,8 @@ public class AgoraController {
     }
 
     @PostMapping(value="/delete_class_master", produces = "application/json; charset=utf8")
-    public String deleteClassMaster(@RequestBody Map<String,Object> param){
-        final String channelName = param.get("roomName").toString();
+    public String deleteClassMaster(@RequestBody AgoraVO agoraVO){
+        final String channelName = agoraVO.getRoomName();
         System.out.println("Delete class exist :: " + channelName);
 
         try {
@@ -117,9 +118,9 @@ public class AgoraController {
     }
 
     @PostMapping(value="/is_class_master", produces = "application/json; charset=utf8")
-    public String isClassMaster(@RequestBody Map<String,Object> param){
-        final String channelName = param.get("roomName").toString();
-        final String uid = param.get("classMaster").toString();
+    public String isClassMaster(@RequestBody AgoraVO agoraVO){
+        final String channelName = agoraVO.getRoomName();
+        final String uid = agoraVO.getClassMaster();
 
         System.out.println("Is class master :: " + channelName + " :: " + uid);
         
