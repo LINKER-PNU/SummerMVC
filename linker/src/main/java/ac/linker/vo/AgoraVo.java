@@ -1,8 +1,8 @@
 package ac.linker.vo;
 
-public class AgoraVO {
-    private String roomName;
-    private String classMaster;
+public class AgoraVo {
+	private String roomName;
+	private String classMaster;
 
 	public String getRoomName() {
 		return this.roomName;
