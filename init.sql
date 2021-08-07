@@ -48,18 +48,11 @@ CREATE TABLE joining( /*match user and room*/
 ALTER TABLE joining ADD PRIMARY KEY (joining_room_no,joining_user_no);/*prevent duplicated pair*/
 
 CREATE TABLE timer(
-<<<<<<< HEAD
     global_timer_no INT PRIMARY KEY AUTO_INCREMENT,
-    timer_subject NVARCHAR(20) NOT NULL,
-    timer_start_time DATETIME NOT NULL,
-    timer_acc_time INT NOT NULL,
-    timer_user_no INT,
-=======
     timer_subject NVARCHAR(20) NOT NULL DEFAULT "",
     timer_start_time DATETIME NOT NULL DEFAULT "",
     timer_acc_time INT NOT NULL DEFAULT 0,
     timer_user_no INT NOT NULL DEFAULT 0,
->>>>>>> vo_ref
     FOREIGN KEY (timer_user_no) REFERENCES user (global_user_no),
     timer_room_no INT NOT NULL DEFAULT 0,
     FOREIGN KEY (timer_room_no) REFERENCES room (global_room_no)
@@ -71,22 +64,13 @@ CREATE TABLE board(
     FOREIGN KEY (board_user_no) REFERENCES user (global_user_no),
     board_room_no INT NOT NULL DEFAULT 0,
     FOREIGN KEY (board_room_no) REFERENCES room (global_room_no),
-<<<<<<< HEAD
-    board_title VARCHAR(50) NOT NULL,
-    board_content TEXT NOT NULL,
-    board_write_dt DATETIME,
-    board_edit_dt DATETIME,
-    board_notice BOOLEAN NOT NULL,
-    board_assignment BOOLEAN NOT NULL,
-    board_visible BOOLEAN NOT NULL
-=======
+
     board_title VARCHAR(50) NOT NULL DEFAULT "",
     board_content TEXT NOT NULL DEFAULT "",
     board_write_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
     board_edit_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
     board_notice BOOLEAN NOT NULL DEFAULT 0,
-    board_activate BOOLEAN NOT NULL DEFAULT 0
->>>>>>> vo_ref
+    board_visible BOOLEAN NOT NULL DEFAULT 0
 );
 
 CREATE TABLE logs(
