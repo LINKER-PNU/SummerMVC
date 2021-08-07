@@ -12,12 +12,12 @@ USE summer;
 
 CREATE TABLE user(
     global_user_no INT PRIMARY KEY AUTO_INCREMENT,
-    user_auth_token NVARCHAR(50),
-    user_name NVARCHAR(50) NOT NULL,
-    user_id NVARCHAR(50) NOT NULL,
+    user_auth_token NVARCHAR(50) NOT NULL DEFAULT "",
+    user_name NVARCHAR(50) NOT NULL DEFAULT "",
+    user_id NVARCHAR(50) NOT NULL DEFAULT "",
     user_skin_color INT NOT NULL DEFAULT 0,
     user_skin_role CHAR(1) NOT NULL DEFAULT "S",
-    user_join_dt DATETIME NOT NULL
+    user_join_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00"
 );
 /*
 alter table user add user_skin_role CHAR(1) NOT NULL DEFAULT "S";
@@ -26,44 +26,52 @@ alter table user add user_skin_color INT NOT NULL DEFAULT 0;
 
 CREATE TABLE room(
     global_room_no INT PRIMARY KEY AUTO_INCREMENT,
-    room_name NVARCHAR(20) NOT NULL UNIQUE,
-    room_code VARCHAR(6) UNIQUE,
+    room_name NVARCHAR(20) NOT NULL DEFAULT "" UNIQUE,
+    room_code VARCHAR(6) NOT NULL DEFAULT "" UNIQUE,
     room_present INT NOT NULL DEFAULT 0,
     room_max INT NOT NULL DEFAULT 0,
-    room_create_dt DATETIME NOT NULL,
-    room_agora_uid VARCHAR(20),
-    room_agora_token VARCHAR(139)
+    room_create_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
+    room_agora_uid VARCHAR(20) NOT NULL DEFAULT "",
+    room_agora_token VARCHAR(139) NOT NULL DEFAULT ""
 );
 /*
-alter table room add room_agora_uid varchar(20);
-alter table room add room_agora_token varchar(139);
+alter table room add room_agora_uid varchar(20) NOT NULL DEFAULT "";
+alter table room add room_agora_token varchar(140) NOT NULL DEFAULT "";
 */
 
 CREATE TABLE joining( /*match user and room*/
-    joining_user_no INT,
+    joining_user_no INT NOT NULL DEFAULT "0",
     FOREIGN KEY (joining_user_no) REFERENCES user (global_user_no),
-    joining_room_no INT,
+    joining_room_no INT NOT NULL DEFAULT "0",
     FOREIGN KEY (joining_room_no) REFERENCES room (global_room_no)
 );
 ALTER TABLE joining ADD PRIMARY KEY (joining_room_no,joining_user_no);/*prevent duplicated pair*/
 
 CREATE TABLE timer(
+<<<<<<< HEAD
     global_timer_no INT PRIMARY KEY AUTO_INCREMENT,
     timer_subject NVARCHAR(20) NOT NULL,
     timer_start_time DATETIME NOT NULL,
     timer_acc_time INT NOT NULL,
     timer_user_no INT,
+=======
+    timer_subject NVARCHAR(20) NOT NULL DEFAULT "",
+    timer_start_time DATETIME NOT NULL DEFAULT "",
+    timer_acc_time INT NOT NULL DEFAULT 0,
+    timer_user_no INT NOT NULL DEFAULT 0,
+>>>>>>> vo_ref
     FOREIGN KEY (timer_user_no) REFERENCES user (global_user_no),
-    timer_room_no INT,
+    timer_room_no INT NOT NULL DEFAULT 0,
     FOREIGN KEY (timer_room_no) REFERENCES room (global_room_no)
 );
 
 CREATE TABLE board(
     global_board_no INT PRIMARY KEY AUTO_INCREMENT,
-    board_user_no INT,
+    board_user_no INT NOT NULL DEFAULT 0,
     FOREIGN KEY (board_user_no) REFERENCES user (global_user_no),
-    board_room_no INT,
+    board_room_no INT NOT NULL DEFAULT 0,
     FOREIGN KEY (board_room_no) REFERENCES room (global_room_no),
+<<<<<<< HEAD
     board_title VARCHAR(50) NOT NULL,
     board_content TEXT NOT NULL,
     board_write_dt DATETIME,
@@ -71,6 +79,14 @@ CREATE TABLE board(
     board_notice BOOLEAN NOT NULL,
     board_assignment BOOLEAN NOT NULL,
     board_visible BOOLEAN NOT NULL
+=======
+    board_title VARCHAR(50) NOT NULL DEFAULT "",
+    board_content TEXT NOT NULL DEFAULT "",
+    board_write_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
+    board_edit_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
+    board_notice BOOLEAN NOT NULL DEFAULT 0,
+    board_activate BOOLEAN NOT NULL DEFAULT 0
+>>>>>>> vo_ref
 );
 
 CREATE TABLE logs(
