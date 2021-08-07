@@ -48,6 +48,7 @@ CREATE TABLE joining( /*match user and room*/
 ALTER TABLE joining ADD PRIMARY KEY (joining_room_no,joining_user_no);/*prevent duplicated pair*/
 
 CREATE TABLE timer(
+    global_timer_no INT PRIMARY KEY AUTO_INCREMENT,
     timer_subject NVARCHAR(20) NOT NULL,
     timer_start_time DATETIME NOT NULL,
     timer_acc_time INT NOT NULL,
@@ -68,7 +69,8 @@ CREATE TABLE board(
     board_write_dt DATETIME,
     board_edit_dt DATETIME,
     board_notice BOOLEAN NOT NULL,
-    board_activate BOOLEAN NOT NULL
+    board_assignment BOOLEAN NOT NULL,
+    board_visible BOOLEAN NOT NULL
 );
 
 CREATE TABLE logs(

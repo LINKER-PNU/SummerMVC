@@ -42,6 +42,13 @@
     WHERE user_name=#{displayName};
   </select>
 
+  <update id="updateSkin">
+    UPDATE user
+    SET user_skin_color=#{skinColor},
+    user_skin_role=#{skinRole}
+    WHERE user_name=#{displayName}
+  </update>
+
   <select id="getRoomByName" resultType="java.util.HashMap">
     SELECT room_name, room_present, room_max
     FROM room 
@@ -157,11 +164,6 @@
     WHERE room_name=#{roomName}
   </update>
 
-  <update id="updateSkin">
-    UPDATE user
-    SET user_skin_color=#{skinColor},
-    user_skin_role=#{skinRole}
-    WHERE user_name=#{displayName}
-  </update>
   
+
 </mapper>

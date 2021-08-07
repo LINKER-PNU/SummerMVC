@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.UserDto;
 import ac.linker.service.ConnectService;
-import ac.linker.vo.UserVO;
+import ac.linker.vo.UserVo;
 
 @RestController
 public class HomeController {
@@ -39,7 +39,7 @@ public class HomeController {
     }
 
     @PostMapping(value = "/login", produces = "application/json; charset=utf8")
-    public String userLogin(@RequestBody UserVO userVO) {
+    public String userLogin(@RequestBody UserVo userVO) {
 
         final String authToken = userVO.getAuthToken();
         final String displayName = userVO.getDisplayName();
@@ -63,7 +63,7 @@ public class HomeController {
         }
 
         final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("result_login", true);
+        jsonObject.addProperty("result_login", "success");
 
         return jsonObject.toString();
         // send the result by json
@@ -104,13 +104,15 @@ public class HomeController {
     }
 
     @PostMapping(value = "/skin", produces = "application/json; charset=utf8")
-    public String updateSkin(@RequestBody UserVO userVO) {
+    public String updateSkin(@RequestBody UserVo userVO) {
         final UserDto userDto = new UserDto(userVO.getDisplayName(), userVO.getSkinColor(), userVO.getSkinRole());
 
         connectService.updateSkin(userDto);
 
+        System.out.println("updateSkin :: " + userVO.getDisplayName());
+
         final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("result_skin", true);
+        jsonObject.addProperty("result_skin", "success");
 
         return jsonObject.toString();
     }
