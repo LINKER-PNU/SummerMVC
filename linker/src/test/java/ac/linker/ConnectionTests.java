@@ -1,48 +1,33 @@
 package ac.linker;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.DuplicateKeyException;
 
-import ac.linker.controller.ConnectController;
-import ac.linker.dto.JoinDto;
 import ac.linker.dto.RoomDto;
-import ac.linker.dto.UserDto;
-import ac.linker.service.CodeGenerator;
+import ac.linker.service.AgoraService;
 import ac.linker.service.ConnectService;
+import ac.linker.service.HomeService;
 
 @SpringBootTest
 public class ConnectionTests {
     private Gson gson = new Gson();
     private ConnectService connectService;
-    static int i = 92645;
+    private AgoraService agoraService;
+    private HomeService homeService;
+
     @Autowired
-    ConnectionTests(ConnectService connectService) {
+    ConnectionTests(ConnectService connectService, AgoraService agoraService, HomeService homeService) {
         this.connectService = connectService;
+        this.agoraService = agoraService;
+        this.homeService = homeService;
     }
 
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        // try {
-        //     RtcTokenBuilderSample.RtcTokenBuilderSampleMethod();    
-        // } catch (Exception e) {
-        //     //TODO: handle exception
-        // }
-        
-        System.out.println(i);
+        System.out.println(homeService.getAllUser());
     }
 }

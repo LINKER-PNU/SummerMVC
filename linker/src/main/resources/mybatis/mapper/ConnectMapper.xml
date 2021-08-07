@@ -3,65 +3,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ac.linker.mapper.ConnectMapper">
-  <select id="getAllUser" resultType="java.util.HashMap">
-    SELECT * 
-    FROM user;
-  </select>
-  
-  <select id="getUser" resultType="java.util.HashMap">
-    SELECT user_name, user_skin_color, user_skin_role
-    FROM user
-    WHERE user_id=#{userId};
-  </select>
-
-  <select id="getSkin" resultType="java.util.HashMap">
-    SELECT skin_color,skin_role
-    FROM skin
-    WHERE skin_user_no = (
-      SELECT global_user_no
-      FROM user
-      WHERE user_id = #{userId});
-  </select>
-
-  <select id="getRoom" resultType="java.util.HashMap">
-    SELECT room_name, room_present, room_max
-    FROM room 
-    WHERE global_room_no in (
-      SELECT joining_room_no 
-      FROM joining 
-      WHERE joining_user_no = (
-        SELECT global_user_no 
-        FROM user 
-        WHERE user_id = #{userId})
-      ) group by global_room_no;
-  </select>
-
-  <select id="getUserByName" resultType="java.util.HashMap">
-    SELECT user_id, user_skin_color, user_skin_role
-    FROM user
-    WHERE user_name=#{displayName};
-  </select>
-
-  <update id="updateSkin">
-    UPDATE user
-    SET user_skin_color=#{skinColor},
-    user_skin_role=#{skinRole}
-    WHERE user_name=#{displayName}
-  </update>
-
-  <select id="getRoomByName" resultType="java.util.HashMap">
-    SELECT room_name, room_present, room_max
-    FROM room 
-    WHERE global_room_no in (
-      SELECT joining_room_no 
-      FROM joining 
-      WHERE joining_user_no = (
-        SELECT global_user_no 
-        FROM user 
-        WHERE user_name = #{displayName})
-      ) group by global_room_no;
-  </select>
-  
   <select id="getRoomByCode" resultType="java.util.HashMap">
     SELECT room_name 
     FROM room 
@@ -79,11 +20,6 @@
     FROM room
     WHERE room_name = #{roomName}
   </select>
-
-  <insert id="insertUser">
-    INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt)
-    VALUES (#{authToken},#{displayName},#{userId},#{joinDate})
-  </insert>
   
   <insert id="insertRoom" parameterType="ac.linker.dto.RoomDto" useGeneratedKeys="true" keyProperty="roomNo" keyColumn="global_room_no">
     INSERT INTO room(room_name,room_create_dt)
@@ -100,12 +36,6 @@
       WHERE room_name = #{roomName})
     )
   </insert>
-
-  <update id="updateToken">
-    UPDATE user
-    SET user_auth_token=#{authToken}
-    WHERE user_id=#{userId}
-  </update>
 
   <update id="updateRoomCode">
     UPDATE room
@@ -132,38 +62,4 @@
     SET room_present = room_present-1
     WHERE room_name=#{roomName}
   </update>
-
-  <select id="getAgoraToken" resultType="java.util.HashMap">
-    SELECT room_agora_token
-    FROM room
-    WHERE room_name=#{roomName}
-  </select>
-
-  <update id="updateAgoraToken">
-    UPDATE room
-    SET room_agora_token=#{roomAgoraToken}
-    WHERE room_name=#{roomName}
-  </update>
-
-  <select id="getAgoraUid" resultType="java.util.HashMap">
-    SELECT room_agora_uid
-    FROM room
-    WHERE room_name=#{roomName}
-  </select>
-
-  <update id="updateAgoraUid">
-    UPDATE room
-    SET room_agora_uid=#{roomAgoraUid}
-    WHERE room_name=#{roomName}
-  </update>
-
-  <update id="resetAgora">
-    UPDATE room
-    SET room_agora_uid=NULL,
-    room_agora_token=NULL
-    WHERE room_name=#{roomName}
-  </update>
-
-  
-
 </mapper>
