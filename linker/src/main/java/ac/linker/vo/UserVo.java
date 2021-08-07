@@ -9,48 +9,51 @@ public class UserVo {
     private int skinColor;
     private char skinRole;
 
-	public int getSkinColor() {
-		return this.skinColor;
-	}
-
-	public void setSkinColor(int skinColor) {
-		this.skinColor = skinColor;
-	}
-
-	public char getSkinRole() {
-		return this.skinRole;
-	}
-
-	public void setSkinRole(char skinRole) {
-		this.skinRole = skinRole;
-	}
-
-    public String getAuthToken(){
+    public String getAuthToken() {
         return this.authToken;
     }
-    public void setAuthToken(String authToken){
+
+    public void setAuthToken(String authToken) {
         this.authToken = authToken;
     }
-    
-    public String getDisplayName(){
+
+    public String getDisplayName() {
         return this.displayName;
     }
-    public void setDisplayName(String displayName){
+
+    public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-    
-    public String getUserId(){
+
+    public String getUserId() {
         return this.userId;
     }
-    public void setUserId(String userId){
+
+    public void setUserId(String userId) {
         this.userId = userId;
     }
-    
-    public boolean getNewPlayer(){
+
+    public boolean getNewPlayer() {
         return this.newPlayer;
     }
-    public void setNewPlayer(Boolean newPlayer){
+
+    public void setNewPlayer(Boolean newPlayer) {
         this.newPlayer = newPlayer;
     }
 
+    public int getSkinColor() {
+        return this.skinColor;
+    }
+
+    public void setSkinColor(int skinColor) {
+        this.skinColor = skinColor;
+    }
+
+    public char getSkinRole() {
+        return this.skinRole;
+    }
+
+    public void setSkinRole(char skinRole) {
+        this.skinRole = skinRole;
+    }
 }

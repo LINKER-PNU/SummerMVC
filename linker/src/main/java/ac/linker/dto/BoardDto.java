@@ -13,7 +13,7 @@ public class BoardDto {
     private boolean boardVisible;
 
     public BoardDto(String boardWriter, String boardRoom, String boardTitle, String boardContent, String boardWriteDate,
-        String boardEditDate, boolean boardNotice, boolean boardVisible) {
+            String boardEditDate, boolean boardNotice, boolean boardVisible) {
         this.boardWriter = boardWriter;
         this.boardRoom = boardRoom;
         this.boardTitle = boardTitle;
@@ -23,8 +23,4 @@ public class BoardDto {
         this.boardNotice = boardNotice;
         this.boardVisible = boardVisible;
     }
-
-                    
-    
 }
-

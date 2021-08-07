@@ -1,16 +1,26 @@
 package ac.linker.vo;
 
 public class BoardVo {
-    private String boardWriter;
-    private String boardRoom;
+	private int boardId;
 
-    private String boardTitle;
-    private String boardContent;
-    private String boardDeadline;
+	private String boardWriter;
+	private String boardRoom;
 
-    private boolean boardNotice;
-    private boolean boardAssignment;
-    private boolean boardVisible;
+	private String boardTitle;
+	private String boardContent;
+	private String boardDeadline;
+
+	private boolean boardNotice;
+	private boolean boardAssignment;
+	private boolean boardVisible;
+
+	public int getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(int boardId) {
+		this.boardId = boardId;
+	}
 
 	public String getBoardWriter() {
 		return this.boardWriter;
@@ -52,7 +62,7 @@ public class BoardVo {
 		this.boardNotice = boardNotice;
 	}
 
-    public boolean isBoardAssignment() {
+	public boolean isBoardAssignment() {
 		return this.boardAssignment;
 	}
 
@@ -68,7 +78,7 @@ public class BoardVo {
 		this.boardVisible = boardVisible;
 	}
 
-    public String getBoardDeadline() {
+	public String getBoardDeadline() {
 		return this.boardDeadline;
 	}
 

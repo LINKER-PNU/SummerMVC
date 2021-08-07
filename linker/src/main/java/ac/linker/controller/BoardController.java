@@ -12,33 +12,35 @@ import ac.linker.service.ConnectService;
 import ac.linker.vo.BoardVo;
 
 @RestController
-public class ClassroomController {
+public class BoardController {
     private ConnectService connectService;
 
     @Autowired
-    ClassroomController(ConnectService connectService){
+    BoardController(ConnectService connectService) {
         this.connectService = connectService;
     }
 
+    // write board
     @PostMapping
-    public String insertBoard(@RequestBody BoardVo boardVo){
-        
-
+    public String insertBoard(@RequestBody BoardVo boardVo) {
     }
 
+    // get board list
     @PostMapping
-    public String getBoards(@RequestBody BoardVo boardVo){
+    public String getBoards(@RequestBody BoardVo boardVo) {
         // List<Map<String,Object>> queryResult = connectService.
-
     }
 
+    // click board
     @PostMapping
-    public String insertTimer(@RequestBody ){
-
+    public String getBoardInfo(@RequestBody BoardVo boardVo) {
     }
 
-    @PostMapping
-    public String getTimers(@RequestBody ){
+    // edit board
+    public String editBoard(@RequestBody BoardVo boardVo) {
+    }
 
+    // delete(deactivate) board
+    public String deactivateBoard(@RequestBody BoardVo boardVo) {
     }
 }
