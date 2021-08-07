@@ -6,6 +6,26 @@ public class UserVO {
     private String userId;
     private boolean newPlayer;
 
+    private int skinColor;
+    private char skinRole;
+
+
+	public int getSkinColor() {
+		return this.skinColor;
+	}
+
+	public void setSkinColor(int skinColor) {
+		this.skinColor = skinColor;
+	}
+
+	public char getSkinRole() {
+		return this.skinRole;
+	}
+
+	public void setSkinRole(char skinRole) {
+		this.skinRole = skinRole;
+	}
+
     public String getAuthToken(){
         return this.authToken;
     }

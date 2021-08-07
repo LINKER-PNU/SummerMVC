@@ -157,4 +157,11 @@
     WHERE room_name=#{roomName}
   </update>
 
+  <update id="updateSkin">
+    UPDATE user
+    SET user_skin_color=#{skinColor},
+    user_skin_role=#{skinRole}
+    WHERE user_name=#{displayName}
+  </update>
+  
 </mapper>

@@ -11,6 +11,15 @@ public class UserDto {
     private String joinDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     private String newPlayer;
 
+    private int skinColor;
+    private char skinRole;
+
+    public UserDto(String displayName, int skinColor, char skinRole){
+        this.displayName = displayName;
+        this.skinColor = skinColor;
+        this.skinRole = skinRole;
+    }
+
     public UserDto(final String displayName){
         this.displayName = displayName;
     }

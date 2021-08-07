@@ -102,6 +102,18 @@ public class HomeController {
 
         return userInfoJson;
     }
+
+    @PostMapping(value = "/skin", produces = "application/json; charset=utf8")
+    public String updateSkin(@RequestBody UserVO userVO) {
+        final UserDto userDto = new UserDto(userVO.getDisplayName(), userVO.getSkinColor(), userVO.getSkinRole());
+
+        connectService.updateSkin(userDto);
+
+        final JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("result_skin", true);
+
+        return jsonObject.toString();
+    }
 }
 
 

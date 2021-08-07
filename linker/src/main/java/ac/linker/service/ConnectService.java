@@ -51,4 +51,6 @@ public interface ConnectService {
     void updateAgoraUid(RoomDto room);
 
     void resetAgora(RoomDto room);
+
+    void updateSkin(UserDto user);
 }

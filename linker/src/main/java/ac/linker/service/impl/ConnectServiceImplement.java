@@ -108,4 +108,8 @@ public class ConnectServiceImplement implements ConnectService {
     public void resetAgora(RoomDto room){
         connectMapper.resetAgora(room);
     }
+
+    public void updateSkin(UserDto user){
+        connectMapper.updateSkin(user);
+    }
 }
