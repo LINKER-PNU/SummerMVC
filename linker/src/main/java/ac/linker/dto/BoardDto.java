@@ -1,11 +1,14 @@
 package ac.linker.dto;
 
 public class BoardDto {
+    private int boardId;
+
     private String boardWriter;
     private String boardRoom;
 
     private String boardTitle;
     private String boardContent;
+
     private String boardWriteDt;
     private String boardEditDt;
     private String boardDeadline;
@@ -15,6 +18,14 @@ public class BoardDto {
     private boolean boardVisible;
 
     public BoardDto() {
+    }
+
+    public int getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(int boardId) {
+        this.boardId = boardId;
     }
 
     public String getBoardTitle() {

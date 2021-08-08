@@ -27,17 +27,20 @@ public class BoardController {
     }
 
     // get board list
-    @PostMapping(value = "/board_list", produces = "application/json; charset=utf8")
+    @PostMapping(value = "/list", produces = "application/json; charset=utf8")
     public String getBoards(@RequestBody BoardVo boardVo) {
         BoardDto boardDto = new BoardDto();
         boardDto.setBoardRoom(boardVo.getBoardRoom());
         return gson.toJson(boardService.getBoards(boardDto));
     }
 
-    // // click board
-    // @PostMapping
-    // public String getBoardInfo(@RequestBody BoardVo boardVo) {
-    // }
+    // click board
+    @PostMapping(value = "/content")
+    public String getBoardContent(@RequestBody BoardVo boardVo) {
+        BoardDto boardDto = new BoardDto();
+        boardDto.setBoardId(boardVo.getBoardId());
+        return boardService.getBoardContent(boardDto).getBoardContent();
+    }
 
     // // write board
     // @PostMapping

@@ -9,4 +9,6 @@ public interface BoardService {
     BoardVo getBoardTitle(BoardDto boardDto);
 
     List<BoardVo> getBoards(BoardDto boardDto);
+
+    BoardVo getBoardContent(BoardDto boardDto);
 }

@@ -1,6 +1,7 @@
 package ac.linker;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +35,8 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
+        JsonObject json = new JsonObject();
         BoardDto boardDto = new BoardDto();
-        boardDto.setBoardRoom("1");
-
-        // for (BoardVo boardVo : boardService.getBoards(boardDto)) {
-        // System.out.println(gson.toJson(boardVo));
-        // }
-
-        System.out.println(gson.toJson(boardService.getBoards(boardDto)));
+        boardDto.setBoardId(1);
     }
 }

@@ -29,4 +29,10 @@
         WHERE room_name=#{boardRoom}
     )
   </select>
+
+  <select id="getBoardContent" resultType="ac.linker.vo.BoardVo">
+    SELECT board_content
+    FROM board
+    WHERE global_board_no=#{boardId}
+  </select>
 </mapper>
