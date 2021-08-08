@@ -4,6 +4,7 @@ public class BoardVo {
 	private int boardId;
 
 	private String boardWriter;
+	private String boardWriterId;
 	private String boardRoom;
 
 	private String boardTitle;
@@ -28,6 +29,14 @@ public class BoardVo {
 
 	public void setBoardWriter(String boardWriter) {
 		this.boardWriter = boardWriter;
+	}
+
+	public String getBoardWriterId() {
+		return boardWriterId;
+	}
+
+	public void setBoardWriterId(String boardWriterId) {
+		this.boardWriterId = boardWriterId;
 	}
 
 	public String getBoardRoom() {

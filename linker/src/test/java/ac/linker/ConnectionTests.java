@@ -34,8 +34,7 @@ public class ConnectionTests {
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
         BoardDto boardDto = new BoardDto();
-        boardDto.setBoardWriter("boardWriter");
-
-        System.out.println((boardService.getBoardTitle(boardDto)).getBoardTitle());
+        boardDto.setBoardRoom("1");
+        System.out.println(boardService.getBoards(boardDto).getBoardTitle());
     }
 }

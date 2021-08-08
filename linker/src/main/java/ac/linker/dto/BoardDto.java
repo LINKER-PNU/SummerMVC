@@ -6,32 +6,30 @@ public class BoardDto {
 
     private String boardTitle;
     private String boardContent;
-    private String boardWriteDate;
-    private String boardEditDate;
+    private String boardWriteDt;
+    private String boardEditDt;
+    private String boardDeadline;
 
     private boolean boardNotice;
+    private boolean boardAssignment;
     private boolean boardVisible;
 
     public BoardDto() {
     }
 
-    public BoardDto(String boardWriter, String boardRoom, String boardTitle, String boardContent, String boardWriteDate,
-            String boardEditDate, boolean boardNotice, boolean boardVisible) {
-        this.setBoardWriter(boardWriter);
-        this.boardRoom = boardRoom;
+    public String getBoardTitle() {
+        return boardTitle;
+    }
+
+    public void setBoardTitle(String boardTitle) {
         this.boardTitle = boardTitle;
-        this.boardContent = boardContent;
-        this.boardWriteDate = boardWriteDate;
-        this.boardEditDate = boardEditDate;
-        this.boardNotice = boardNotice;
-        this.boardVisible = boardVisible;
     }
 
-    public String getBoardWriter() {
-        return boardWriter;
+    public String getBoardRoom() {
+        return boardRoom;
     }
 
-    public void setBoardWriter(String boardWriter) {
-        this.boardWriter = boardWriter;
+    public void setBoardRoom(String boardRoom) {
+        this.boardRoom = boardRoom;
     }
 }

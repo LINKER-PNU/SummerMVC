@@ -20,4 +20,8 @@ public class BoardServiceImplement implements BoardService {
     public BoardVo getBoardTitle(BoardDto boardDto) {
         return boardMapper.getBoardTitle(boardDto);
     }
+
+    public BoardVo getBoards(BoardDto boardDto) {
+        return boardMapper.getBoards(boardDto);
+    };
 }

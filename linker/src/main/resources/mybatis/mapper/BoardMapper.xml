@@ -8,4 +8,24 @@
     FROM board
     WHERE board_writer=#{boardWriter}
   </select>
+
+  <select id="getBoards" resultType="ac.linker.vo.BoardVo">
+    SELECT global_board_no AS boardId,
+        board_title,
+        user.user_id,
+        user.user_name,
+        board_write_dt,
+        board_edit_dt,
+        board_deadline,
+        board_notice,
+        board_assignment
+    FROM board
+    LEFT JOIN user
+    ON user.global_user_no=board.board_user_no
+    WHERE board_room_no=(
+        SELECT global_room_no
+        FROM room
+        WHERE room_name=#{boardRoom}
+    )
+  </select>
 </mapper>

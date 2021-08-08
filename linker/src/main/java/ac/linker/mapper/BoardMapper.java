@@ -10,4 +10,6 @@ import ac.linker.vo.BoardVo;
 @Mapper
 public interface BoardMapper {
     BoardVo getBoardTitle(BoardDto boardDto);
+
+    BoardVo getBoards(BoardDto boardDto);
 }

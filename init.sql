@@ -64,12 +64,13 @@ CREATE TABLE board(
     FOREIGN KEY (board_user_no) REFERENCES user (global_user_no),
     board_room_no INT NOT NULL DEFAULT 0,
     FOREIGN KEY (board_room_no) REFERENCES room (global_room_no),
-
     board_title NVARCHAR(50) NOT NULL DEFAULT "",
-    board_content TEXT NOT NULL DEFAULT "",
+    board_content TEXT NOT NULL,
     board_write_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
     board_edit_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
+    board_deadline DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
     board_notice BOOLEAN NOT NULL DEFAULT 0,
+    board_assignment BOOLEAN NOT NULL DEFAULT 0,
     board_visible BOOLEAN NOT NULL DEFAULT 0
 );
 
