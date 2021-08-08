@@ -13,12 +13,12 @@ import ac.linker.vo.BoardVo;
 
 @RestController
 public class BoardController {
-    private ConnectService connectService;
+    // private ConnectService connectService;
 
-    @Autowired
-    BoardController(ConnectService connectService) {
-        this.connectService = connectService;
-    }
+    // @Autowired
+    // BoardController(ConnectService connectService) {
+    // this.connectService = connectService;
+    // }
 
     // write board
     @PostMapping
