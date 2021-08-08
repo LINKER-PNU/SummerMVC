@@ -16,49 +16,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.UserDto;
-import ac.linker.service.ConnectService;
+import ac.linker.service.HomeService;
 import ac.linker.vo.UserVo;
 
 @RestController
 public class HomeController {
-    private ConnectService connectService;
+    private HomeService homeService;
     private Gson gson = new Gson();
     // private final Logger logger = LoggerFactory
 
-
     @Autowired
-    HomeController(ConnectService connectService) {
-        this.connectService = connectService;
+    HomeController(HomeService homeService) {
+        this.homeService = homeService;
     }
 
     @RequestMapping(value = "/")
     public String index() {
         System.out.println("###############GotoIndex################");
-        
+
         return "hello";
     }
 
     @PostMapping(value = "/login", produces = "application/json; charset=utf8")
-    public String userLogin(@RequestBody UserVo userVO) {
+    public String userLogin(@RequestBody UserVo userVo) {
 
-        final String authToken = userVO.getAuthToken();
-        final String displayName = userVO.getDisplayName();
-        final String userId = userVO.getUserId();
-        final boolean newPlayer = userVO.getNewPlayer();
+        final String authToken = userVo.getAuthToken();
+        final String displayName = userVo.getDisplayName();
+        final String userId = userVo.getUserId();
+        final boolean newPlayer = userVo.getNewPlayer();
         // make string or boolean from received information(post/json)
-        
-        System.out.println("userLogin :: " + 
-            displayName + " :: " + 
-            userId + " :: " + 
-            (newPlayer ? "newPlayer" : "oldPlayer") + "\n");
+
+        System.out.println("userLogin :: " + displayName + " :: " + userId + " :: "
+                + (newPlayer ? "newPlayer" : "oldPlayer") + "\n");
 
         final UserDto userDto = new UserDto(authToken, displayName, userId);
 
         if (newPlayer) {
-            connectService.insertUser(userDto);
+            homeService.insertUser(userDto);
             // insert the informations, user registered
         } else {
-            connectService.updateToken(userDto);
+            homeService.updateToken(userDto);
             // update token
         }
 
@@ -73,7 +70,7 @@ public class HomeController {
     public String getUserInfo(@RequestBody Map<String, Object> param) {
         final String userName = param.get("user_id").toString();
         final UserDto userDto = new UserDto(userName);
-        final List<Map<String, Object>> userResult = connectService.getUserByName(userDto);
+        final List<Map<String, Object>> userResult = homeService.getUserByName(userDto);
 
         System.out.println("getUserInfo :: " + userName);
 
@@ -88,7 +85,7 @@ public class HomeController {
             userInfo.put("result_user", "empty set");
         }
 
-        final List<Map<String, Object>> userRoomResult = connectService.getRoomByName(userDto);
+        final List<Map<String, Object>> userRoomResult = homeService.getRoomByName(userDto);
         if (!userRoomResult.isEmpty()) {
             userInfo.put("result_room", "success");
             userInfo.put("user_room", userRoomResult);
@@ -104,12 +101,12 @@ public class HomeController {
     }
 
     @PostMapping(value = "/skin", produces = "application/json; charset=utf8")
-    public String updateSkin(@RequestBody UserVo userVO) {
-        final UserDto userDto = new UserDto(userVO.getDisplayName(), userVO.getSkinColor(), userVO.getSkinRole());
+    public String updateSkin(@RequestBody UserVo userVo) {
+        final UserDto userDto = new UserDto(userVo.getDisplayName(), userVo.getSkinColor(), userVo.getSkinRole());
 
-        connectService.updateSkin(userDto);
+        homeService.updateSkin(userDto);
 
-        System.out.println("updateSkin :: " + userVO.getDisplayName());
+        System.out.println("updateSkin :: " + userVo.getDisplayName());
 
         final JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("result_skin", "success");
@@ -117,5 +114,3 @@ public class HomeController {
         return jsonObject.toString();
     }
 }
-
-

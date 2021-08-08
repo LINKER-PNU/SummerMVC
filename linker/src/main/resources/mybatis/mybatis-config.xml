@@ -3,5 +3,7 @@
 <configuration>
     <mappers>
         <mapper resource="ConnectMapper.xml"/>
+        <mapper resource="AgoraMapper.xml"/>
+        <mapper resource="HomeMapper.xml"/>
     </mappers>
 </configuration>

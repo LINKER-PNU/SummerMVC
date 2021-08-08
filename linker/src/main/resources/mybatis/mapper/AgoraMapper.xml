@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ac.linker.mapper.AgoraMapper">
+  <select id="getAgoraToken" resultType="java.util.HashMap">
+    SELECT room_agora_token
+    FROM room
+    WHERE room_name=#{roomName}
+  </select>
+
+  <update id="updateAgoraToken">
+    UPDATE room
+    SET room_agora_token=#{roomAgoraToken}
+    WHERE room_name=#{roomName}
+  </update>
+
+  <select id="getAgoraUid" resultType="java.util.HashMap">
+    SELECT room_agora_uid
+    FROM room
+    WHERE room_name=#{roomName}
+  </select>
+
+  <update id="updateAgoraUid">
+    UPDATE room
+    SET room_agora_uid=#{roomAgoraUid}
+    WHERE room_name=#{roomName}
+  </update>
+
+  <update id="resetAgora">
+    UPDATE room
+    SET room_agora_uid=NULL,
+    room_agora_token=NULL
+    WHERE room_name=#{roomName}
+  </update>
+</mapper>
