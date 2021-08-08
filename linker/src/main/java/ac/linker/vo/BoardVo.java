@@ -9,6 +9,9 @@ public class BoardVo {
 
 	private String boardTitle;
 	private String boardContent;
+
+	private String boardWriteDt;
+	private String boardEditDt;
 	private String boardDeadline;
 
 	private boolean boardNotice;

@@ -11,14 +11,15 @@
 
   <select id="getBoards" resultType="ac.linker.vo.BoardVo">
     SELECT global_board_no AS boardId,
+        user.user_id AS boardWriterId,
+        user.user_name AS boardWriter,
         board_title,
-        user.user_id,
-        user.user_name,
         board_write_dt,
         board_edit_dt,
         board_deadline,
         board_notice,
-        board_assignment
+        board_assignment,
+        board_visible
     FROM board
     LEFT JOIN user
     ON user.global_user_no=board.board_user_no

@@ -1,5 +1,7 @@
 package ac.linker.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +23,7 @@ public class BoardServiceImplement implements BoardService {
         return boardMapper.getBoardTitle(boardDto);
     }
 
-    public BoardVo getBoards(BoardDto boardDto) {
+    public List<BoardVo> getBoards(BoardDto boardDto) {
         return boardMapper.getBoards(boardDto);
     };
 }

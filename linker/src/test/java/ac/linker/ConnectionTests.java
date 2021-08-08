@@ -12,6 +12,7 @@ import ac.linker.service.AgoraService;
 import ac.linker.service.BoardService;
 import ac.linker.service.ConnectService;
 import ac.linker.service.HomeService;
+import ac.linker.vo.BoardVo;
 
 @SpringBootTest
 public class ConnectionTests {
@@ -35,6 +36,11 @@ public class ConnectionTests {
         System.out.println("###############ConnectionTest##############");
         BoardDto boardDto = new BoardDto();
         boardDto.setBoardRoom("1");
-        System.out.println(boardService.getBoards(boardDto).getBoardTitle());
+
+        // for (BoardVo boardVo : boardService.getBoards(boardDto)) {
+        // System.out.println(gson.toJson(boardVo));
+        // }
+
+        System.out.println(gson.toJson(boardService.getBoards(boardDto)));
     }
 }
