@@ -65,7 +65,7 @@ CREATE TABLE board(
     board_room_no INT NOT NULL DEFAULT 0,
     FOREIGN KEY (board_room_no) REFERENCES room (global_room_no),
 
-    board_title VARCHAR(50) NOT NULL DEFAULT "",
+    board_title NVARCHAR(50) NOT NULL DEFAULT "",
     board_content TEXT NOT NULL DEFAULT "",
     board_write_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
     board_edit_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",

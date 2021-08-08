@@ -12,9 +12,12 @@ public class BoardDto {
     private boolean boardNotice;
     private boolean boardVisible;
 
+    public BoardDto() {
+    }
+
     public BoardDto(String boardWriter, String boardRoom, String boardTitle, String boardContent, String boardWriteDate,
             String boardEditDate, boolean boardNotice, boolean boardVisible) {
-        this.boardWriter = boardWriter;
+        this.setBoardWriter(boardWriter);
         this.boardRoom = boardRoom;
         this.boardTitle = boardTitle;
         this.boardContent = boardContent;
@@ -22,5 +25,13 @@ public class BoardDto {
         this.boardEditDate = boardEditDate;
         this.boardNotice = boardNotice;
         this.boardVisible = boardVisible;
+    }
+
+    public String getBoardWriter() {
+        return boardWriter;
+    }
+
+    public void setBoardWriter(String boardWriter) {
+        this.boardWriter = boardWriter;
     }
 }

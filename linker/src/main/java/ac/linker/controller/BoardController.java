@@ -20,20 +20,20 @@ public class BoardController {
     // this.connectService = connectService;
     // }
 
-    // write board
-    @PostMapping
-    public String insertBoard(@RequestBody BoardVo boardVo) {
-    }
-
     // get board list
     @PostMapping
     public String getBoards(@RequestBody BoardVo boardVo) {
-        // List<Map<String,Object>> queryResult = connectService.
+
     }
 
     // click board
     @PostMapping
     public String getBoardInfo(@RequestBody BoardVo boardVo) {
+    }
+
+    // write board
+    @PostMapping
+    public String insertBoard(@RequestBody BoardVo boardVo) {
     }
 
     // edit board

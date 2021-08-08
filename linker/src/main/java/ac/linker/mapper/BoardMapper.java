@@ -1,5 +1,13 @@
 package ac.linker.mapper;
 
-public interface BoardMapper {
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
+import ac.linker.dto.BoardDto;
+import ac.linker.vo.BoardVo;
+
+@Repository
+@Mapper
+public interface BoardMapper {
+    BoardVo getBoardTitle(BoardDto boardDto);
 }

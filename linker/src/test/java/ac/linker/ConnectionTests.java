@@ -6,8 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import ac.linker.dto.BoardDto;
 import ac.linker.dto.RoomDto;
 import ac.linker.service.AgoraService;
+import ac.linker.service.BoardService;
 import ac.linker.service.ConnectService;
 import ac.linker.service.HomeService;
 
@@ -17,17 +19,23 @@ public class ConnectionTests {
     private ConnectService connectService;
     private AgoraService agoraService;
     private HomeService homeService;
+    private BoardService boardService;
 
     @Autowired
-    ConnectionTests(ConnectService connectService, AgoraService agoraService, HomeService homeService) {
+    ConnectionTests(ConnectService connectService, AgoraService agoraService, HomeService homeService,
+            BoardService boardService) {
         this.connectService = connectService;
         this.agoraService = agoraService;
         this.homeService = homeService;
+        this.boardService = boardService;
     }
 
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        System.out.println(homeService.getAllUser());
+        BoardDto boardDto = new BoardDto();
+        boardDto.setBoardWriter("boardWriter");
+
+        System.out.println((boardService.getBoardTitle(boardDto)).getBoardTitle());
     }
 }
