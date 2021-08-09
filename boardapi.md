@@ -55,3 +55,35 @@ Write room name, where boards belong.
 {% endapi-method-spec %}
 {% endapi-method %}
 
+{% api-method method="post" host="" path="/board/content" %}
+{% api-method-summary %}
+getBoardContent
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="boardId" type="integer" required=true %}
+Write id of the board you clicked.
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+Response content as string, not json format.
+{% endapi-method-response-example-description %}
+
+```
+content
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
