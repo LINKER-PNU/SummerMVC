@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,10 +43,16 @@ public class BoardController {
         return boardService.getBoardContent(boardDto).getBoardContent();
     }
 
-    // // write board
-    // @PostMapping
-    // public String insertBoard(@RequestBody BoardVo boardVo) {
-    // }
+    // write board
+    @PostMapping
+    public String insertBoard(@RequestBody BoardVo boardVo) {
+        ModelMapper modelMapper = new ModelMapper();
+        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
+
+        boardService.inserBoard(boardDto);
+
+        return "success";
+    }
 
     // // edit board
     // public String editBoard(@RequestBody BoardVo boardVo) {

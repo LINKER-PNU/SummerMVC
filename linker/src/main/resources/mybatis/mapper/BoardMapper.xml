@@ -35,4 +35,35 @@
     FROM board
     WHERE global_board_no=#{boardId}
   </select>
+
+  <insert id="insertBoard">
+    INSERT INTO board(
+      board_user_no,
+      board_room_no,
+      board_title,
+      board_content,
+      board_write_dt,
+      board_edit_dt,
+      board_deadline,
+      board_notice,
+      board_assignment
+    )
+    VALUES((
+        SELECT global_user_no
+        FROM user
+        WHERE user_name=#{userName}
+      ),(
+        SELECT global_room_no
+        FROM room
+        WHERE room_name=#{roomName}
+      ),
+    #{boardTitle},
+    #{boardContent},
+    #{boardWriteDt},
+    #{boardEditDt},
+    #{boardDeadline},
+    #{boardNotice},
+    #{boardAssignment}
+  )
+  </insert>
 </mapper>

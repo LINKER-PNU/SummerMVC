@@ -1,11 +1,13 @@
 package ac.linker.dto;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class BoardDto {
     private int boardId;
 
     private String boardWriter;
     private String boardRoom;
-
     private String boardTitle;
     private String boardContent;
 
@@ -17,8 +19,21 @@ public class BoardDto {
     private boolean boardAssignment;
     private boolean boardVisible;
 
-    public BoardDto() {
-    }
+    public BoardDto(){}
+    
+	public BoardDto(String boardWriter, String boardRoom, String boardTitle, String boardContent, String boardDeadline,
+	boolean boardNotice, boolean boardAssignment) {
+		this.boardWriter = boardWriter;
+		this.boardRoom = boardRoom;
+		this.boardTitle = boardTitle;
+		this.boardContent = boardContent;
+		this.boardDeadline = boardDeadline;
+		this.boardNotice = boardNotice;
+		this.boardAssignment = boardAssignment;
+
+		this.boardWriteDt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		this.boardEditDt = this.boardWriteDt;
+	}
 
     public int getBoardId() {
         return boardId;

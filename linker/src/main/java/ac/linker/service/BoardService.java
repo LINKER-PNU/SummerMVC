@@ -11,4 +11,6 @@ public interface BoardService {
     List<BoardVo> getBoards(BoardDto boardDto);
 
     BoardVo getBoardContent(BoardDto boardDto);
+
+    void inserBoard(BoardDto boardDto);
 }

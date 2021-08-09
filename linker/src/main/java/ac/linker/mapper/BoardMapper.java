@@ -16,4 +16,6 @@ public interface BoardMapper {
     List<BoardVo> getBoards(BoardDto boardDto);
 
     BoardVo getBoardContent(BoardDto boardDto);
+
+    void inserBoard(BoardDto boardDto);
 }
