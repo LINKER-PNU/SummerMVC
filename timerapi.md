@@ -1,8 +1,8 @@
-# HomeAPI
+# TimerAPI
 
-{% api-method method="post" host="https://api.cakes.com" path="/login" %}
+{% api-method method="post" host="https://api.cakes.com" path="/timer/add" %}
 {% api-method-summary %}
-login
+addTimer
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -12,20 +12,16 @@ login
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="authToken" type="string" required=true %}
-Token from GameSparks
+{% api-method-parameter name="timerUser" type="string" required=true %}
+ID of user who use this timer.
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="displayName" type="string" required=true %}
-User's nickname
+{% api-method-parameter name="timerRoom" type="string" required=true %}
+Room name where this timer belongs to.
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="userId" type="string" required=true %}
-Uid from GameSparks
-{% endapi-method-parameter %}
-
-{% api-method-parameter name="newPlayer" type="boolean" required=true %}
-New player or not
+{% api-method-parameter name="timerSubject" type="string" required=true %}
+Subject name of this timer.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -36,7 +32,7 @@ New player or not
 Cake successfully retrieved.
 {% endapi-method-response-example-description %}
 
-```text
+```
 { "result" : true }
 ```
 {% endapi-method-response-example %}
@@ -44,9 +40,9 @@ Cake successfully retrieved.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/user" %}
+{% api-method method="post" host="" path="/timer/list" %}
 {% api-method-summary %}
-getUserInfo
+getTimers
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -56,8 +52,12 @@ getUserInfo
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="userId" type="string" required=true %}
-Id of user.
+{% api-method-parameter name="timerUser" type="string" required=true %}
+ID of user.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="timerRoom" type="string" required=true %}
+Room where this user belongs to.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -69,19 +69,6 @@ Id of user.
 {% endapi-method-response-example-description %}
 
 ```
-{
-  "result_user": "success",
-  "user_skin_role": "S",
-  "user_room": [
-    { "room_present": 0, "room_max": 3, "room_name": "linker_test" },
-    { "room_present": 0, "room_max": 1, "room_name": "새로운방" },
-    { "room_present": 0, "room_max": 1, "room_name": "aaaaa" },
-    { "room_present": 0, "room_max": 1, "room_name": "dfdf" }
-  ],
-  "user_id": "61029561de098611321319d7",
-  "result_room": "success",
-  "user_skin_color": 0
-}
 
 ```
 {% endapi-method-response-example %}
