@@ -155,7 +155,7 @@ editBoard
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="boardId" type="string" required=true %}
+{% api-method-parameter name="boardId" type="integer" required=true %}
 ID of the board you edited.
 {% endapi-method-parameter %}
 
@@ -201,13 +201,13 @@ deleteBoard
 {% endapi-method-summary %}
 
 {% api-method-description %}
-
+Delete board. In fact it just be invisible.
 {% endapi-method-description %}
 
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-path-parameters %}
-{% api-method-parameter name="boardId" type="string" required=true %}
+{% api-method-parameter name="boardId" type="integer" required=true %}
 Id of the board you deleted.
 {% endapi-method-parameter %}
 {% endapi-method-path-parameters %}

@@ -69,6 +69,114 @@ Room where this user belongs to.
 {% endapi-method-response-example-description %}
 
 ```
+[
+  { "timerId": 2, "timerSubject": "subj2", "timerStudyTime": 15 },
+  { "timerId": 4, "timerSubject": "timerSubject3", "timerStudyTime": 0 }
+]
+
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="post" host="" path="/timer/stop" %}
+{% api-method-summary %}
+stopTimer
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="timerId" type="integer" required=true %}
+ID of the timer to stop.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="timerStudyTime" type="integer" required=true %}
+Study time\(second\) at this moment.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="post" host="" path="/timer/edit" %}
+{% api-method-summary %}
+editTimer
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="timerId" type="integer" required=true %}
+ID of the timer to edit its subject name.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="timerSubject" type="string" required=true %}
+Subject name to edit.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="post" host="" path="/timer/remove" %}
+{% api-method-summary %}
+removeTimer
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="timerId" type="integer" required=true %}
+ID of the timer to remove.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
 
 ```
 {% endapi-method-response-example %}

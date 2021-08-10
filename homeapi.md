@@ -74,15 +74,12 @@ Id of user.
   "user_skin_role": "S",
   "user_room": [
     { "room_present": 0, "room_max": 3, "room_name": "linker_test" },
-    { "room_present": 0, "room_max": 1, "room_name": "새로운방" },
-    { "room_present": 0, "room_max": 1, "room_name": "aaaaa" },
-    { "room_present": 0, "room_max": 1, "room_name": "dfdf" }
+    { "room_present": 0, "room_max": 1, "room_name": "새로운방" }
   ],
   "user_id": "61029561de098611321319d7",
   "result_room": "success",
   "user_skin_color": 0
 }
-
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
