@@ -67,11 +67,11 @@ public class HomeController {
 
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String getUserInfo(@RequestBody Map<String, Object> param) {
-        final String userName = param.get("user_id").toString();
-        final UserDto userDto = new UserDto(userName);
-        final List<Map<String, Object>> userResult = homeService.getUserByName(userDto);
+        final String userId = param.get("userId").toString();
+        final UserDto userDto = new UserDto(userId);
+        final List<Map<String, Object>> userResult = homeService.getUser(userDto);
 
-        System.out.println("getUserInfo :: " + userName);
+        System.out.println("getUserInfo :: " + userId);
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
 
@@ -84,7 +84,7 @@ public class HomeController {
             userInfo.put("result_user", "empty set");
         }
 
-        final List<Map<String, Object>> userRoomResult = homeService.getRoomByName(userDto);
+        final List<Map<String, Object>> userRoomResult = homeService.getRoom(userDto);
         if (!userRoomResult.isEmpty()) {
             userInfo.put("result_room", "success");
             userInfo.put("user_room", userRoomResult);

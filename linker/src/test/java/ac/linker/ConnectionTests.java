@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import ac.linker.dto.BoardDto;
 import ac.linker.dto.RoomDto;
+import ac.linker.dto.UserDto;
 import ac.linker.service.AgoraService;
 import ac.linker.service.BoardService;
 import ac.linker.service.ConnectService;
@@ -39,17 +40,7 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        BoardVo boardVo1 = new BoardVo();
-        boardVo1.setBoardId(5);
-        BoardDto boardDto1 = modelMapper.map(boardVo1, BoardDto.class);
-        
-        BoardVo boardVo2 = new BoardVo();
-        boardVo2.setBoardRoom("boardroom");
-        BoardDto boardDto2 = modelMapper.map(boardVo2, BoardDto.class);
-
-        Optional optional = Optional.ofNullable(boardDto2.getBoardId());
-    
-        System.out.println(optional.orElse("other"));
-        
+        System.out.println(homeService.getUser(new UserDto("id")));
+        System.out.println(homeService.getRoom(new UserDto("id")));
     }
 }

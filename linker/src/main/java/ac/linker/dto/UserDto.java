@@ -14,20 +14,20 @@ public class UserDto {
     private int skinColor;
     private char skinRole;
 
-    public UserDto(String displayName, int skinColor, char skinRole){
+    public UserDto(String displayName, int skinColor, char skinRole) {
         this.displayName = displayName;
         this.skinColor = skinColor;
         this.skinRole = skinRole;
     }
 
-    public UserDto(final String displayName){
-        this.displayName = displayName;
+    public UserDto(final String userId) {
+        this.userId = userId;
     }
 
-    public UserDto(final String authToken,final String displayName,final String userId){
+    public UserDto(final String authToken, final String displayName, final String userId) {
         this.authToken = authToken;
         this.displayName = displayName;
         this.userId = userId;
         System.out.println(joinDate);
-    }   
+    }
 }
