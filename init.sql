@@ -71,7 +71,7 @@ CREATE TABLE board(
     board_deadline DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
     board_notice BOOLEAN NOT NULL DEFAULT 0,
     board_assignment BOOLEAN NOT NULL DEFAULT 0,
-    board_visible BOOLEAN NOT NULL DEFAULT 0
+    board_visible BOOLEAN NOT NULL DEFAULT 1
 );
 
 CREATE TABLE logs(

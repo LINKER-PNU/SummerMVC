@@ -7,8 +7,6 @@ public class TimerVo {
     private String timerRoom;
 
     private String timerSubject;
-
-    private String timerStart;
     private int timerStudyTime;
 
     public int getTimerId() {
@@ -41,14 +39,6 @@ public class TimerVo {
 
     public void setTimerSubject(String timerSubject) {
         this.timerSubject = timerSubject;
-    }
-
-    public String getTimerStart() {
-        return this.timerStart;
-    }
-
-    public void setTimerStart(String timerStart) {
-        this.timerStart = timerStart;
     }
 
     public int getTimerStudyTime() {

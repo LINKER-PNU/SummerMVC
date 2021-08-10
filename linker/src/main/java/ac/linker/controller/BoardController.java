@@ -19,7 +19,9 @@ import ac.linker.vo.BoardVo;
 public class BoardController {
     private BoardService boardService;
     private ResponseService responseService;
+    
     private Gson gson = new Gson();
+    private ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     BoardController(BoardService boardService, ResponseService responseService) {
@@ -30,13 +32,12 @@ public class BoardController {
     // get board list
     @PostMapping(value = "/list", produces = "application/json; charset=utf8")
     public String getBoards(@RequestBody BoardVo boardVo) {
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBoardRoom(boardVo.getBoardRoom());
+        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
         return gson.toJson(boardService.getBoards(boardDto));
     }
 
     // click board
-    @PostMapping(value = "/content")
+    @PostMapping(value = "/content", produces = "application/json; charset=utf8")
     public String getBoardContent(@RequestBody BoardVo boardVo) {
         BoardDto boardDto = new BoardDto();
         boardDto.setBoardId(boardVo.getBoardId());
@@ -44,9 +45,9 @@ public class BoardController {
     }
 
     // write board
-    @PostMapping(value = "/insert")
+    @PostMapping(value = "/insert", produces = "application/json; charset=utf8")
     public String insertBoard(@RequestBody BoardVo boardVo) {
-        ModelMapper modelMapper = new ModelMapper();
+        
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         boardService.insertBoard(boardDto);
@@ -55,9 +56,9 @@ public class BoardController {
     }
 
     // edit board
-    @PostMapping(value = "/edit")
+    @PostMapping(value = "/edit", produces = "application/json; charset=utf8")
     public String editBoard(@RequestBody BoardVo boardVo) {
-        ModelMapper modelMapper = new ModelMapper();
+        
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         boardService.editBoard(boardDto);
@@ -68,7 +69,7 @@ public class BoardController {
     // delete(deactivate) board
     @PostMapping(value = "/delete")
     public String deleteBoard(@RequestBody BoardVo boardVo) {
-        ModelMapper modelMapper = new ModelMapper();
+        
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         boardService.invisibleBoard(boardDto);

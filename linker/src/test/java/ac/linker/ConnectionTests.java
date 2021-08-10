@@ -1,5 +1,7 @@
 package ac.linker;
 
+import java.util.Optional;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -14,7 +16,6 @@ import ac.linker.service.AgoraService;
 import ac.linker.service.BoardService;
 import ac.linker.service.ConnectService;
 import ac.linker.service.HomeService;
-import ac.linker.service.ResponseService;
 import ac.linker.vo.BoardVo;
 
 @SpringBootTest
@@ -24,23 +25,31 @@ public class ConnectionTests {
     private AgoraService agoraService;
     private HomeService homeService;
     private BoardService boardService;
-    private ResponseService responseService;
+    ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     ConnectionTests(ConnectService connectService, AgoraService agoraService, HomeService homeService,
-            BoardService boardService, ResponseService responseService) {
+            BoardService boardService) {
         this.connectService = connectService;
         this.agoraService = agoraService;
         this.homeService = homeService;
         this.boardService = boardService;
-        this.responseService = responseService;
     }
 
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        System.out.println(responseService.getPhotonResponse(0));
-        System.out.println(responseService.getResultResponse(true));
-        System.out.println(responseService.getPhotonResponse(2));
+        BoardVo boardVo1 = new BoardVo();
+        boardVo1.setBoardId(5);
+        BoardDto boardDto1 = modelMapper.map(boardVo1, BoardDto.class);
+        
+        BoardVo boardVo2 = new BoardVo();
+        boardVo2.setBoardRoom("boardroom");
+        BoardDto boardDto2 = modelMapper.map(boardVo2, BoardDto.class);
+
+        Optional optional = Optional.ofNullable(boardDto2.getBoardId());
+    
+        System.out.println(optional.orElse("other"));
+        
     }
 }
