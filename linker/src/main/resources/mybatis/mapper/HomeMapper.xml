@@ -26,6 +26,25 @@
     WHERE user_name=#{displayName}
   </update>
 
+  <select id="getUser" resultType="java.util.HashMap">
+    SELECT user_name, user_skin_color, user_skin_role
+    FROM user
+    WHERE user_id=#{userId};
+  </select>
+
+  <select id="getRoom" resultType="java.util.HashMap">
+    SELECT room_name, room_present, room_max
+    FROM room 
+    WHERE global_room_no in (
+      SELECT joining_room_no 
+      FROM joining 
+      WHERE joining_user_no = (
+        SELECT global_user_no 
+        FROM user 
+        WHERE user_id = #{userId})
+      ) group by global_room_no;
+  </select>
+
   <select id="getUserByName" resultType="java.util.HashMap">
     SELECT user_id, user_skin_color, user_skin_role
     FROM user
@@ -45,32 +64,13 @@
       ) group by global_room_no;
   </select>
 
-  <select id="getUser" resultType="java.util.HashMap">
-    SELECT user_name, user_skin_color, user_skin_role
-    FROM user
-    WHERE user_id=#{userId};
-  </select>
-
-  <select id="getSkin" resultType="java.util.HashMap">
+    <select id="getSkin" resultType="java.util.HashMap">
     SELECT skin_color,skin_role
     FROM skin
     WHERE skin_user_no = (
       SELECT global_user_no
       FROM user
       WHERE user_id = #{userId});
-  </select>
-
-  <select id="getRoom" resultType="java.util.HashMap">
-    SELECT room_name, room_present, room_max
-    FROM room 
-    WHERE global_room_no in (
-      SELECT joining_room_no 
-      FROM joining 
-      WHERE joining_user_no = (
-        SELECT global_user_no 
-        FROM user 
-        WHERE user_id = #{userId})
-      ) group by global_room_no;
   </select>
 </mapper>
   

@@ -19,7 +19,7 @@ import ac.linker.vo.BoardVo;
 public class BoardController {
     private BoardService boardService;
     private ResponseService responseService;
-    
+
     private Gson gson = new Gson();
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -47,7 +47,7 @@ public class BoardController {
     // write board
     @PostMapping(value = "/insert", produces = "application/json; charset=utf8")
     public String insertBoard(@RequestBody BoardVo boardVo) {
-        
+
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         boardService.insertBoard(boardDto);
@@ -58,18 +58,17 @@ public class BoardController {
     // edit board
     @PostMapping(value = "/edit", produces = "application/json; charset=utf8")
     public String editBoard(@RequestBody BoardVo boardVo) {
-        
-        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
+        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
         boardService.editBoard(boardDto);
 
         return responseService.getResultResponse(true);
     }
 
     // delete(deactivate) board
-    @PostMapping(value = "/delete")
+    @PostMapping(value = "/delete", produces = "application/json; charset=utf8")
     public String deleteBoard(@RequestBody BoardVo boardVo) {
-        
+
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         boardService.invisibleBoard(boardDto);

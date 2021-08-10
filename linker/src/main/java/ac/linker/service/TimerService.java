@@ -7,7 +7,7 @@ import ac.linker.vo.TimerVo;
 
 public interface TimerService {
     List<TimerVo> getTimers(TimerDto timerDto);
-    
+
     void insertTimer(TimerDto timerDto);
 
     void editTimer(TimerDto timerDto);

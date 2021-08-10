@@ -6,7 +6,7 @@
     <select id="getTimers" resultType="ac.linker.vo.TimerVo">
         SELECT global_timer_no AS timerId,
             timer_subject,
-            timer_acc_time
+            timer_acc_time AS timerStudyTime
         FROM timer
         WHERE timer_user_no=(
             SELECT global_user_no
@@ -36,4 +36,21 @@
             WHERE room_name=#{timerRoom}
         ))
     </insert>
+
+    <update id="accumTimer">
+        UPDATE timer
+        SET timer_acc_time = timer_acc_time + #{timerStudyTime}
+        WHERE global_timer_no=#{timerId}
+    </update>
+
+    <update id="editTimer">
+        UPDATE timer
+        SET timer_subject = #{timerSubject}
+        WHERE global_timer_no=#{timerId}
+    </update>
+
+    <delete id="deleteTimer">
+        DELETE FROM timer
+        WHERE global_timer_no=#{timerId}
+    </delete>
 </mapper>

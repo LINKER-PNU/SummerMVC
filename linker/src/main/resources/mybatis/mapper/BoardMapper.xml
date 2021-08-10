@@ -51,11 +51,11 @@
     VALUES((
         SELECT global_user_no
         FROM user
-        WHERE user_name=#{userName}
+        WHERE user_id=#{boardWriterId}
       ),(
         SELECT global_room_no
         FROM room
-        WHERE room_name=#{roomName}
+        WHERE room_name=#{boardRoom}
       ),
     #{boardTitle},
     #{boardContent},
@@ -73,14 +73,15 @@
       board_content=#{boardContent},
       board_deadline=#{boardDeadline},
       board_assignment=#{boardAssignment},
-      board_notice=#{boardNotice}
-    WHERE board_id=#{boardId}
+      board_notice=#{boardNotice},
+      board_edit_dt=#{boardEditDt}
+    WHERE global_board_no=#{boardId}
   </update>
 
-  <update id="invisbleBoard">
+  <update id="invisibleBoard">
     UPDATE board
     SET board_visible=false
-    WHERE board_id=#{boardId}
+    WHERE global_board_no=#{boardId}
   </update>
 
 </mapper>
