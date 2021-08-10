@@ -18,26 +18,18 @@ import ac.linker.dto.JoinDto;
 import ac.linker.dto.RoomDto;
 import ac.linker.service.CodeGenerator;
 import ac.linker.service.ConnectService;
+import ac.linker.service.ResponseService;
 
 @RestController
 public class ConnectController {
     private Gson gson = new Gson();
     private ConnectService connectService;
+    private ResponseService responseService;
 
     @Autowired
-    ConnectController(ConnectService connectService) {
+    ConnectController(ConnectService connectService, ResponseService responseService) {
         this.connectService = connectService;
-    }
-
-    private String getResponseJson(final int status) {
-        final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("State", "");
-        jsonObject.addProperty("ResultCode", status);
-        /*
-         * 0 : OK 1 : Duplicated 2 : Over the max length
-         */
-        return jsonObject.toString();
-
+        this.responseService = responseService;
     }
 
     @PostMapping(value = "/create", produces = "application/json; charset=utf8")
@@ -61,10 +53,10 @@ public class ConnectController {
                 connectService.insertRoom(roomDto);
             } catch (DuplicateKeyException e) {
                 System.out.println("Warning! Room name " + roomName + " duplicated!(from pathCreate)\n");
-                return getResponseJson(1);
+                return responseService.getPhotonResponse(1);
             } catch (DataIntegrityViolationException m) {
                 System.out.println("Warning! Room name " + roomName + " is over the max length!(from pathCreate)\n");
-                return getResponseJson(2);
+                return responseService.getPhotonResponse(2);
             }
 
             while (true) { // create and update room code
@@ -88,7 +80,7 @@ public class ConnectController {
             connectService.updateRoomJoin(roomDto);
         }
 
-        return getResponseJson(0);
+        return responseService.getPhotonResponse(0);
     }
 
     @PostMapping(value = "/join", produces = "application/json; charset=utf8")
@@ -112,7 +104,7 @@ public class ConnectController {
                     + "! Duplicated pair is prevented.\n");
         }
 
-        return getResponseJson(0);
+        return responseService.getPhotonResponse(0);
     }
 
     @PostMapping(value = "/leave", produces = "application/json; charset=utf8")
@@ -125,7 +117,7 @@ public class ConnectController {
 
         connectService.updateRoomLeave(new RoomDto(roomName));
 
-        return getResponseJson(0);
+        return responseService.getPhotonResponse(0);
     }
 
     @PostMapping(value = "/close", produces = "application/json; charset=utf8")
@@ -136,7 +128,7 @@ public class ConnectController {
 
         // delete room
 
-        return getResponseJson(0);
+        return responseService.getPhotonResponse(0);
     }
 
     @PostMapping(value = "/event", produces = "application/json; charset=utf8")
@@ -145,7 +137,7 @@ public class ConnectController {
 
         System.out.println("PathEvent : " + requestObject + "\n");
 
-        return getResponseJson(0);
+        return responseService.getPhotonResponse(0);
     }
 
     @PostMapping(value = "/game_properties", produces = "application/json; charset=utf8")
@@ -154,7 +146,7 @@ public class ConnectController {
 
         System.out.println("PathGameProperites : " + requestObject + "\n");
 
-        return getResponseJson(0);
+        return responseService.getPhotonResponse(0);
     }
 
     @PostMapping(value = "/auth_room", produces = "application/json; charset=utf8")

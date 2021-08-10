@@ -14,6 +14,7 @@ import ac.linker.service.AgoraService;
 import ac.linker.service.BoardService;
 import ac.linker.service.ConnectService;
 import ac.linker.service.HomeService;
+import ac.linker.service.ResponseService;
 import ac.linker.vo.BoardVo;
 
 @SpringBootTest
@@ -23,30 +24,23 @@ public class ConnectionTests {
     private AgoraService agoraService;
     private HomeService homeService;
     private BoardService boardService;
+    private ResponseService responseService;
 
     @Autowired
     ConnectionTests(ConnectService connectService, AgoraService agoraService, HomeService homeService,
-            BoardService boardService) {
+            BoardService boardService, ResponseService responseService) {
         this.connectService = connectService;
         this.agoraService = agoraService;
         this.homeService = homeService;
         this.boardService = boardService;
+        this.responseService = responseService;
     }
 
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        BoardVo boardVo = new BoardVo();
-
-        boardVo.setBoardId(5);
-        boardVo.setBoardRoom("boardroom");
-        boardVo.setBoardTitle("boardtitle");
-        
-        ModelMapper modelMapper = new ModelMapper();
-        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
-
-        System.out.println(boardDto.getBoardId());
-        System.out.println(boardDto.getBoardTitle());
-        System.out.println(boardDto.getBoardRoom());
+        System.out.println(responseService.getPhotonResponse(0));
+        System.out.println(responseService.getResultResponse(true));
+        System.out.println(responseService.getPhotonResponse(2));
     }
 }

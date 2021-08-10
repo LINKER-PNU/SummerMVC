@@ -1,8 +1,5 @@
 package ac.linker.controller;
 
-import java.util.List;
-import java.util.Map;
-
 import com.google.gson.Gson;
 
 import org.modelmapper.ModelMapper;
@@ -14,17 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.BoardDto;
 import ac.linker.service.BoardService;
+import ac.linker.service.ResponseService;
 import ac.linker.vo.BoardVo;
 
 @RestController
 @RequestMapping(value = "/board")
 public class BoardController {
     private BoardService boardService;
+    private ResponseService responseService;
     private Gson gson = new Gson();
 
     @Autowired
-    BoardController(BoardService boardService) {
+    BoardController(BoardService boardService, ResponseService responseService) {
         this.boardService = boardService;
+        this.responseService = responseService;
     }
 
     // get board list
@@ -51,7 +51,7 @@ public class BoardController {
 
         boardService.insertBoard(boardDto);
 
-        return "success";
+        return responseService.getResultResponse(true);
     }
 
     // edit board
@@ -61,8 +61,7 @@ public class BoardController {
 
         boardService.editBoard(boardDto);
 
-        return "success";
-
+        return responseService.getResultResponse(true);
     }
 
     // delete(deactivate) board
@@ -72,6 +71,6 @@ public class BoardController {
 
         boardService.invisibleBoard(boardDto);
 
-        return "success";
+        return responseService.getResultResponse(true);
     }
 }

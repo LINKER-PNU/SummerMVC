@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,17 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.UserDto;
 import ac.linker.service.HomeService;
+import ac.linker.service.ResponseService;
 import ac.linker.vo.UserVo;
 
 @RestController
 public class HomeController {
     private HomeService homeService;
+    private ResponseService responseService;
     private Gson gson = new Gson();
     // private final Logger logger = LoggerFactory
 
     @Autowired
-    HomeController(HomeService homeService) {
+    HomeController(HomeService homeService, ResponseService responseService) {
         this.homeService = homeService;
+        this.responseService = responseService;
     }
 
     @RequestMapping(value = "/")
@@ -59,10 +61,7 @@ public class HomeController {
             // update token
         }
 
-        final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("result_login", "success");
-
-        return jsonObject.toString();
+        return responseService.getResultResponse(true);
         // send the result by json
     }
 
@@ -108,9 +107,6 @@ public class HomeController {
 
         System.out.println("updateSkin :: " + userVo.getDisplayName());
 
-        final JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("result_skin", "success");
-
-        return jsonObject.toString();
+        return responseService.getResultResponse(true);
     }
 }
