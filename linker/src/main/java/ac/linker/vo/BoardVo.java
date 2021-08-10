@@ -18,8 +18,6 @@ public class BoardVo {
 	private boolean boardAssignment;
 	private boolean boardVisible;
 
-	public BoardVo(){}
-
 	public int getBoardId() {
 		return boardId;
 	}
