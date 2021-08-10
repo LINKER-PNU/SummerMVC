@@ -109,7 +109,7 @@ Study time\(second\) at this moment.
 {% endapi-method-response-example-description %}
 
 ```
-{ "result" : true }
+
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
@@ -145,7 +145,7 @@ Subject name to edit.
 {% endapi-method-response-example-description %}
 
 ```
-{ "result" : true }
+
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
@@ -177,7 +177,7 @@ ID of the timer to remove.
 {% endapi-method-response-example-description %}
 
 ```
-{ "result" : true }
+
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}

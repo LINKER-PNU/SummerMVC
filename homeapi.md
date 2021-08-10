@@ -86,3 +86,43 @@ Id of user.
 {% endapi-method-spec %}
 {% endapi-method %}
 
+{% api-method method="post" host="" path="/skin" %}
+{% api-method-summary %}
+updateSkin
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="userId" type="integer" required=true %}
+Id of the user to change skin.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="skinColor" type="integer" required=true %}
+Color you set.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="skinRole" type="string" required=true %}
+Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher'.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+{ "result" : true }
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
