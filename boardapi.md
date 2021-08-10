@@ -156,7 +156,7 @@ editBoard
 {% api-method-request %}
 {% api-method-body-parameters %}
 {% api-method-parameter name="boardId" type="string" required=true %}
-ID of the board you clicked.
+ID of the board you edited.
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="boardTitle" type="string" required=true %}
@@ -188,6 +188,38 @@ Is the board assignment.
 {% endapi-method-response-example-description %}
 
 ```text
+{ "result" : true }
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="post" host="" path="/board/delete" %}
+{% api-method-summary %}
+deleteBoard
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-path-parameters %}
+{% api-method-parameter name="boardId" type="string" required=true %}
+Id of the board you deleted.
+{% endapi-method-parameter %}
+{% endapi-method-path-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
 { "result" : true }
 ```
 {% endapi-method-response-example %}
