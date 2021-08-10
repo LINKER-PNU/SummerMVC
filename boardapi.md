@@ -12,8 +12,8 @@ getBoards
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="roomName" type="string" required=true %}
-Write room name, where boards belong.
+{% api-method-parameter name="boardRoom" type="string" required=true %}
+Room name, where the boards belong.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -24,7 +24,7 @@ Write room name, where boards belong.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 [{
     boardAssignment: true
     boardDeadline: "2000-01-01 00:00:00"
@@ -50,7 +50,6 @@ Write room name, where boards belong.
     boardWriterId: "id2"
 }]
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -69,7 +68,7 @@ getBoardContent
 {% api-method-request %}
 {% api-method-body-parameters %}
 {% api-method-parameter name="boardId" type="integer" required=true %}
-Write id of the board you clicked.
+ID of the board you clicked.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -80,11 +79,67 @@ Write id of the board you clicked.
 Response content as string, not json format.
 {% endapi-method-response-example-description %}
 
-```
+```text
 content
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
+{% api-method method="post" host="" path="/board/insert" %}
+{% api-method-summary %}
+insertBoard
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="boardRoom" type="string" required=true %}
+Room name, where the board belongs.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="boardWriter" type="string" required=true %}
+The board writer's user name.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="boardTitle" type="string" required=true %}
+Title of the board.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="boardContent" type="string" required=true %}
+Content of the board.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="boardDeadline" type="string" required=true %}
+Deadline of the board if it is assignment.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="boardNotice" type="boolean" required=true %}
+Is the board notice.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="boardAssignment" type="boolean" required=true %}
+Is the board assignment.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
