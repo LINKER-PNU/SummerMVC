@@ -17,7 +17,7 @@ public class BoardDto {
 
     private boolean boardNotice;
     private boolean boardAssignment;
-    private boolean boardVisible;
+    private boolean boardVisible = true;
 
     public BoardDto(){}
     

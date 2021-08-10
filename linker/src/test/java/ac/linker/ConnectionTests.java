@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -35,8 +36,17 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        JsonObject json = new JsonObject();
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBoardId(1);
+        BoardVo boardVo = new BoardVo();
+
+        boardVo.setBoardId(5);
+        boardVo.setBoardRoom("boardroom");
+        boardVo.setBoardTitle("boardtitle");
+        
+        ModelMapper modelMapper = new ModelMapper();
+        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
+
+        System.out.println(boardDto.getBoardId());
+        System.out.println(boardDto.getBoardTitle());
+        System.out.println(boardDto.getBoardRoom());
     }
 }

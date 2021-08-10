@@ -12,5 +12,9 @@ public interface BoardService {
 
     BoardVo getBoardContent(BoardDto boardDto);
 
-    void inserBoard(BoardDto boardDto);
+    void insertBoard(BoardDto boardDto);
+
+    void editBoard(BoardDto boardDto);
+
+    void invisibleBoard(BoardDto boardDto);
 }

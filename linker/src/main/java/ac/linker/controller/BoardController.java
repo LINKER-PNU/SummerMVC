@@ -44,21 +44,34 @@ public class BoardController {
     }
 
     // write board
-    @PostMapping
+    @PostMapping(value = "/insert")
     public String insertBoard(@RequestBody BoardVo boardVo) {
         ModelMapper modelMapper = new ModelMapper();
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-        boardService.inserBoard(boardDto);
+        boardService.insertBoard(boardDto);
 
         return "success";
     }
 
-    // // edit board
-    // public String editBoard(@RequestBody BoardVo boardVo) {
-    // }
+    // edit board
+    public String editBoard(@RequestBody BoardVo boardVo) {
+        ModelMapper modelMapper = new ModelMapper();
+        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-    // // delete(deactivate) board
-    // public String deactivateBoard(@RequestBody BoardVo boardVo) {
-    // }
+        boardService.editBoard(boardDto);
+
+        return "success";
+
+    }
+
+    // delete(deactivate) board
+    public String invisibleBoard(@RequestBody BoardVo boardVo) {
+        ModelMapper modelMapper = new ModelMapper();
+        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
+
+        boardService.invisibleBoard(boardDto);
+
+        return "success";
+    }
 }

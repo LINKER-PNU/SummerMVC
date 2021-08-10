@@ -31,7 +31,15 @@ public class BoardServiceImplement implements BoardService {
         return boardMapper.getBoardContent(boardDto);
     }
 
-    public void inserBoard(BoardDto boardDto) {
-        boardMapper.inserBoard(boardDto);
+    public void insertBoard(BoardDto boardDto) {
+        boardMapper.insertBoard(boardDto);
+    }
+
+    public void editBoard(BoardDto boardDto){
+        boardMapper.editBoard(boardDto);
+    }
+
+    public void invisibleBoard(BoardDto boardDto){
+        boardMapper.invisibleBoard(boardDto);
     }
 }

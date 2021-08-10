@@ -66,4 +66,21 @@
     #{boardAssignment}
   )
   </insert>
+
+  <update id="editBoard">
+    UPDATE board
+    SET board_title=#{boardTitle},
+      board_content=#{boardContent},
+      board_deadline=#{boardDeadline},
+      board_assignment=#{boardAssignment},
+      board_notice=#{boardNotice}
+    WHERE board_id=#{boardId}
+  </update>
+
+  <update id="invisbleBoard">
+    UPDATE board
+    SET board_visible=false
+    WHERE board_id=#{boardId}
+  </update>
+
 </mapper>
