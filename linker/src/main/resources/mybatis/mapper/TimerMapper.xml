@@ -2,5 +2,38 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ac.linker.mapper.BoardMapper">
+<mapper namespace="ac.linker.mapper.TimerMapper">
+    <select id="getTimers" resultType="ac.linker.vo.TimerVo">
+        SELECT global_timer_no AS timerId,
+            timer_subject,
+            timer_acc_time
+        FROM timer
+        WHERE timer_user_no=(
+            SELECT global_user_no
+            FROM user
+            WHERE user_id=#{timerUser}
+        )
+        AND timer_room_no=(
+            SELECT global_room_no
+            FROM room
+            WHERE room_name=#{timerRoom}
+        )
+    </select>
+
+    <insert id="insertTimer">
+        INSERT INTO timer(
+            timer_subject,
+            timer_user_no,
+            timer_room_no
+        )
+        VALUES(#{timerSubject},(
+            SELECT global_user_no
+            FROM user
+            WHERE user_id=#{timerUser}
+            ),(
+            SELECT global_room_no
+            FROM room
+            WHERE room_name=#{timerRoom}
+        ))
+    </insert>
 </mapper>

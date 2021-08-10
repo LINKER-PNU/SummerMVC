@@ -50,7 +50,6 @@ ALTER TABLE joining ADD PRIMARY KEY (joining_room_no,joining_user_no);/*prevent 
 CREATE TABLE timer(
     global_timer_no INT PRIMARY KEY AUTO_INCREMENT,
     timer_subject NVARCHAR(20) NOT NULL DEFAULT "",
-    timer_start_time DATETIME NOT NULL DEFAULT "",
     timer_acc_time INT NOT NULL DEFAULT 0,
     timer_user_no INT NOT NULL DEFAULT 0,
     FOREIGN KEY (timer_user_no) REFERENCES user (global_user_no),
