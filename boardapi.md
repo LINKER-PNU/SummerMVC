@@ -50,6 +50,7 @@ Room name, where the boards belong.
     boardWriterId: "id2"
 }]
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -82,6 +83,7 @@ Response content as string, not json format.
 ```text
 content
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -138,6 +140,7 @@ Is the board assignment.
 ```text
 { "result" : true }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -190,6 +193,7 @@ Is the board assignment.
 ```text
 { "result" : true }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -206,11 +210,11 @@ Delete board. In fact it just be invisible.
 
 {% api-method-spec %}
 {% api-method-request %}
-{% api-method-path-parameters %}
+{% api-method-body-parameters %}
 {% api-method-parameter name="boardId" type="integer" required=true %}
 Id of the board you deleted.
 {% endapi-method-parameter %}
-{% endapi-method-path-parameters %}
+{% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
@@ -222,8 +226,8 @@ Id of the board you deleted.
 ```
 { "result" : true }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-
