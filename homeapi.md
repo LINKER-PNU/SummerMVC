@@ -11,7 +11,7 @@ This endpoint allows you to get free cakes.
 
 {% api-method-spec %}
 {% api-method-request %}
-{% api-method-query-parameters %}
+{% api-method-body-parameters %}
 {% api-method-parameter name="authToken" type="string" required=true %}
 Token from GameSparks
 {% endapi-method-parameter %}
@@ -27,7 +27,7 @@ Uid from GameSparks
 {% api-method-parameter name="newPlayer" type="boolean" required=true %}
 New player or not
 {% endapi-method-parameter %}
-{% endapi-method-query-parameters %}
+{% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
@@ -39,6 +39,7 @@ Cake successfully retrieved.
 ```
 {"resultUser" : }
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=404 %}
@@ -49,10 +50,8 @@ Could not find a cake matching this query.
 ```
 {    "message": "Ain't no cake like that."}
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-
-
-

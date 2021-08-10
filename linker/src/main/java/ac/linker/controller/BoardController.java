@@ -55,6 +55,7 @@ public class BoardController {
     }
 
     // edit board
+    @PostMapping(value = "/edit")
     public String editBoard(@RequestBody BoardVo boardVo) {
         ModelMapper modelMapper = new ModelMapper();
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
@@ -65,7 +66,8 @@ public class BoardController {
     }
 
     // delete(deactivate) board
-    public String invisibleBoard(@RequestBody BoardVo boardVo) {
+    @PostMapping(value = "/delete")
+    public String deleteBoard(@RequestBody BoardVo boardVo) {
         ModelMapper modelMapper = new ModelMapper();
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 

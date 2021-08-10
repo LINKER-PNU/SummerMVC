@@ -11,11 +11,11 @@ getBoards
 
 {% api-method-spec %}
 {% api-method-request %}
-{% api-method-query-parameters %}
+{% api-method-body-parameters %}
 {% api-method-parameter name="roomName" type="string" required=true %}
 Write room name, where boards belong.
 {% endapi-method-parameter %}
-{% endapi-method-query-parameters %}
+{% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
@@ -50,6 +50,7 @@ Write room name, where boards belong.
     boardWriterId: "id2"
 }]
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -66,11 +67,11 @@ getBoardContent
 
 {% api-method-spec %}
 {% api-method-request %}
-{% api-method-path-parameters %}
+{% api-method-body-parameters %}
 {% api-method-parameter name="boardId" type="integer" required=true %}
 Write id of the board you clicked.
 {% endapi-method-parameter %}
-{% endapi-method-path-parameters %}
+{% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
@@ -82,8 +83,8 @@ Response content as string, not json format.
 ```
 content
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-
