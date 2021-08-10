@@ -39,6 +39,7 @@ public class HomeController {
         return "hello";
     }
 
+    // login and register
     @PostMapping(value = "/login", produces = "application/json; charset=utf8")
     public String userLogin(@RequestBody UserVo userVo) {
 
@@ -65,6 +66,7 @@ public class HomeController {
         // send the result by json
     }
 
+    // get user informaiton by id
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String getUserInfo(@RequestBody Map<String, Object> param) {
         final String userId = param.get("userId").toString();
@@ -99,13 +101,14 @@ public class HomeController {
         return userInfoJson;
     }
 
+    // update skin color and role
     @PostMapping(value = "/skin", produces = "application/json; charset=utf8")
     public String updateSkin(@RequestBody UserVo userVo) {
-        final UserDto userDto = new UserDto(userVo.getDisplayName(), userVo.getSkinColor(), userVo.getSkinRole());
+        final UserDto userDto = new UserDto(userVo.getUserId(), userVo.getSkinColor(), userVo.getSkinRole());
 
         homeService.updateSkin(userDto);
 
-        System.out.println("updateSkin :: " + userVo.getDisplayName());
+        System.out.println("updateSkin :: " + userVo.getUserId());
 
         return responseService.getResultResponse(true);
     }

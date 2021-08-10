@@ -23,7 +23,7 @@
     UPDATE user
     SET user_skin_color=#{skinColor},
     user_skin_role=#{skinRole}
-    WHERE user_name=#{displayName}
+    WHERE user_id=#{userId}
   </update>
 
   <select id="getUser" resultType="java.util.HashMap">
