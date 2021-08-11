@@ -76,11 +76,11 @@ public class HomeController {
     // get user informaiton by id
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String getUserInfo(@RequestBody UserVo userVo) {
-        final String userId = param.get("userId").toString();
-        final UserDto userDto = new UserDto(userId);
+        UserDto userDto = modelMapper.map(userVo, UserDto.class);
+
         final List<Map<String, Object>> userResult = homeService.getUser(userDto);
 
-        System.out.println("getUserInfo :: " + userId);
+        System.out.println("getUserInfo :: " + userVo.getUserId());
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
 
@@ -111,11 +111,11 @@ public class HomeController {
     // update skin color and role
     @PostMapping(value = "/skin", produces = "application/json; charset=utf8")
     public String updateSkin(@RequestBody UserVo userVo) {
-        final UserDto userDto = new UserDto(userVo.getUserId(), userVo.getSkinColor(), userVo.getSkinRole());
+        UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
         homeService.updateSkin(userDto);
 
-        System.out.println("updateSkin :: " + userVo.getUserId());
+        System.out.println("updateSkin :: " + userVo.getUserId() + " :: " + userVo.getSkinRole() + userVo.getSkinColor());
 
         return responseService.getResultResponse(true);
     }
