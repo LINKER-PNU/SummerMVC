@@ -1,100 +1,115 @@
 package ac.linker.controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.UserDto;
-import ac.linker.service.ConnectService;
+import ac.linker.service.HomeService;
+import ac.linker.service.ResponseService;
+import ac.linker.vo.UserVo;
 
-@Controller
+@RestController
 public class HomeController {
-    private ConnectService connectService;
+    private HomeService homeService;
+    private ResponseService responseService;
+    private Gson gson = new Gson();
+    // private final Logger logger = LoggerFactory
 
     @Autowired
-    HomeController(ConnectService connectService) {
-        this.connectService = connectService;
+    HomeController(HomeService homeService, ResponseService responseService) {
+        this.homeService = homeService;
+        this.responseService = responseService;
     }
 
     @RequestMapping(value = "/")
     public String index() {
         System.out.println("###############GotoIndex################");
+
         return "hello";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=utf8")
-    public void method(@RequestBody Map<String, Object> param, HttpServletResponse response) throws IOException {
+    // login and register
+    @PostMapping(value = "/login", produces = "application/json; charset=utf8")
+    public String userLogin(@RequestBody UserVo userVo) {
 
-        String authToken = param.get("authToken").toString();
-        String displayName = param.get("displayName").toString();
-        String userId = param.get("userId").toString();
-        boolean newPlayer = Boolean.parseBoolean(param.get("newPlayer").toString());
+        final String authToken = userVo.getAuthToken();
+        final String displayName = userVo.getDisplayName();
+        final String userId = userVo.getUserId();
+        final boolean newPlayer = userVo.getNewPlayer();
         // make string or boolean from received information(post/json)
 
-        System.out.println("authToken : " + authToken);
-        System.out.println("displayName : " + displayName);
-        System.out.println("userId : " + userId);
-        System.out.println("newPlayer : " + newPlayer);
+        System.out.println("userLogin :: " + displayName + " :: " + userId + " :: "
+                + (newPlayer ? "newPlayer" : "oldPlayer") + "\n");
 
-        UserDto userDto = new UserDto(authToken, displayName, userId);
+        final UserDto userDto = new UserDto(authToken, displayName, userId);
 
         if (newPlayer) {
-            connectService.insertUser(userDto);
-            // insert the informations
-
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("result", true);
-
-            response.getWriter().print(jsonObject);
-            // send the result by json
-
+            homeService.insertUser(userDto);
+            // insert the informations, user registered
         } else {
-            Map<String, Object> userInfo = new HashMap<String, Object>();
-
-            connectService.updateToken(userDto);
-            // update token and response userDto info
-
-            List<Map<String, Object>> userNameResult = connectService.getUserName(userDto);
-            if (!userNameResult.isEmpty()){
-                userInfo.put("user_name", userNameResult.get(0).get("user_name"));
-            }
-            else{
-                userInfo.put("user_name", "");
-            }
-
-            List<Map<String, Object>> userSkinResult = connectService.getSkin(userDto);
-            if (!userSkinResult.isEmpty()){
-                userInfo.put("user_skin", userSkinResult.get(0));
-            }
-            else{
-                userInfo.put("user_skin", "");
-            }
-            
-            List<Map<String, Object>> userRoomResult = connectService.getRoom(userDto);
-            if (!userRoomResult.isEmpty()){
-                userInfo.put("user_room", userRoomResult);
-            }
-            else{
-                userInfo.put("user_room", "");
-            }
-            // select username, skin, roomlists
-
-            Gson gson = new Gson();
-            String userInfoJson = gson.toJson(userInfo);
-            System.out.println(userInfoJson);
-            response.getWriter().print(userInfoJson);
+            homeService.updateToken(userDto);
+            // update token
         }
+
+        return responseService.getResultResponse(true);
+        // send the result by json
+    }
+
+    // get user informaiton by id
+    @PostMapping(value = "/user", produces = "application/json; charset=utf8")
+    public String getUserInfo(@RequestBody Map<String, Object> param) {
+        final String userId = param.get("userId").toString();
+        final UserDto userDto = new UserDto(userId);
+        final List<Map<String, Object>> userResult = homeService.getUser(userDto);
+
+        System.out.println("getUserInfo :: " + userId);
+
+        Map<String, Object> userInfo = new HashMap<String, Object>();
+
+        if (!userResult.isEmpty()) {
+            userInfo.put("result_user", "success");
+            userInfo.put("user_name", userResult.get(0).get("user_name"));
+            userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
+            userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
+        } else {
+            userInfo.put("result_user", "empty set");
+        }
+
+        final List<Map<String, Object>> userRoomResult = homeService.getRoom(userDto);
+        if (!userRoomResult.isEmpty()) {
+            userInfo.put("result_room", "success");
+            userInfo.put("user_room", userRoomResult);
+        } else {
+            userInfo.put("result_room", "empty set");
+        }
+        // select username, skin, roomlists
+
+        final String userInfoJson = gson.toJson(userInfo);
+        System.out.println(userInfoJson + "\n");
+
+        return userInfoJson;
+    }
+
+    // update skin color and role
+    @PostMapping(value = "/skin", produces = "application/json; charset=utf8")
+    public String updateSkin(@RequestBody UserVo userVo) {
+        final UserDto userDto = new UserDto(userVo.getUserId(), userVo.getSkinColor(), userVo.getSkinRole());
+
+        homeService.updateSkin(userDto);
+
+        System.out.println("updateSkin :: " + userVo.getUserId());
+
+        return responseService.getResultResponse(true);
     }
 }

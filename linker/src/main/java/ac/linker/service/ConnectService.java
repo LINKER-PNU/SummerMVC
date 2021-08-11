@@ -5,33 +5,22 @@ import java.util.Map;
 
 import ac.linker.dto.JoinDto;
 import ac.linker.dto.RoomDto;
-import ac.linker.dto.UserDto;
 
 public interface ConnectService {
-    List<Map<String, Object>> getAllUser();
-
-    List<Map<String, Object>> getUserName(UserDto user);
-
-    List<Map<String, Object>> getSkin(UserDto user);
-
-    List<Map<String, Object>> getRoom(UserDto user);
-
     List<Map<String, Object>> getRoomByCode(RoomDto room);
 
     List<Map<String, Object>> getCodeByName(RoomDto room);
 
-    void insertUser(UserDto user);
+    List<Map<String, Object>> findRoom(RoomDto room);
 
     void insertRoom(RoomDto room);
-    
-    void insertJoin(JoinDto join);
 
-    void updateToken(UserDto user);
+    void insertJoin(JoinDto join);
 
     void updateRoomCode(RoomDto room);
 
     void updateRoomJoin(RoomDto room);
-    
+
     void updateRoomNewJoin(RoomDto room);
 
     void updateRoomLeave(RoomDto room);

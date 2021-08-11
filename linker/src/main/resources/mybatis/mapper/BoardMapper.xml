@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ac.linker.mapper.BoardMapper">
+  <select id="getBoardTitle" resultType="ac.linker.vo.BoardVo">
+    SELECT board_title
+    FROM board
+    WHERE board_writer=#{boardWriter}
+  </select>
+
+  <select id="getBoards" resultType="ac.linker.vo.BoardVo">
+    SELECT global_board_no AS boardId,
+        user.user_id AS boardWriterId,
+        user.user_name AS boardWriter,
+        board_title,
+        board_write_dt,
+        board_edit_dt,
+        board_deadline,
+        board_notice,
+        board_assignment,
+        board_visible
+    FROM board
+    LEFT JOIN user
+    ON user.global_user_no=board.board_user_no
+    WHERE board_room_no=(
+        SELECT global_room_no
+        FROM room
+        WHERE room_name=#{boardRoom}
+    )
+  </select>
+
+  <select id="getBoardContent" resultType="ac.linker.vo.BoardVo">
+    SELECT board_content
+    FROM board
+    WHERE global_board_no=#{boardId}
+  </select>
+
+  <insert id="insertBoard">
+    INSERT INTO board(
+      board_user_no,
+      board_room_no,
+      board_title,
+      board_content,
+      board_write_dt,
+      board_edit_dt,
+      board_deadline,
+      board_notice,
+      board_assignment
+    )
+    VALUES((
+        SELECT global_user_no
+        FROM user
+        WHERE user_id=#{boardWriterId}
+      ),(
+        SELECT global_room_no
+        FROM room
+        WHERE room_name=#{boardRoom}
+      ),
+    #{boardTitle},
+    #{boardContent},
+    #{boardWriteDt},
+    #{boardEditDt},
+    #{boardDeadline},
+    #{boardNotice},
+    #{boardAssignment}
+  )
+  </insert>
+
+  <update id="editBoard">
+    UPDATE board
+    SET board_title=#{boardTitle},
+      board_content=#{boardContent},
+      board_deadline=#{boardDeadline},
+      board_assignment=#{boardAssignment},
+      board_notice=#{boardNotice},
+      board_edit_dt=#{boardEditDt}
+    WHERE global_board_no=#{boardId}
+  </update>
+
+  <update id="invisibleBoard">
+    UPDATE board
+    SET board_visible=false
+    WHERE global_board_no=#{boardId}
+  </update>
+
+</mapper>

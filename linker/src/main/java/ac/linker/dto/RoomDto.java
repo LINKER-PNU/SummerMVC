@@ -8,29 +8,40 @@ public class RoomDto {
     private int roomNo;
     private String roomName;
     private String roomCode = "temp_code";
-    private int roomPresent;
-    private int roomMax;
-    private String createDate =
-        new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    private int roomPresent = 0;
+    private int roomMax = 0;
+    private String createDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+    
+    private String roomAgoraUid;
+    private String roomAgoraToken;
 
-    public RoomDto(){}
+    public RoomDto() {
+    }
 
-    public RoomDto(final String roomName){
+    public RoomDto(final String roomName) {
         this.roomName = roomName;
     }
-    
-    public RoomDto(String roomName,String roomCode,int roomPresent, int roomMax){
+
+    public RoomDto(final String roomName, final String roomCode, final int roomPresent, final int roomMax) {
         this.roomName = roomName;
         this.roomCode = roomCode;
         this.roomPresent = roomPresent;
         this.roomMax = roomMax;
     }
 
-    public int getNo(){
+    public int getNo() {
         return roomNo;
     }
 
-    public void setCode(String roomCode){
+    public void setCode(final String roomCode) {
         this.roomCode = roomCode;
+    }
+
+    public void setAgoraUid(final String roomAgoraUid) {
+        this.roomAgoraUid = roomAgoraUid;
+    }
+
+    public void setAgoraToken(final String roomAgoraToken) {
+        this.roomAgoraToken = roomAgoraToken;
     }
 }

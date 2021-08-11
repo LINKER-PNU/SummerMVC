@@ -1,0 +1,4 @@
+[
+  { "timerId": 2, "timerSubject": "subj2", "timerStudyTime": 15 },
+  { "timerId": 4, "timerSubject": "timerSubject3", "timerStudyTime": 0 }
+]

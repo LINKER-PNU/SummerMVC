@@ -1,0 +1,3 @@
+[submodule "linker/src/main/java/ac/linker/media/Tools/tree/master/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora/media"]
+	path = linker/src/main/java/ac/linker/media/Tools/tree/master/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora/media
+	url = https://github.com/shasuri/Tools.git
