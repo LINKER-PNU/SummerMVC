@@ -20,20 +20,6 @@ public class BoardDto {
     private boolean boardAssignment;
     private boolean boardVisible = true;
 
-    public BoardDto() {
-    }
-
-    public BoardDto(String boardWriterId, String boardRoom, String boardTitle, String boardContent,
-            String boardDeadline, boolean boardNotice, boolean boardAssignment) {
-        this.boardWriterId = boardWriterId;
-        this.boardRoom = boardRoom;
-        this.boardTitle = boardTitle;
-        this.boardContent = boardContent;
-        this.boardDeadline = boardDeadline;
-        this.boardNotice = boardNotice;
-        this.boardAssignment = boardAssignment;
-    }
-
     public int getBoardId() {
         return boardId;
     }

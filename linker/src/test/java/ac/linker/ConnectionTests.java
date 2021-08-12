@@ -45,16 +45,16 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        TimerDto timerDto = new TimerDto(1, "id", "10", "timerSubject5", 20);
+        // TimerDto timerDto = new TimerDto(1, "id", "10", "timerSubject5", 20);
 
-        BoardDto boardDto = new BoardDto("id", "1", "boardTitleIns", "boardContentIns1", "2021-01-01 01:02:00", true,
-                false);
-        boardDto.setBoardId(1);
+        // BoardDto boardDto = new BoardDto("id", "1", "boardTitleIns", "boardContentIns1", "2021-01-01 01:02:00", true,
+        //         false);
+        // boardDto.setBoardId(1);
 
         // System.out.println(gson.toJson(boardService.getBoards(boardDto)));
         // boardService.editBoard(boardDto);
         // boardService.invisibleBoard(boardDto);
-        boardService.insertBoard(boardDto);
+        // boardService.insertBoard(boardDto);
         // timerService.insertTimer(timerDto);
 
         // System.out.println(gson.toJson(timerService.getTimers(timerDto)));
