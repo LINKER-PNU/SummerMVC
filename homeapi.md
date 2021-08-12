@@ -27,6 +27,10 @@ Uid from GameSparks
 {% api-method-parameter name="newPlayer" type="boolean" required=true %}
 New player or not
 {% endapi-method-parameter %}
+
+{% api-method-parameter name="skinRole" type="string" required=true %}
+Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher'.
+{% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
@@ -90,7 +94,7 @@ Id of user.
 
 {% api-method method="post" host="http://eggcation.linker.ac:8080" path="/skin" %}
 {% api-method-summary %}
-updateSkin
+updateSkinColor
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -108,9 +112,6 @@ Id of the user to change skin.
 Color you set.
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="skinRole" type="string" required=true %}
-Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher'.
-{% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
