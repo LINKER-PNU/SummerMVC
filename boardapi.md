@@ -1,6 +1,6 @@
 # BoardAPI
 
-{% api-method method="post" host="https://api.cakes.com" path="/board/list" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/board/list" %}
 {% api-method-summary %}
 getBoards
 {% endapi-method-summary %}
@@ -56,7 +56,7 @@ Room name, where the boards belong.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/board/content" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/board/content" %}
 {% api-method-summary %}
 getBoardContent
 {% endapi-method-summary %}
@@ -89,7 +89,7 @@ content
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/board/insert" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/board/insert" %}
 {% api-method-summary %}
 insertBoard
 {% endapi-method-summary %}
@@ -146,7 +146,7 @@ Is the board assignment.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/board/insert" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/board/insert" %}
 {% api-method-summary %}
 editBoard
 {% endapi-method-summary %}
@@ -199,7 +199,7 @@ Is the board assignment.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/board/delete" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/board/delete" %}
 {% api-method-summary %}
 deleteBoard
 {% endapi-method-summary %}

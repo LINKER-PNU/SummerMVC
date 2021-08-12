@@ -1,6 +1,6 @@
 # TimerAPI
 
-{% api-method method="post" host="https://eggcation.linker.ac:8080" path="/timer/add" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/timer/add" %}
 {% api-method-summary %}
 addTimer
 {% endapi-method-summary %}
@@ -41,7 +41,7 @@ Cake successfully retrieved.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://eggcation.linker.ac:8080https://eggcation.linker.ac:8080https://eggcation.linker.ac:8080" path="/timer/list" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/timer/list" %}
 {% api-method-summary %}
 getTimers
 {% endapi-method-summary %}
@@ -82,7 +82,7 @@ Room where this user belongs to.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://eggcation.linker.ac:8080https://eggcation.linker.ac:8080" path="/timer/stop" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/timer/stop" %}
 {% api-method-summary %}
 stopTimer
 {% endapi-method-summary %}
@@ -119,7 +119,7 @@ Study time\(second\) at this moment.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://eggcation.linker.ac:8080" path="/timer/edit" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/timer/edit" %}
 {% api-method-summary %}
 editTimer
 {% endapi-method-summary %}
@@ -156,7 +156,7 @@ Subject name to edit.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://eggcation.linker.ac:8080" path="/timer/remove" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/timer/remove" %}
 {% api-method-summary %}
 removeTimer
 {% endapi-method-summary %}

@@ -1,6 +1,6 @@
 # HomeAPI
 
-{% api-method method="post" host="https://api.cakes.com" path="/login" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/login" %}
 {% api-method-summary %}
 login
 {% endapi-method-summary %}
@@ -39,12 +39,13 @@ Cake successfully retrieved.
 ```text
 { "result" : true }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/user" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/user" %}
 {% api-method-summary %}
 getUserInfo
 {% endapi-method-summary %}
@@ -81,12 +82,13 @@ Id of user.
   "user_skin_color": 0
 }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/skin" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/skin" %}
 {% api-method-summary %}
 updateSkin
 {% endapi-method-summary %}
@@ -121,8 +123,8 @@ Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher
 ```
 { "result" : true }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-
