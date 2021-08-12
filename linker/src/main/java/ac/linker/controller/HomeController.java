@@ -103,8 +103,7 @@ public class HomeController {
 
         homeService.updateSkinColor(userDto);
 
-        System.out.println(
-                "updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinRole() + userVo.getSkinColor());
+        System.out.println("updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinColor());
 
         return responseService.getResultResponse(true);
     }
