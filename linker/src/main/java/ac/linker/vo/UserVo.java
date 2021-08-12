@@ -6,7 +6,7 @@ public class UserVo {
     private String userId;
     private boolean newPlayer;
 
-    private int skinColor;
+    private String skinColor;
     private char skinRole;
 
     public String getAuthToken() {
@@ -41,11 +41,11 @@ public class UserVo {
         this.newPlayer = newPlayer;
     }
 
-    public int getSkinColor() {
+    public String getSkinColor() {
         return this.skinColor;
     }
 
-    public void setSkinColor(int skinColor) {
+    public void setSkinColor(String skinColor) {
         this.skinColor = skinColor;
     }
 

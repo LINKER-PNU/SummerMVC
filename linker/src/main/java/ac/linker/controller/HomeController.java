@@ -24,7 +24,7 @@ import ac.linker.vo.UserVo;
 public class HomeController {
     private HomeService homeService;
     private ResponseService responseService;
-    
+
     private ModelMapper modelMapper = new ModelMapper();
     private Gson gson = new Gson();
     // private final Logger logger = LoggerFactory
@@ -46,21 +46,9 @@ public class HomeController {
     @PostMapping(value = "/login", produces = "application/json; charset=utf8")
     public String userLogin(@RequestBody UserVo userVo) {
 
-        // final String authToken = userVo.getAuthToken();
-        // final String displayName = userVo.getDisplayName();
-        // final String userId = userVo.getUserId();
-        // final boolean newPlayer = userVo.getNewPlayer();
-        // // make string or boolean from received information(post/json)
-
-        // System.out.println("userLogin :: " + displayName + " :: " + userId + " :: "
-        //         + (newPlayer ? "newPlayer" : "oldPlayer") + "\n");
-
-        // final UserDto userDto = new UserDto(authToken, displayName, userId);
-
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
         System.out.println("userLogin :: " + userVo.getDisplayName() + " :: " + userVo.getUserId() + " :: "
                 + (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer") + "\n");
-
         if (userVo.getNewPlayer()) {
             homeService.insertUser(userDto);
             // insert the informations, user registered
@@ -110,12 +98,13 @@ public class HomeController {
 
     // update skin color and role
     @PostMapping(value = "/skin", produces = "application/json; charset=utf8")
-    public String updateSkin(@RequestBody UserVo userVo) {
+    public String updateSkinColor(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
-        homeService.updateSkin(userDto);
+        homeService.updateSkinColor(userDto);
 
-        System.out.println("updateSkin :: " + userVo.getUserId() + " :: " + userVo.getSkinRole() + userVo.getSkinColor());
+        System.out.println(
+                "updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinRole() + userVo.getSkinColor());
 
         return responseService.getResultResponse(true);
     }

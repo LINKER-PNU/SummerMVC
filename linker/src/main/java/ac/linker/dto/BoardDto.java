@@ -19,4 +19,40 @@ public class BoardDto {
     private boolean boardNotice;
     private boolean boardAssignment;
     private boolean boardVisible = true;
+
+    public void setBoardId(int boardId) {
+        this.boardId = boardId;
+    }
+
+    public void setBoardWriter(String boardWriter) {
+        this.boardWriter = boardWriter;
+    }
+
+    public void setBoardWriterId(String boardWriterId) {
+        this.boardWriterId = boardWriterId;
+    }
+
+    public void setBoardRoom(String boardRoom) {
+        this.boardRoom = boardRoom;
+    }
+
+    public void setBoardTitle(String boardTitle) {
+        this.boardTitle = boardTitle;
+    }
+
+    public void setBoardContent(String boardContent) {
+        this.boardContent = boardContent;
+    }
+
+    public void setBoardDeadline(String boardDeadline) {
+        this.boardDeadline = boardDeadline;
+    }
+
+    public void setBoardNotice(boolean boardNotice) {
+        this.boardNotice = boardNotice;
+    }
+
+    public void setBoardAssignment(boolean boardAssignment) {
+        this.boardAssignment = boardAssignment;
+    }
 }

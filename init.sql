@@ -15,7 +15,7 @@ CREATE TABLE user(
     user_auth_token NVARCHAR(50) NOT NULL DEFAULT "",
     user_name NVARCHAR(50) NOT NULL DEFAULT "",
     user_id NVARCHAR(50) NOT NULL DEFAULT "",
-    user_skin_color INT NOT NULL DEFAULT 0,
+    user_skin_color VARCHAR(40) NOT NULL DEFAULT "RGBA(1.000, 1.000, 1.000, 1.000)",
     user_skin_role CHAR(1) NOT NULL DEFAULT "S",
     user_join_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00"
 );

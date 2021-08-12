@@ -9,8 +9,8 @@
   </select>
   
   <insert id="insertUser">
-    INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt)
-    VALUES (#{authToken},#{displayName},#{userId},#{joinDate})
+    INSERT INTO user(user_auth_token,user_name,user_id,user_join_dt,user_skin_role)
+    VALUES (#{authToken},#{displayName},#{userId},#{joinDate},#{skinRole})
   </insert>
 
   <update id="updateToken">
@@ -19,10 +19,9 @@
     WHERE user_id=#{userId}
   </update>
 
-  <update id="updateSkin">
+  <update id="updateSkinColor">
     UPDATE user
-    SET user_skin_color=#{skinColor},
-    user_skin_role=#{skinRole}
+    SET user_skin_color=#{skinColor}
     WHERE user_id=#{userId}
   </update>
 

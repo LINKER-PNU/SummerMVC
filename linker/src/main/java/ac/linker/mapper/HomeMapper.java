@@ -16,7 +16,7 @@ public interface HomeMapper {
 
     void updateToken(UserDto user);
 
-    void updateSkin(UserDto user);
+    void updateSkinColor(UserDto user);
 
     List<Map<String, Object>> getAllUser();
 

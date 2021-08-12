@@ -27,8 +27,8 @@ public class HomeServiceImplement implements HomeService {
         homeMapper.updateToken(user);
     }
 
-    public void updateSkin(UserDto user) {
-        homeMapper.updateSkin(user);
+    public void updateSkinColor(UserDto user) {
+        homeMapper.updateSkinColor(user);
     }
 
     public List<Map<String, Object>> getAllUser() {
