@@ -3,6 +3,7 @@ package ac.linker.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.Gson;
 
@@ -27,7 +28,7 @@ public class HomeController {
 
     private ModelMapper modelMapper = new ModelMapper();
     private Gson gson = new Gson();
-    // private final Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     HomeController(HomeService homeService, ResponseService responseService) {
@@ -37,7 +38,7 @@ public class HomeController {
 
     @RequestMapping(value = "/")
     public String index() {
-        System.out.println("###############GotoIndex################");
+        logger.info("###############GotoIndex################");
 
         return "hello";
     }
@@ -47,16 +48,29 @@ public class HomeController {
     public String userLogin(@RequestBody UserVo userVo) {
 
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
-        System.out.println("userLogin :: " + userVo.getDisplayName() + " :: " + userVo.getUserId() + " :: "
-                + (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer") + "\n");
+
+        Optional<Character> optional = Optional.ofNullable(userVo.getSkinRole());
+
+        logger.info("userLogin :: " + userVo.getDisplayName() + "(" + userVo.getUserId() + ") :: "
+                + optional.orElse('N') + " :: " + (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer") + "\n");
+
         if (userVo.getNewPlayer()) {
-            homeService.insertUser(userDto);
-            // insert the informations, user registered
+            try {
+                // insert the informations, user registered
+                homeService.insertUser(userDto);
+            } catch (Exception e) {
+                logger.error(e + " :: Errors on insert query  :: insertUser\n");
+            }
         } else {
-            homeService.updateToken(userDto);
-            // update token
+            try {
+                // update token
+                homeService.updateToken(userDto);
+            } catch (Exception e) {
+                logger.error(e + " :: Errors on insert/update query  :: updateToken\n");
+            }
         }
 
+        logger.info("User " + userVo.getDisplayName() + " insert complete.\n");
         return responseService.getResultResponse(true);
         // send the result by json
     }
@@ -65,12 +79,17 @@ public class HomeController {
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String getUserInfo(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
-
-        final List<Map<String, Object>> userResult = homeService.getUser(userDto);
-
-        System.out.println("getUserInfo :: " + userVo.getUserId());
+        logger.info("getUserInfo :: " + userVo.getUserId() + "\n");
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
+
+        final List<Map<String, Object>> userResult;
+        try {
+            userResult = homeService.getUser(userDto);
+        } catch (Exception e) {
+            logger.error(e + " :: Errors on select query :: getUser\n");
+            return responseService.getResultResponse(false);
+        }
 
         if (!userResult.isEmpty()) {
             userInfo.put("result_user", "success");
@@ -90,8 +109,8 @@ public class HomeController {
         }
         // select username, skin, roomlists
 
-        final String userInfoJson = gson.toJson(userInfo);
-        System.out.println(userInfoJson + "\n");
+        final String userInfoJson = gson.toJson(userInfo); // need rewrite
+        logger.info("User " + userInfo.get("user_name") + " select complete.\n");
 
         return userInfoJson;
     }
@@ -101,11 +120,10 @@ public class HomeController {
     public String updateSkinColor(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
+        logger.info("updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinColor() + "\n");
         homeService.updateSkinColor(userDto);
 
-        System.out.println(
-                "updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinRole() + userVo.getSkinColor());
-
+        logger.info("User (ID)" + userVo.getUserId() + " color update complete.\n");
         return responseService.getResultResponse(true);
     }
 }
