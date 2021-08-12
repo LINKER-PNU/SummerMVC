@@ -39,8 +39,7 @@ public class BoardController {
     // click board
     @PostMapping(value = "/content", produces = "application/json; charset=utf8")
     public String getBoardContent(@RequestBody BoardVo boardVo) {
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBoardId(boardVo.getBoardId());
+        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
         return boardService.getBoardContent(boardDto).getBoardContent();
     }
 

@@ -34,7 +34,7 @@ public class AgoraController {
 
         final String channelName = agoraVo.getRoomName();
         System.out.println("get_token :: " + channelName);
-        RoomDto roomDto = new RoomDto(channelName);
+        final RoomDto roomDto = new RoomDto(channelName);
 
         final List<Map<String, Object>> queryResult = agoraService.getAgoraToken(roomDto);
         Optional<Map<String, Object>> optional = Optional.ofNullable(queryResult.get(0));

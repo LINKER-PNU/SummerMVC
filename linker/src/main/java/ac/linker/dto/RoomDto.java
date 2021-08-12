@@ -22,13 +22,6 @@ public class RoomDto {
         this.roomName = roomName;
     }
 
-    public RoomDto(final String roomName, final String roomCode, final int roomPresent, final int roomMax) {
-        this.roomName = roomName;
-        this.roomCode = roomCode;
-        this.roomPresent = roomPresent;
-        this.roomMax = roomMax;
-    }
-
     public int getNo() {
         return roomNo;
     }
