@@ -5,3 +5,4 @@ cd ~/SummerMVC/linker
 chmod +x ./gradlew
 ./gradlew build -x test
 nohup java -jar build/libs/linker-0.0.1-SNAPSHOT.jar &
+# tail -n 100 ~/SummerMVC/linker/nohup.out
