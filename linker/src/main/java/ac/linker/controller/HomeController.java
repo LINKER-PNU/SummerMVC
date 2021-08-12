@@ -52,7 +52,7 @@ public class HomeController {
         Optional<Character> optional = Optional.ofNullable(userVo.getSkinRole());
 
         logger.info("userLogin :: " + userVo.getDisplayName() + "(" + userVo.getUserId() + ") :: "
-                + optional.orElse('N') + " :: " + (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer") + "\n");
+                + optional.orElse('N') + " :: " + (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer"));
 
         if (userVo.getNewPlayer()) {
             try {
@@ -79,7 +79,7 @@ public class HomeController {
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String getUserInfo(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
-        logger.info("getUserInfo :: " + userVo.getUserId() + "\n");
+        logger.info("getUserInfo :: " + userVo.getUserId());
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
 
@@ -120,7 +120,7 @@ public class HomeController {
     public String updateSkinColor(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
-        logger.info("updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinColor() + "\n");
+        logger.info("updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinColor());
         homeService.updateSkinColor(userDto);
 
         logger.info("User (ID)" + userVo.getUserId() + " color update complete.\n");

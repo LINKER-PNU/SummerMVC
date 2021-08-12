@@ -7,6 +7,8 @@ import java.util.Optional;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.DuplicateKeyException;
@@ -23,6 +25,8 @@ import ac.linker.service.ResponseService;
 @RestController
 public class ConnectController {
     private Gson gson = new Gson();
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private ConnectService connectService;
     private ResponseService responseService;
 
@@ -34,17 +38,17 @@ public class ConnectController {
 
     @PostMapping(value = "/create", produces = "application/json; charset=utf8")
     public String pathCreate(@RequestBody Map<String, Object> param) {
-        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        // final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
-        System.out.println("PathCreate : " + requestObject + "\n");
+        // System.out.println("PathCreate : " + requestObject + "\n");
         final String roomName = param.get("GameId").toString();
         final String userId = param.get("UserId").toString();
         final String userName = param.get("Nickname").toString();
         final String reqType = param.get("Type").toString();
 
-        RoomDto roomDto = new RoomDto(roomName);
+        logger.info("pathCrate :: " + reqType + " :: " + roomName + " :: " + userName + "(" + userId + ")");
 
-        System.out.println("reqType : " + reqType);
+        RoomDto roomDto = new RoomDto(roomName);
 
         if (reqType.equals("Create")) {
             // room insert
@@ -52,10 +56,10 @@ public class ConnectController {
             try { // prevent duplicated room name
                 connectService.insertRoom(roomDto);
             } catch (DuplicateKeyException e) {
-                System.out.println("Warning! Room name " + roomName + " duplicated!(from pathCreate)\n");
+                logger.warn("pathCreate :: Room name " + roomName + " is duplicated!\n");
                 return responseService.getPhotonResponse(1);
             } catch (DataIntegrityViolationException m) {
-                System.out.println("Warning! Room name " + roomName + " is over the max length!(from pathCreate)\n");
+                logger.warn("pathCreate :: Room name " + roomName + " is over the max length(20)!\n");
                 return responseService.getPhotonResponse(2);
             }
 
@@ -65,18 +69,20 @@ public class ConnectController {
                     connectService.updateRoomCode(roomDto);
                     break;
                 } catch (DuplicateKeyException e) { // prevent duplicated code.
-                    System.out.println("Warning! Invite code " + roomDto.getNo() + " duplicated! Regenerate code...\n");
+                    logger.warn(
+                            "pathCreate :: Invite code " + roomDto.getNo() + " is duplicated! Regenerating code...");
                 }
             }
 
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(roomDto);
-            System.out.println(userId + " :: " + userName + " created and joined " + roomName + "\n");
+            logger.info("User " + userName + "(" + userId + ") created and joined " + roomName + ".\n");
             // join room
         }
 
         if (reqType.equals("Load")) {
-            System.out.println(userId + " :: " + userName + " recreated and joined " + roomName + "\n");
+            // if room is recreated
+            logger.info("User " + userName + "(" + userId + ") recreated and joined " + roomName + ".\n");
             connectService.updateRoomJoin(roomDto);
         }
 
@@ -85,22 +91,24 @@ public class ConnectController {
 
     @PostMapping(value = "/join", produces = "application/json; charset=utf8")
     public String pathJoin(@RequestBody Map<String, Object> param) {
-        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        // final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
 
-        System.out.println("PathJoin : " + requestObject + "\n");
+        // System.out.println("PathJoin : " + requestObject + "\n");
 
         final String roomName = param.get("GameId").toString();
         final String userId = param.get("UserId").toString();
         final String userName = param.get("Nickname").toString();
 
+        logger.info("pathJoin :: " + roomName + " :: " + userName + "(" + userId + ")");
+
         // user join
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(new RoomDto(roomName));
-            System.out.println(userId + " :: " + userName + "joined" + roomName + "\n");
+            logger.info("User " + userName + "(" + userId + ") joined " + roomName + ".\n");
         } catch (DuplicateKeyException e) {
             connectService.updateRoomJoin(new RoomDto(roomName));
-            System.out.println("Member " + userId + " :: " + userName + " is already in room " + roomName
+            logger.info("User " + userName + "(" + userId + ") is already in room " + roomName
                     + "! Duplicated pair is prevented.\n");
         }
 
@@ -109,14 +117,18 @@ public class ConnectController {
 
     @PostMapping(value = "/leave", produces = "application/json; charset=utf8")
     public String pathLeave(@RequestBody Map<String, Object> param) {
-        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        // final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
+        // System.out.println("PathLeave : " + requestObject + "\n");
 
         final String roomName = param.get("GameId").toString();
+        final String userId = param.get("UserId").toString();
+        final String userName = param.get("Nickname").toString();
 
-        System.out.println("PathLeave : " + requestObject + "\n");
+        logger.info("pathLeave :: " + roomName + " :: " + userName + "(" + userId + ")");
 
         connectService.updateRoomLeave(new RoomDto(roomName));
 
+        logger.info("User " + userName + "(" + userId + ") leaved " + roomName + ".\n");
         return responseService.getPhotonResponse(0);
     }
 
@@ -155,7 +167,7 @@ public class ConnectController {
         final String roomCode = optional.orElse("");
         final String roomName;
 
-        System.out.println("Received roomCode : " + roomCode);
+        logger.info("authRoom :: Received roomCode " + roomCode);
 
         RoomDto roomDto = new RoomDto();
         roomDto.setCode(roomCode);
@@ -164,24 +176,25 @@ public class ConnectController {
         if (!queryResult.isEmpty()) {
             roomName = queryResult.get(0).get("room_name").toString();
         } else {
+            logger.warn("authRoom :: There is no room has code " + roomCode);
             roomName = "";
         }
-        System.out.println("Response roomName : " + roomName + "\n");
 
+        logger.info("Response roomName : " + roomName + "\n");
         return roomName;
     }
 
     @PostMapping(value = "/room_code", produces = "application/json; charset=utf8")
-    public String responseRoomCode(@RequestBody Map<String, Object> param) {
+    public String getRoomCode(@RequestBody Map<String, Object> param) {
         final Optional<String> optional = Optional.ofNullable(param.get("roomName").toString());
         final String roomName = optional.orElse("");
         final String roomCode;
 
-        System.out.println("Received roomName : " + roomName);
+        logger.info("getRoomCode :: Received roomName : " + roomName);
 
         roomCode = connectService.getCodeByName(new RoomDto(roomName)).get(0).get("room_code").toString();
-        System.out.println("Response roomCode : " + roomCode + "\n");
 
+        logger.info("Response roomCode : " + roomCode + "\n");
         return roomCode;
     }
 
@@ -190,14 +203,15 @@ public class ConnectController {
         final Optional<String> optional = Optional.ofNullable(param.get("roomName").toString());
         final String roomName = optional.orElse("");
         final List<Map<String, Object>> queryResult = connectService.findRoom(new RoomDto(roomName));
-        final boolean roomExist;
 
-        roomExist = !queryResult.isEmpty();
+        logger.info("checkRoomExist :: " + roomName);
+
+        final boolean roomExist = !queryResult.isEmpty();
 
         if (roomExist) {
-            System.out.println("Warning! Room name " + roomName + " duplicated!(from checkRoomExist)\n");
+            logger.info("Room name " + roomName + " is duplicated! Creation is prevented...\n");
         } else {
-            System.out.println("Room name " + roomName + " is admitted!(from checkRoomExist)\n");
+            logger.info("Room name " + roomName + " is available!\n");
         }
 
         return Boolean.toString(roomExist);
