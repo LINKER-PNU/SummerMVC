@@ -28,7 +28,7 @@ Uid from GameSparks
 New player or not
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="skinRole" type="string" required=true %}
+{% api-method-parameter name="skinRole" type="string" required=false %}
 Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher'.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
@@ -43,7 +43,6 @@ Cake successfully retrieved.
 ```text
 { "result" : true }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -73,7 +72,7 @@ Id of user.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 {
   "result_user": "success",
   "user_skin_role": "S",
@@ -86,7 +85,6 @@ Id of user.
   "user_skin_color": 0
 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -111,7 +109,6 @@ Id of the user to change skin.
 {% api-method-parameter name="skinColor" type="integer" required=true %}
 Color you set.
 {% endapi-method-parameter %}
-
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
@@ -121,11 +118,11 @@ Color you set.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 { "result" : true }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
