@@ -19,7 +19,9 @@ public class BoardDto {
     private boolean boardNotice;
     private boolean boardAssignment;
     private boolean boardVisible = true;
-
+    public BoardDto(String boardRoom) {
+        this.boardRoom = boardRoom;
+    }
     public void setBoardId(int boardId) {
         this.boardId = boardId;
     }

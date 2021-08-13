@@ -26,14 +26,15 @@
     WHERE board_room_no=(
         SELECT global_room_no
         FROM room
-        WHERE room_name=#{boardRoom}
-    ) AND board_visible=true 
+        WHERE room_name=#{boardRoom})
+    AND board_visible=true 
   </select>
 
   <select id="getBoardContent" resultType="ac.linker.vo.BoardVo">
     SELECT board_content
     FROM board
     WHERE global_board_no=#{boardId}
+    AND board_visible=true
   </select>
 
   <insert id="insertBoard">
@@ -76,6 +77,7 @@
       board_notice=#{boardNotice},
       board_edit_dt=#{boardEditDt}
     WHERE global_board_no=#{boardId}
+    AND board_visible=true 
   </update>
 
   <update id="invisibleBoard">

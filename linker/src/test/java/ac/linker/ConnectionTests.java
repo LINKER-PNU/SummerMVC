@@ -50,7 +50,6 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        String a = "asd";
-        logger.info(marker,"{} is not error. {}",a,"Maybe");
+        System.out.println(gson.toJson(boardService.getBoards(new BoardDto("1"))));
     }
 }
