@@ -27,7 +27,7 @@
         SELECT global_room_no
         FROM room
         WHERE room_name=#{boardRoom}
-    )
+    ) AND board_visible=true 
   </select>
 
   <select id="getBoardContent" resultType="ac.linker.vo.BoardVo">
