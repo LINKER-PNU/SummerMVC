@@ -50,7 +50,6 @@ Room name, where the boards belong.
     boardWriterId: "id2"
 }]
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -83,7 +82,6 @@ Response content as string, not json format.
 ```text
 content
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -105,8 +103,8 @@ insertBoard
 Room name, where the board belongs.
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="boardWriter" type="string" required=true %}
-The board writer's user name.
+{% api-method-parameter name="boardWriterId" type="string" required=true %}
+The board writer's user ID.
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="boardTitle" type="string" required=true %}
@@ -140,7 +138,6 @@ Is the board assignment.
 ```text
 { "result" : true }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -193,7 +190,6 @@ Is the board assignment.
 ```text
 { "result" : true }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -223,11 +219,11 @@ Id of the board you deleted.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 { "result" : true }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
