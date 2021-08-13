@@ -7,6 +7,9 @@ import com.google.gson.JsonObject;
 
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -31,6 +34,8 @@ public class ConnectionTests {
     private TimerService timerService;
 
     ModelMapper modelMapper = new ModelMapper();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    Marker marker;
 
     @Autowired
     ConnectionTests(ConnectService connectService, AgoraService agoraService, HomeService homeService,
@@ -45,7 +50,7 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        // homeService.insertUser(new UserDto("t", "d", "u", "true", 'T'));
-
+        String a = "asd";
+        logger.info(marker,"{} is not error. {}",a,"Maybe");
     }
 }

@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,7 @@ public class HomeController {
     private ModelMapper modelMapper = new ModelMapper();
     private Gson gson = new Gson();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    // private static Marker marker;
 
     @Autowired
     HomeController(HomeService homeService, ResponseService responseService) {
@@ -51,23 +53,21 @@ public class HomeController {
 
         Optional<Character> optional = Optional.ofNullable(userVo.getSkinRole());
 
-        logger.info("userLogin :: " + userVo.getDisplayName() + "(" + userVo.getUserId() + ") :: "
-                + optional.orElse('N') + " :: " + (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer"));
-
+        logger.info("userLogin :: {}({}) :: {} :: {}",userVo.getDisplayName(),userVo.getUserId(),optional.orElse('N'),(userVo.getNewPlayer() ? "newPlayer" : "oldPlayer"));
         if (userVo.getNewPlayer()) {
             try {
                 // insert the informations, user registered
                 homeService.insertUser(userDto);
-            } catch (Exception e) {
-                logger.error(e + " :: Errors on insert query  :: insertUser\n");
+            } catch (Exception e) {                
+                logger.error("{} :: Errors on insert query  :: insertUser\n",e.toString());
             }
         } else {
             try {
                 // update token
                 homeService.updateToken(userDto);
-                logger.info("User " + userVo.getDisplayName() + " insert complete.\n");
+            logger.info("User {} insert complete.\n",userVo.getDisplayName());
             } catch (Exception e) {
-                logger.error(e + " :: Errors on insert/update query  :: updateToken\n");
+                logger.error("{} :: Errors on insert/update query  :: updateToken\n",e.toString());
             }
         }
         return responseService.getResultResponse(true);
@@ -78,7 +78,7 @@ public class HomeController {
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String getUserInfo(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
-        logger.info("getUserInfo :: " + userVo.getUserId());
+        logger.info("getUserInfo :: {}",userVo.getUserId());
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
 
@@ -86,7 +86,7 @@ public class HomeController {
         try {
             userResult = homeService.getUser(userDto);
         } catch (Exception e) {
-            logger.error(e + " :: Errors on select query :: getUser\n");
+            logger.error("{} :: Errors on select query :: getUser\n",e.toString());
             return responseService.getResultResponse(false);
         }
 
@@ -109,7 +109,7 @@ public class HomeController {
         // select username, skin, roomlists
 
         final String userInfoJson = gson.toJson(userInfo); // need rewrite
-        logger.info("User " + userInfo.get("user_name") + " select complete.\n");
+        logger.info("User {} select complete.\n",userInfo.get("user_name"));
 
         return userInfoJson;
     }
@@ -119,7 +119,7 @@ public class HomeController {
     public String updateSkinColor(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
-        logger.info("updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinColor());
+        logger.info("updateSkinColor :: {} :: {}",userVo.getUserId(),userVo.getSkinColor());
         homeService.updateSkinColor(userDto);
 
         logger.info("User skin color update complete.\n");
