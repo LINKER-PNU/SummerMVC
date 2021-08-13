@@ -33,7 +33,7 @@ public class TimerController {
     // add timer
     @PostMapping(value = "/add", produces = "application/json; charset=utf8")
     public String addTimer(@RequestBody TimerVo timerVo) {
-        logger.info("addTimer :: " + timerVo.getTimerRoom() + " :: " + timerVo.getTimerUser() + " :: " + timerVo.getTimerSubject());
+        logger.info("addTimer :: {} :: {} :: {}",timerVo.getTimerRoom(),timerVo.getTimerUser(),timerVo.getTimerSubject());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
 
         timerService.insertTimer(timerDto);
@@ -45,7 +45,7 @@ public class TimerController {
     // get timer list
     @PostMapping(value = "/list", produces = "application/json; charset=utf8")
     public String getTimers(@RequestBody TimerVo timerVo) {
-        logger.info("getTimers :: " + timerVo.getTimerRoom() + " :: " + timerVo.getTimerId());
+        logger.info("getTimers :: {} :: {}", timerVo.getTimerId(),timerVo.getTimerRoom());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
 
         final String timers = gson.toJson(timerService.getTimers(timerDto));
@@ -56,7 +56,7 @@ public class TimerController {
     // click stop button
     @PostMapping(value = "/stop", produces = "application/json; charset=utf8")
     public String stopTimer(@RequestBody TimerVo timerVo) {
-        logger.info("stopTimer :: " + timerVo.getTimerId());
+        logger.info("stopTimer :: {}", timerVo.getTimerId());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
 
         timerService.accumTimer(timerDto);
@@ -69,7 +69,7 @@ public class TimerController {
     @PostMapping(value = "/edit", produces = "application/json; charset=utf8")
     public String editTimer(@RequestBody TimerVo timerVo) {
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
-        logger.info("editTimer :: " + timerVo.getTimerId());
+        logger.info("editTimer :: {}", timerVo.getTimerId());
 
         timerService.editTimer(timerDto);
         logger.info("Timer subject edit complete.\n");
@@ -81,7 +81,7 @@ public class TimerController {
     @PostMapping(value = "/remove", produces = "application/json; charset=utf8")
     public String removeTimer(@RequestBody TimerVo timerVo) {
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
-        logger.info("removeTimer :: " + timerVo.getTimerId());
+        logger.info("removeTimer :: {}", timerVo.getTimerId());
 
         timerService.deleteTimer(timerDto);
         logger.info("Timer delete complete.\n");

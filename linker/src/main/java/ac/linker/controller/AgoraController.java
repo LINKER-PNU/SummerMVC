@@ -37,7 +37,7 @@ public class AgoraController {
     public String getToken(@RequestBody AgoraVo agoraVo) {
 
         final String channelName = agoraVo.getRoomName();
-        logger.info("getToken :: " + channelName);
+        logger.info("getToken :: {}", channelName);
         final RoomDto roomDto = new RoomDto(channelName);
 
         final List<Map<String, Object>> queryResult = agoraService.getAgoraToken(roomDto);
@@ -71,7 +71,7 @@ public class AgoraController {
     public String checkClassExist(@RequestBody AgoraVo agoraVo) {
         final String channelName = agoraVo.getRoomName();
 
-        logger.info("checkClassExist :: " + channelName);
+        logger.info("checkClassExist :: {}", channelName);
 
         final List<Map<String, Object>> uidQueryResult = agoraService.getAgoraUid(new RoomDto(channelName));
         Optional<Map<String, Object>> optional = Optional.ofNullable(uidQueryResult.get(0));
@@ -92,14 +92,14 @@ public class AgoraController {
         final String channelName = agoraVo.getRoomName();
         final String uid = agoraVo.getClassMaster();
 
-        logger.info("insertClassMaster :: " + channelName + " :: " + uid);
+        logger.info("insertClassMaster :: {} :: {}",channelName,uid);
 
         RoomDto roomDto = new RoomDto(channelName);
         roomDto.setAgoraUid(uid);
 
         try {
             agoraService.updateAgoraUid(roomDto);
-            logger.info("Agora class master is updated to " + uid + ".\n");
+            logger.info("Agora class master is updated to {}.\n",uid);
             return "true";
         } catch (Exception e) {
             agoraService.resetAgora(roomDto);
@@ -111,7 +111,7 @@ public class AgoraController {
     @PostMapping(value = "/delete_class_master", produces = "application/json; charset=utf8")
     public String deleteClassMaster(@RequestBody AgoraVo agoraVo) {
         final String channelName = agoraVo.getRoomName();
-        logger.info("deleteClassMaster :: " + channelName);
+        logger.info("deleteClassMaster :: {}", channelName);
 
         try {
             agoraService.resetAgora(new RoomDto(channelName));
@@ -128,16 +128,16 @@ public class AgoraController {
         final String channelName = agoraVo.getRoomName();
         final String uid = agoraVo.getClassMaster();
 
-        logger.info("isClassMaster :: " + channelName + " :: " + uid);
+        logger.info("isClassMaster :: {} :: {}",channelName,uid);
 
         final List<Map<String, Object>> queryResult = agoraService.getAgoraUid(new RoomDto(channelName));
 
         final boolean equalsResult = uid.equals(queryResult.get(0).get("room_agora_uid").toString());
 
         if (equalsResult) {
-            logger.info(uid + " is class master of " + channelName + "!\n");
+            logger.info("{} is class master of {}!\n",uid,channelName);
         } else {
-            logger.warn("isClassMaster :: " + uid + " is not class master of " + channelName + "...\n");
+            logger.warn("isClassMaster :: {} is not class master of {}...\n",uid,channelName);
         }
 
         return String.valueOf(equalsResult);

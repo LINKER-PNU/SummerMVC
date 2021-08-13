@@ -30,7 +30,6 @@ public class HomeController {
     private ModelMapper modelMapper = new ModelMapper();
     private Gson gson = new Gson();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    // private static Marker marker;
 
     @Autowired
     HomeController(HomeService homeService, ResponseService responseService) {

@@ -35,7 +35,7 @@ public class BoardController {
     // get board list
     @PostMapping(value = "/list", produces = "application/json; charset=utf8")
     public String getBoards(@RequestBody BoardVo boardVo) {
-        logger.info("getBoards :: " + boardVo.getBoardRoom());
+        logger.info("getBoards :: {}", boardVo.getBoardRoom());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         logger.info("Boards select complete.\n" );
@@ -45,7 +45,7 @@ public class BoardController {
     // click board
     @PostMapping(value = "/content", produces = "application/json; charset=utf8")
     public String getBoardContent(@RequestBody BoardVo boardVo) {
-        logger.info("getBoardContent :: " + boardVo.getBoardId());
+        logger.info("getBoardContent :: {}", boardVo.getBoardId());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         logger.info("Content select complete.\n");
@@ -55,7 +55,7 @@ public class BoardController {
     // write board
     @PostMapping(value = "/insert", produces = "application/json; charset=utf8")
     public String insertBoard(@RequestBody BoardVo boardVo) {
-        logger.info("insertBoard :: " + boardVo.getBoardRoom() + " :: " + boardVo.getBoardTitle() + " :: " + boardVo.getBoardWriterId());
+        logger.info("insertBoard :: {} :: {} :: {}",boardVo.getBoardRoom(),boardVo.getBoardTitle(),boardVo.getBoardWriterId());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         boardService.insertBoard(boardDto);
@@ -67,7 +67,7 @@ public class BoardController {
     // edit board
     @PostMapping(value = "/edit", produces = "application/json; charset=utf8")
     public String editBoard(@RequestBody BoardVo boardVo) {
-        logger.info("editBoard :: " + boardVo.getBoardId());
+        logger.info("editBoard :: {}", boardVo.getBoardId());
 
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
         boardService.editBoard(boardDto);
@@ -79,12 +79,12 @@ public class BoardController {
     // delete(deactivate) board
     @PostMapping(value = "/delete", produces = "application/json; charset=utf8")
     public String deleteBoard(@RequestBody BoardVo boardVo) {
-        logger.info("deleteBoard :: " + boardVo.getBoardId());
+        logger.info("deleteBoard :: {}", boardVo.getBoardId());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         boardService.invisibleBoard(boardDto);
 
-        logger.info("Board deactivate complete.\n" );
+        logger.info("Board deactivate complete.\n");
         return responseService.getResultResponse(true);
     }
 }
