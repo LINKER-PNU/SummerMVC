@@ -19,13 +19,12 @@ import ac.linker.vo.BoardVo;
 @RestController
 @RequestMapping(value = "/board")
 public class BoardController {
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
     private BoardService boardService;
     private ResponseService responseService;
 
     private Gson gson = new Gson();
     private ModelMapper modelMapper = new ModelMapper();
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     BoardController(BoardService boardService, ResponseService responseService) {
