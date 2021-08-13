@@ -116,7 +116,9 @@ Content of the board.
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="boardDeadline" type="string" required=true %}
-Deadline of the board if it is assignment.
+Deadline of the board if it is assignment.  
+Format : yyyy-MM-dd hh:mm:ss  
+2020-01-01 00:00:00
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="boardNotice" type="boolean" required=true %}
