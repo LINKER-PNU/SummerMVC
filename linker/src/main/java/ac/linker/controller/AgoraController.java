@@ -115,7 +115,7 @@ public class AgoraController {
 
         try {
             agoraService.resetAgora(new RoomDto(channelName));
-            logger.info("Agora class master is reset at channel " + channelName + ".\n");
+            logger.info("Agora class master is reset at channel.\n");
             return "true";
         } catch (Exception e) {
             logger.error("deleteClassMaster :: Agora class master resetting is failed!\n");

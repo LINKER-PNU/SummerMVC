@@ -65,25 +65,28 @@ public class ConnectController {
 
             while (true) { // create and update room code
                 try {
-                    roomDto.setCode(CodeGenerator.getCode(roomDto.getNo()));
+                    String roomCode = CodeGenerator.getCode(roomDto.getNo());
+                    roomDto.setCode(roomCode);
+                    
                     connectService.updateRoomCode(roomDto);
+                    logger.info("Room code " + roomCode + " is set on room " + roomName);
+
                     break;
                 } catch (DuplicateKeyException e) { // prevent duplicated code.
-                    logger.warn(
-                            "pathCreate :: Invite code " + roomDto.getNo() + " is duplicated! Regenerating code...");
+                    logger.warn("pathCreate :: Generated invite code is duplicated! Regenerating code...");
                 }
             }
 
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(roomDto);
-            logger.info("User " + userName + "(" + userId + ") created and joined " + roomName + ".\n");
+            logger.info("User " + userName + " created and joined in " + roomName + ".\n");
             // join room
         }
 
         if (reqType.equals("Load")) {
             // if room is recreated
-            logger.info("User " + userName + "(" + userId + ") recreated and joined " + roomName + ".\n");
             connectService.updateRoomJoin(roomDto);
+            logger.info("User " + userName + " recreated and joined in " + roomName + ".\n");
         }
 
         return responseService.getPhotonResponse(0);
@@ -105,11 +108,10 @@ public class ConnectController {
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(new RoomDto(roomName));
-            logger.info("User " + userName + "(" + userId + ") joined " + roomName + ".\n");
+            logger.info("User " + userName + " joined in " + roomName + ".\n");
         } catch (DuplicateKeyException e) {
             connectService.updateRoomJoin(new RoomDto(roomName));
-            logger.info("User " + userName + "(" + userId + ") is already in room " + roomName
-                    + "! Duplicated pair is prevented.\n");
+            logger.info("User " + userName + " is already in room " + roomName + "! Duplicated pair is prevented.\n");
         }
 
         return responseService.getPhotonResponse(0);
@@ -128,7 +130,7 @@ public class ConnectController {
 
         connectService.updateRoomLeave(new RoomDto(roomName));
 
-        logger.info("User " + userName + "(" + userId + ") leaved " + roomName + ".\n");
+        logger.info("User " + userName + " leaved " + roomName + ".\n");
         return responseService.getPhotonResponse(0);
     }
 
@@ -209,9 +211,9 @@ public class ConnectController {
         final boolean roomExist = !queryResult.isEmpty();
 
         if (roomExist) {
-            logger.info("Room name " + roomName + " is duplicated! Creation is prevented...\n");
+            logger.info("Room name is duplicated! Creation is prevented...\n");
         } else {
-            logger.info("Room name " + roomName + " is available!\n");
+            logger.info("Room name is available!\n");
         }
 
         return Boolean.toString(roomExist);

@@ -65,12 +65,11 @@ public class HomeController {
             try {
                 // update token
                 homeService.updateToken(userDto);
+                logger.info("User " + userVo.getDisplayName() + " insert complete.\n");
             } catch (Exception e) {
                 logger.error(e + " :: Errors on insert/update query  :: updateToken\n");
             }
         }
-
-        logger.info("User " + userVo.getDisplayName() + " insert complete.\n");
         return responseService.getResultResponse(true);
         // send the result by json
     }
@@ -123,7 +122,7 @@ public class HomeController {
         logger.info("updateSkinColor :: " + userVo.getUserId() + " :: " + userVo.getSkinColor());
         homeService.updateSkinColor(userDto);
 
-        logger.info("User (ID)" + userVo.getUserId() + " color update complete.\n");
+        logger.info("User skin color update complete.\n");
         return responseService.getResultResponse(true);
     }
 }

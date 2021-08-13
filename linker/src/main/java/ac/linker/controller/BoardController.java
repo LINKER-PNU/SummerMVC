@@ -38,7 +38,7 @@ public class BoardController {
         logger.info("getBoards :: " + boardVo.getBoardRoom());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-        logger.info("Boards in room " + boardVo.getBoardRoom() + " select complete.\n" );
+        logger.info("Boards select complete.\n" );
         return gson.toJson(boardService.getBoards(boardDto));
     }
 
@@ -48,7 +48,7 @@ public class BoardController {
         logger.info("getBoardContent :: " + boardVo.getBoardId());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-        logger.info("Content of (ID)" + boardVo.getBoardId() + " select complete.\n");
+        logger.info("Content select complete.\n");
         return boardService.getBoardContent(boardDto).getBoardContent();
     }
 
@@ -60,7 +60,7 @@ public class BoardController {
 
         boardService.insertBoard(boardDto);
 
-        logger.info(boardVo.getBoardTitle() + " insert complete.\n");
+        logger.info("Board insert complete.\n");
         return responseService.getResultResponse(true);
     }
 
@@ -72,7 +72,7 @@ public class BoardController {
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
         boardService.editBoard(boardDto);
 
-        logger.info("Board " + boardVo.getBoardId() + " :: " + boardVo.getBoardTitle() + " update complete.\n" );
+        logger.info("Board edit complete.\n" );
         return responseService.getResultResponse(true);
     }
 
@@ -84,7 +84,7 @@ public class BoardController {
 
         boardService.invisibleBoard(boardDto);
 
-        logger.info("Board " + boardVo.getBoardId() + " deactivate complete.\n" );
+        logger.info("Board deactivate complete.\n" );
         return responseService.getResultResponse(true);
     }
 }
