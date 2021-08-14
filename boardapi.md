@@ -79,8 +79,8 @@ ID of the board you clicked. The content will response by string not json.
 Response content as string, not json format.
 {% endapi-method-response-example-description %}
 
-```text
-content
+```
+Hello world!
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
