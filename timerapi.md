@@ -32,10 +32,9 @@ Subject name of this timer.
 Cake successfully retrieved.
 {% endapi-method-response-example-description %}
 
-```
+```text
 { "result" : true }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -69,14 +68,12 @@ Room where this user belongs to.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 [
   { "timerId": 2, "timerSubject": "subj2", "timerStudyTime": 15 },
   { "timerId": 4, "timerSubject": "timerSubject3", "timerStudyTime": 0 }
 ]
-
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -110,10 +107,9 @@ Study time\(second\) at this moment.
 
 {% endapi-method-response-example-description %}
 
+```text
+{ "result" : true }
 ```
-
-```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -147,10 +143,9 @@ Subject name to edit.
 
 {% endapi-method-response-example-description %}
 
+```text
+{ "result" : true }
 ```
-
-```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -180,11 +175,11 @@ ID of the timer to remove.
 
 {% endapi-method-response-example-description %}
 
+```text
+{ "result" : true }
 ```
-
-```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
