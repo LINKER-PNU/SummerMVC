@@ -3,14 +3,13 @@ package ac.linker.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+// import java.util.Optional;
 
 import com.google.gson.Gson;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,29 +43,41 @@ public class HomeController {
         return "hello";
     }
 
+    @PostMapping(value = "/test", produces = "application/json; charset=utf8")
+    public String testRequest(@RequestBody UserVo userVo) {
+        UserDto userDto = modelMapper.map(userVo, UserDto.class);
+        System.out.println(userVo.getSkinRole() == '\0');
+
+        return "aresult";
+    }
+
     // login and register
     @PostMapping(value = "/login", produces = "application/json; charset=utf8")
     public String userLogin(@RequestBody UserVo userVo) {
 
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
-        Optional<Character> optional = Optional.ofNullable(userVo.getSkinRole());
+        // Optional<Character> optional = Optional.ofNullable(userVo.getSkinRole());
 
-        logger.info("userLogin :: {}({}) :: {} :: {}",userVo.getDisplayName(),userVo.getUserId(),optional.orElse('N'),(userVo.getNewPlayer() ? "newPlayer" : "oldPlayer"));
+        logger.info("userLogin :: {}({}) :: {} :: {}", userVo.getDisplayName(), userVo.getUserId(),
+                (userVo.getSkinRole() == '\0' ? 'N' : userVo.getSkinColor()),
+                (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer"));
+
         if (userVo.getNewPlayer()) {
             try {
                 // insert the informations, user registered
                 homeService.insertUser(userDto);
-            } catch (Exception e) {                
-                logger.error("{} :: Errors on insert query  :: insertUser\n",e.toString());
+                logger.info("User {} insert complete.\n", userVo.getDisplayName());
+            } catch (Exception e) {
+                logger.error("{} :: Errors on insert query :: insertUser\n", e.toString());
             }
         } else {
             try {
                 // update token
                 homeService.updateToken(userDto);
-            logger.info("User {} insert complete.\n",userVo.getDisplayName());
+                logger.info("User {} login complete.\n", userVo.getDisplayName());
             } catch (Exception e) {
-                logger.error("{} :: Errors on insert/update query  :: updateToken\n",e.toString());
+                logger.error("{} :: Errors on insert/update query :: updateToken\n", e.toString());
             }
         }
         return responseService.getResultResponse(true);
@@ -77,7 +88,7 @@ public class HomeController {
     @PostMapping(value = "/user", produces = "application/json; charset=utf8")
     public String getUserInfo(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
-        logger.info("getUserInfo :: {}",userVo.getUserId());
+        logger.info("getUserInfo :: {}", userVo.getUserId());
 
         Map<String, Object> userInfo = new HashMap<String, Object>();
 
@@ -85,7 +96,7 @@ public class HomeController {
         try {
             userResult = homeService.getUser(userDto);
         } catch (Exception e) {
-            logger.error("{} :: Errors on select query :: getUser\n",e.toString());
+            logger.error("{} :: Errors on select query :: getUser\n", e.toString());
             return responseService.getResultResponse(false);
         }
 
@@ -108,7 +119,7 @@ public class HomeController {
         // select username, skin, roomlists
 
         final String userInfoJson = gson.toJson(userInfo); // need rewrite
-        logger.info("User {} select complete.\n",userInfo.get("user_name"));
+        logger.info("User {} select complete.\n", userInfo.get("user_name"));
 
         return userInfoJson;
     }
@@ -118,7 +129,7 @@ public class HomeController {
     public String updateSkinColor(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
-        logger.info("updateSkinColor :: {} :: {}",userVo.getUserId(),userVo.getSkinColor());
+        logger.info("updateSkinColor :: {} :: {}", userVo.getUserId(), userVo.getSkinColor());
         homeService.updateSkinColor(userDto);
 
         logger.info("User skin color update complete.\n");

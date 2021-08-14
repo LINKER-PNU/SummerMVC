@@ -1,5 +1,7 @@
 package ac.linker;
 
+import static org.mockito.ArgumentMatchers.isNull;
+
 import java.util.Optional;
 
 import com.google.gson.Gson;
@@ -23,6 +25,7 @@ import ac.linker.service.ConnectService;
 import ac.linker.service.HomeService;
 import ac.linker.service.TimerService;
 import ac.linker.vo.BoardVo;
+import ac.linker.vo.UserVo;
 
 @SpringBootTest
 public class ConnectionTests {
@@ -50,8 +53,8 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.add("property", gson.toJsonTree(boardService.getBoards(new BoardDto("1"))).getAsJsonArray());
-        System.out.println(jsonObject.toString());
+        UserVo userVo = new UserVo();
+
+        // System.out.println(' '.isNull());
     }
 }
