@@ -50,6 +50,8 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        System.out.println(gson.toJson(boardService.getBoards(new BoardDto("1"))));
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.add("property", gson.toJsonTree(boardService.getBoards(new BoardDto("1"))).getAsJsonArray());
+        System.out.println(jsonObject.toString());
     }
 }

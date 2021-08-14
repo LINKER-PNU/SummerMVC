@@ -1,6 +1,7 @@
 package ac.linker.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -38,8 +39,12 @@ public class BoardController {
         logger.info("getBoards :: {}", boardVo.getBoardRoom());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-        logger.info("Boards select complete.\n" );
-        return gson.toJson(boardService.getBoards(boardDto));
+        final JsonObject jsonObject = new JsonObject();
+
+        jsonObject.add("result", gson.toJsonTree(boardService.getBoards(boardDto)).getAsJsonArray());
+        logger.info("Boards select complete.\n");
+
+        return jsonObject.toString();
     }
 
     // click board
@@ -55,7 +60,8 @@ public class BoardController {
     // write board
     @PostMapping(value = "/insert", produces = "application/json; charset=utf8")
     public String insertBoard(@RequestBody BoardVo boardVo) {
-        logger.info("insertBoard :: {} :: {} :: {}",boardVo.getBoardRoom(),boardVo.getBoardTitle(),boardVo.getBoardWriterId());
+        logger.info("insertBoard :: {} :: {} :: {}", boardVo.getBoardRoom(), boardVo.getBoardTitle(),
+                boardVo.getBoardWriterId());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
         boardService.insertBoard(boardDto);
@@ -72,7 +78,7 @@ public class BoardController {
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
         boardService.editBoard(boardDto);
 
-        logger.info("Board edit complete.\n" );
+        logger.info("Board edit complete.\n");
         return responseService.getResultResponse(true);
     }
 
