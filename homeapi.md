@@ -107,7 +107,9 @@ Id of the user to change skin.
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="skinColor" type="integer" required=true %}
-Color you set.
+Color you set.  
+Format : RRGGBBAA  
+86F4FFFF
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}

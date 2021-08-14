@@ -68,7 +68,7 @@ getBoardContent
 {% api-method-request %}
 {% api-method-body-parameters %}
 {% api-method-parameter name="boardId" type="integer" required=true %}
-ID of the board you clicked.
+ID of the board you clicked. The content will response by string not json.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
