@@ -25,7 +25,7 @@ Room name, where the boards belong.
 {% endapi-method-response-example-description %}
 
 ```text
-[{
+{ result : [{
     boardAssignment: true
     boardDeadline: "2000-01-01 00:00:00"
     boardEditDt: "2000-01-01 00:00:00"
@@ -48,7 +48,7 @@ Room name, where the boards belong.
     boardWriteDt: "2000-01-01 00:00:00"
     boardWriter: "name2"
     boardWriterId: "id2"
-}]
+}]}
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
