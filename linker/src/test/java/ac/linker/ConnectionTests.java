@@ -53,7 +53,10 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        UserVo userVo = new UserVo();
+        System.out.println(
+                agoraService.getAgoraToken(new RoomDto("a")).get(0).get("room_agora_token").toString().isEmpty());
+        System.out
+                .println(agoraService.getAgoraUid(new RoomDto("a")).get(0).get("room_agora_uid").toString().isEmpty());
 
         // System.out.println(' '.isNull());
     }

@@ -2,7 +2,6 @@ package ac.linker.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,12 +40,12 @@ public class AgoraController {
         final RoomDto roomDto = new RoomDto(channelName);
 
         final List<Map<String, Object>> queryResult = agoraService.getAgoraToken(roomDto);
-        Optional<Map<String, Object>> optional = Optional.ofNullable(queryResult.get(0));
+        String agoraToken = queryResult.get(0).get("room_agora_token").toString();
 
-        if (optional.isPresent()) {
+        if (agoraToken.isEmpty()) {
             // token exist
             logger.info("Token exist!\n");
-            return queryResult.get(0).get("room_agora_token").toString();
+            return agoraToken;
         } else {
             // token not exist
             logger.info("Token not exist! Generate token.\n");
@@ -54,12 +53,12 @@ public class AgoraController {
 
                 int timestamp = (int) (System.currentTimeMillis() / 1000 + expirationTimeInSeconds);
 
-                final String roomAgoraToken = token.buildTokenWithUid(appId, appCertificate, channelName, 0,
-                        Role.Role_Publisher, timestamp);
-                roomDto.setAgoraToken(roomAgoraToken);
+                agoraToken = token.buildTokenWithUid(appId, appCertificate, channelName, 0, Role.Role_Publisher,
+                        timestamp);
+                roomDto.setAgoraToken(agoraToken);
                 agoraService.updateAgoraToken(roomDto);
 
-                return roomAgoraToken;
+                return agoraToken;
 
             } catch (Exception e) {
                 return "-1";
@@ -74,17 +73,16 @@ public class AgoraController {
         logger.info("checkClassExist :: {}", channelName);
 
         final List<Map<String, Object>> uidQueryResult = agoraService.getAgoraUid(new RoomDto(channelName));
-        Optional<Map<String, Object>> optional = Optional.ofNullable(uidQueryResult.get(0));
 
-        final boolean existResult = optional.isPresent();
+        final boolean agoraUidExist = uidQueryResult.get(0).get("room_agroa_uid").toString().isEmpty();
 
-        if (existResult) {
+        if (agoraUidExist) {
             logger.info("Class exist!\n");
         } else {
             logger.warn("checkClassExist :: Class not exist...\n");
         }
 
-        return String.valueOf(existResult);
+        return String.valueOf(agoraUidExist);
     }
 
     @PostMapping(value = "/insert_class_master", produces = "application/json; charset=utf8")
@@ -92,14 +90,14 @@ public class AgoraController {
         final String channelName = agoraVo.getRoomName();
         final String uid = agoraVo.getClassMaster();
 
-        logger.info("insertClassMaster :: {} :: {}",channelName,uid);
+        logger.info("insertClassMaster :: {} :: {}", channelName, uid);
 
         RoomDto roomDto = new RoomDto(channelName);
         roomDto.setAgoraUid(uid);
 
         try {
             agoraService.updateAgoraUid(roomDto);
-            logger.info("Agora class master is updated to {}.\n",uid);
+            logger.info("Agora class master is updated to {}.\n", uid);
             return "true";
         } catch (Exception e) {
             agoraService.resetAgora(roomDto);
@@ -128,16 +126,16 @@ public class AgoraController {
         final String channelName = agoraVo.getRoomName();
         final String uid = agoraVo.getClassMaster();
 
-        logger.info("isClassMaster :: {} :: {}",channelName,uid);
+        logger.info("isClassMaster :: {} :: {}", channelName, uid);
 
         final List<Map<String, Object>> queryResult = agoraService.getAgoraUid(new RoomDto(channelName));
 
         final boolean equalsResult = uid.equals(queryResult.get(0).get("room_agora_uid").toString());
 
         if (equalsResult) {
-            logger.info("{} is class master of {}!\n",uid,channelName);
+            logger.info("{} is class master of {}!\n", uid, channelName);
         } else {
-            logger.warn("isClassMaster :: {} is not class master of {}...\n",uid,channelName);
+            logger.warn("isClassMaster :: {} is not class master of {}...\n", uid, channelName);
         }
 
         return String.valueOf(equalsResult);
