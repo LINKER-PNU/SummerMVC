@@ -43,7 +43,7 @@ public class ConnectController {
         final String userName = param.get("Nickname").toString();
         final String reqType = param.get("Type").toString();
 
-        logger.info("pathCrate :: {} :: {} :: {}({})",reqType,roomName,userName,userId);
+        logger.info("pathCrate :: {} :: {} :: {}({})", reqType, roomName, userName, userId);
 
         RoomDto roomDto = new RoomDto(roomName);
 
@@ -53,10 +53,10 @@ public class ConnectController {
             try { // prevent duplicated room name
                 connectService.insertRoom(roomDto);
             } catch (DuplicateKeyException e) {
-                logger.warn("pathCreate :: Room name {} is duplicated!\n",roomName);
+                logger.warn("pathCreate :: Room name {} is duplicated!\n", roomName);
                 return responseService.getPhotonResponse(1);
             } catch (DataIntegrityViolationException m) {
-                logger.warn("pathCreate :: Room name {} is over the max length(20)!\n",roomName);
+                logger.warn("pathCreate :: Room name {} is over the max length(20)!\n", roomName);
                 return responseService.getPhotonResponse(2);
             }
 
@@ -64,9 +64,9 @@ public class ConnectController {
                 try {
                     String roomCode = CodeGenerator.getCode(roomDto.getNo());
                     roomDto.setCode(roomCode);
-                    
+
                     connectService.updateRoomCode(roomDto);
-                    logger.info("Room code {} is set on room {}",roomCode, roomName);
+                    logger.info("Room code {} is set on room {}", roomCode, roomName);
 
                     break;
                 } catch (DuplicateKeyException e) { // prevent duplicated code.
@@ -76,14 +76,14 @@ public class ConnectController {
 
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(roomDto);
-            logger.info("User {} created and joined in {}.\n", userName,roomName);
+            logger.info("User {} created and joined in {}.\n", userName, roomName);
             // join room
         }
 
         if (reqType.equals("Load")) {
             // if room is recreated
             connectService.updateRoomJoin(roomDto);
-            logger.info("User {} recreated and joined in {}.\n", userName,roomName);
+            logger.info("User {} recreated and joined in {}.\n", userName, roomName);
         }
 
         return responseService.getPhotonResponse(0);
@@ -95,16 +95,16 @@ public class ConnectController {
         final String userId = param.get("UserId").toString();
         final String userName = param.get("Nickname").toString();
 
-        logger.info("pathJoin :: {} :: {}({})",roomName,userName,userId);
+        logger.info("pathJoin :: {} :: {}({})", roomName, userName, userId);
 
         // user join
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(new RoomDto(roomName));
-            logger.info("User {} joined in {}.\n",roomName,userName);
+            logger.info("User {} joined in {}.\n", roomName, userName);
         } catch (DuplicateKeyException e) {
             connectService.updateRoomJoin(new RoomDto(roomName));
-            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n",roomName,userName);
+            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", roomName, userName);
         }
 
         return responseService.getPhotonResponse(0);
@@ -116,19 +116,18 @@ public class ConnectController {
         final String userId = param.get("UserId").toString();
         final String userName = param.get("Nickname").toString();
 
-        logger.info("pathLeave :: {} :: {}({})",roomName,userName,userId);
+        logger.info("pathLeave :: {} :: {}({})", roomName, userName, userId);
 
         connectService.updateRoomLeave(new RoomDto(roomName));
 
-        logger.info("User {} leaved {}.\n",roomName,userName);
+        logger.info("User {} leaved {}.\n", roomName, userName);
         return responseService.getPhotonResponse(0);
     }
 
     @PostMapping(value = "/close", produces = "application/json; charset=utf8")
     public String pathClose(@RequestBody Map<String, Object> param) {
-        final JsonObject requestObject = gson.toJsonTree(param).getAsJsonObject();
-
-        System.out.println("PathClose : " + requestObject + "\n");
+        final String roomName = param.get("GameId").toString();
+        logger.info("pathClose :: {}", roomName);
 
         // delete room
 
@@ -172,7 +171,7 @@ public class ConnectController {
             roomName = "";
         }
 
-        logger.info("Response roomName : {}\n",roomName);
+        logger.info("Response roomName : {}\n", roomName);
         return roomName;
     }
 
