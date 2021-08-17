@@ -29,8 +29,8 @@
 
   <update id="resetAgora">
     UPDATE room
-    SET room_agora_uid=NULL,
-    room_agora_token=NULL
+    SET room_agora_uid="",
+    room_agora_token=""
     WHERE room_name=#{roomName}
   </update>
 </mapper>
