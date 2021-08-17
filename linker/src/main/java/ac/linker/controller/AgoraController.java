@@ -42,7 +42,7 @@ public class AgoraController {
         final List<Map<String, Object>> queryResult = agoraService.getAgoraToken(roomDto);
         String agoraToken = queryResult.get(0).get("room_agora_token").toString();
 
-        if (agoraToken.isEmpty()) {
+        if (!agoraToken.isEmpty()) {
             // token exist
             logger.info("Token exist!\n");
             return agoraToken;
@@ -72,17 +72,19 @@ public class AgoraController {
 
         logger.info("checkClassExist :: {}", channelName);
 
-        final List<Map<String, Object>> uidQueryResult = agoraService.getAgoraUid(new RoomDto(channelName));
+        // final List<Map<String, Object>> uidQueryResult = agoraService.getAgoraUid(new
+        // RoomDto(channelName));
 
-        final boolean agoraUidExist = uidQueryResult.get(0).get("room_agroa_uid").toString().isEmpty();
+        final boolean agoraUidNotExist = agoraService.getAgoraUid(new RoomDto(channelName)).get(0).get("room_agora_uid")
+                .toString().isEmpty();
 
-        if (agoraUidExist) {
+        if (!agoraUidNotExist) {
             logger.info("Class exist!\n");
         } else {
             logger.warn("checkClassExist :: Class not exist...\n");
         }
 
-        return String.valueOf(agoraUidExist);
+        return String.valueOf(agoraUidNotExist);
     }
 
     @PostMapping(value = "/insert_class_master", produces = "application/json; charset=utf8")
@@ -128,9 +130,8 @@ public class AgoraController {
 
         logger.info("isClassMaster :: {} :: {}", channelName, uid);
 
-        final List<Map<String, Object>> queryResult = agoraService.getAgoraUid(new RoomDto(channelName));
-
-        final boolean equalsResult = uid.equals(queryResult.get(0).get("room_agora_uid").toString());
+        final boolean equalsResult = uid
+                .equals(agoraService.getAgoraUid(new RoomDto(channelName)).get(0).get("room_agora_uid").toString());
 
         if (equalsResult) {
             logger.info("{} is class master of {}!\n", uid, channelName);
