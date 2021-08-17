@@ -75,16 +75,16 @@ public class AgoraController {
         // final List<Map<String, Object>> uidQueryResult = agoraService.getAgoraUid(new
         // RoomDto(channelName));
 
-        final boolean agoraUidNotExist = agoraService.getAgoraUid(new RoomDto(channelName)).get(0).get("room_agora_uid")
+        final boolean agoraUidExist = !agoraService.getAgoraUid(new RoomDto(channelName)).get(0).get("room_agora_uid")
                 .toString().isEmpty();
 
-        if (!agoraUidNotExist) {
+        if (agoraUidExist) {
             logger.info("Class exist!\n");
         } else {
             logger.warn("checkClassExist :: Class not exist...\n");
         }
 
-        return String.valueOf(agoraUidNotExist);
+        return String.valueOf(agoraUidExist);
     }
 
     @PostMapping(value = "/insert_class_master", produces = "application/json; charset=utf8")
