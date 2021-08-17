@@ -42,7 +42,7 @@ public class AgoraController {
         final List<Map<String, Object>> queryResult = agoraService.getAgoraToken(roomDto);
         String agoraToken = queryResult.get(0).get("room_agora_token").toString();
 
-        if (agoraToken.isEmpty()) {
+        if (!agoraToken.isEmpty()) {
             // token exist
             logger.info("Token exist!\n");
             return agoraToken;
@@ -72,9 +72,11 @@ public class AgoraController {
 
         logger.info("checkClassExist :: {}", channelName);
 
-        final List<Map<String, Object>> uidQueryResult = agoraService.getAgoraUid(new RoomDto(channelName));
+        // final List<Map<String, Object>> uidQueryResult = agoraService.getAgoraUid(new
+        // RoomDto(channelName));
 
-        final boolean agoraUidNotExist = uidQueryResult.get(0).get("room_agora_uid").toString().isEmpty();
+        final boolean agoraUidNotExist = agoraService.getAgoraUid(new RoomDto(channelName)).get(0).get("room_agora_uid")
+                .toString().isEmpty();
 
         if (!agoraUidNotExist) {
             logger.info("Class exist!\n");
