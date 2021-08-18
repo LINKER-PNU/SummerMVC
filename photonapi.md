@@ -36,10 +36,9 @@ If the room is created first time, put it "Create" but recreated, put it "Load".
 Room successfully created.
 {% endapi-method-response-example-description %}
 
-```
+```text
 {    "State": "", "ResultCode": 0    }
 ```
-
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=400 %}
@@ -47,10 +46,9 @@ Room successfully created.
 Room name is already in database, means duplicated. The room is not inserted.
 {% endapi-method-response-example-description %}
 
-```
+```text
 {    "State": "", "ResultCode": 1    }
 ```
-
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=401 %}
@@ -58,10 +56,9 @@ Room name is already in database, means duplicated. The room is not inserted.
 Room name is over the max length.
 {% endapi-method-response-example-description %}
 
-```
+```text
 {    "State": "", "ResultCode": 2    }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -99,10 +96,9 @@ The user's nickname.
 Joining room successful.
 {% endapi-method-response-example-description %}
 
-```
+```text
 {    "State": "", "ResultCode": 0    }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -131,7 +127,6 @@ User who leave the room.
 {% api-method-parameter name="Nickname" type="string" required=true %}
 The user's nickname.
 {% endapi-method-parameter %}
-{% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
@@ -141,10 +136,9 @@ The user's nickname.
 Leaving room successful.
 {% endapi-method-response-example-description %}
 
-```
+```text
 {    "State": "", "ResultCode": 0    }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -169,21 +163,20 @@ Name of room to close.
 {% endapi-method-request %}
 
 {% api-method-response %}
-{% api-method-response-example httpCode=201 %}
+{% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
 Closing room successful.
 {% endapi-method-response-example-description %}
 
-```
+```text
 {    "State": "", "ResultCode": 0    }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/auth_room" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/auth\_room" %}
 {% api-method-summary %}
 authRoom
 {% endapi-method-summary %}
@@ -207,16 +200,15 @@ Invite code of the room to get name.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 linker_test
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/room_code" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/room\_code" %}
 {% api-method-summary %}
 getRoomCode
 {% endapi-method-summary %}
@@ -240,16 +232,15 @@ Name of room to get invite code.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 gkdnl
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/room_exist" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/room\_exist" %}
 {% api-method-summary %}
 checkRoomExist
 {% endapi-method-summary %}
@@ -273,11 +264,11 @@ Name of room to check.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 true
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
