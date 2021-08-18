@@ -3,7 +3,6 @@ package ac.linker.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-// import java.util.Optional;
 
 import com.google.gson.Gson;
 
@@ -43,21 +42,11 @@ public class HomeController {
         return "hello";
     }
 
-    @PostMapping(value = "/test", produces = "application/json; charset=utf8")
-    public String testRequest(@RequestBody UserVo userVo) {
-        UserDto userDto = modelMapper.map(userVo, UserDto.class);
-        System.out.println(userVo.getSkinRole() == '\0');
-
-        return "aresult";
-    }
-
     // login and register
     @PostMapping(value = "/login", produces = "application/json; charset=utf8")
     public String userLogin(@RequestBody UserVo userVo) {
 
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
-
-        // Optional<Character> optional = Optional.ofNullable(userVo.getSkinRole());
 
         logger.info("userLogin :: {}({}) :: {} :: {}", userVo.getDisplayName(), userVo.getUserId(),
                 (userVo.getSkinRole() == '\0' ? 'N' : userVo.getSkinColor()),

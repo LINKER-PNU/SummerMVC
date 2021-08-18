@@ -1,6 +1,6 @@
 # PhotonAPI
 
-{% api-method method="post" host="https://api.cakes.com" path="/create" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/create" %}
 {% api-method-summary %}
 pathCreate
 {% endapi-method-summary %}
@@ -39,6 +39,7 @@ Room successfully created.
 ```
 {    "State": "", "ResultCode": 0    }
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=400 %}
@@ -49,6 +50,7 @@ Room name is already in database, means duplicated. The room is not inserted.
 ```
 {    "State": "", "ResultCode": 1    }
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=401 %}
@@ -59,12 +61,13 @@ Room name is over the max length.
 ```
 {    "State": "", "ResultCode": 2    }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.cakes.com" path="/" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/join" %}
 {% api-method-summary %}
 pathJoin
 {% endapi-method-summary %}
@@ -77,28 +80,37 @@ pathJoin
 {% api-method-request %}
 {% api-method-body-parameters %}
 {% api-method-parameter name="GameId" type="string" required=true %}
-Name of room to create.
+Name of room to join.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="UserId" type="string" required=true %}
+User who join the room.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="Nickname" type="string" required=true %}
+The user's nickname.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
-{% api-method-response-example httpCode=200 %}
+{% api-method-response-example httpCode=201 %}
 {% api-method-response-example-description %}
-
+Joining room successful.
 {% endapi-method-response-example-description %}
 
 ```
-
+{    "State": "", "ResultCode": 0    }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.cakes.com" path="/" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/leave" %}
 {% api-method-summary %}
-
+pathLeave
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -109,30 +121,38 @@ Name of room to create.
 {% api-method-request %}
 {% api-method-body-parameters %}
 {% api-method-parameter name="GameId" type="string" required=true %}
-Name of room to create.
+Name of room to leave.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="UserId" type="string" required=true %}
+User who leave the room.
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="Nickname" type="string" required=true %}
+The user's nickname.
+{% endapi-method-parameter %}
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
-{% api-method-response-example httpCode=200 %}
+{% api-method-response-example httpCode=201 %}
 {% api-method-response-example-description %}
-
+Leaving room successful.
 {% endapi-method-response-example-description %}
 
 ```
-
+{    "State": "", "ResultCode": 0    }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-
-
-{% api-method method="post" host="https://api.cakes.com" path="/" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/close" %}
 {% api-method-summary %}
-
+pathClose
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -143,28 +163,29 @@ Name of room to create.
 {% api-method-request %}
 {% api-method-body-parameters %}
 {% api-method-parameter name="GameId" type="string" required=true %}
-Name of room to create.
+Name of room to close.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
-{% api-method-response-example httpCode=200 %}
+{% api-method-response-example httpCode=201 %}
 {% api-method-response-example-description %}
-
+Closing room successful.
 {% endapi-method-response-example-description %}
 
 ```
-
+{    "State": "", "ResultCode": 0    }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.cakes.com" path="/" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/auth_room" %}
 {% api-method-summary %}
-
+authRoom
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -174,8 +195,8 @@ Name of room to create.
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="GameId" type="string" required=true %}
-Name of room to create.
+{% api-method-parameter name="roomCode" type="string" required=true %}
+Invite code of the room to get name.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -187,16 +208,17 @@ Name of room to create.
 {% endapi-method-response-example-description %}
 
 ```
-
+linker_test
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.cakes.com" path="/" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/room_code" %}
 {% api-method-summary %}
-
+getRoomCode
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -206,8 +228,8 @@ Name of room to create.
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="GameId" type="string" required=true %}
-Name of room to create.
+{% api-method-parameter name="roomName" type="string" required=true %}
+Name of room to get invite code.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -219,16 +241,17 @@ Name of room to create.
 {% endapi-method-response-example-description %}
 
 ```
-
+gkdnl
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.cakes.com" path="/" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/room_exist" %}
 {% api-method-summary %}
-
+checkRoomExist
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -238,8 +261,8 @@ Name of room to create.
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="GameId" type="string" required=true %}
-Name of room to create.
+{% api-method-parameter name="roomName" type="string" required=true %}
+Name of room to check.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -251,10 +274,10 @@ Name of room to create.
 {% endapi-method-response-example-description %}
 
 ```
-
+true
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-

@@ -72,9 +72,6 @@ public class AgoraController {
 
         logger.info("checkClassExist :: {}", channelName);
 
-        // final List<Map<String, Object>> uidQueryResult = agoraService.getAgoraUid(new
-        // RoomDto(channelName));
-
         final boolean agoraUidExist = !agoraService.getAgoraUid(new RoomDto(channelName)).get(0).get("room_agora_uid")
                 .toString().isEmpty();
 
