@@ -1,10 +1,6 @@
----
-description: (Writing...)
----
-
 # AgoraAPI
 
-{% api-method method="post" host="https://api.cakes.com" path="/get\_token" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/get\_token" %}
 {% api-method-summary %}
 getToken
 {% endapi-method-summary %}
@@ -31,12 +27,13 @@ Cake successfully retrieved.
 ```
 
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/check\_class\_exist" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/check\_class\_exist" %}
 {% api-method-summary %}
 checkClassExist
 {% endapi-method-summary %}
@@ -63,6 +60,7 @@ Room name you want to check class exist or not.
 ```
 true
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=302 %}
@@ -73,12 +71,13 @@ true
 ```
 false
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.cakes.com" path="/insert\_class\_master" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/insert\_class\_master" %}
 {% api-method-summary %}
 insertClassMaster
 {% endapi-method-summary %}
@@ -109,6 +108,7 @@ Room name you want to insert master uid.
 ```
 true
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=302 %}
@@ -119,12 +119,13 @@ true
 ```
 false
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.cakes.com" path="/delete\_class\_master" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/delete\_class\_master" %}
 {% api-method-summary %}
 deleteClassMaster
 {% endapi-method-summary %}
@@ -151,6 +152,7 @@ Room name you want to delete class master.
 ```
 true
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=302 %}
@@ -161,12 +163,13 @@ true
 ```
 false
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="https://api.cakes.com" path="/is\_class\_master" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/is\_class\_master" %}
 {% api-method-summary %}
 isClassMaster
 {% endapi-method-summary %}
@@ -197,6 +200,7 @@ Room name you want to check master.
 ```
 true
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=302 %}
@@ -207,8 +211,8 @@ true
 ```
 false
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-
