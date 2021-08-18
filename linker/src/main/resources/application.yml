@@ -18,8 +18,15 @@ server:
             force: true
 
 logging:
-    file:
-        max-history: 20
     pattern:
         console: "%clr(%date{'HH:mm:ss'}){faint} %clr(-%5level) %clr([%thread]){faint} %clr(%logger.%method:%line){cyan} %clr(:){faint} %m%n%wEx"
-        file: "%clr(%date{'yyyy-MM-dd HH:mm:ss'}){faint} %clr(-%5level) %clr([%thread]){faint} %clr(%logger.%method:%line){cyan} %clr(:){faint} %m%n%wEx"
+        file: "%clr(%date{'yyyy-MM-dd HH:mm:ss'}){faint} %clr(-%5level) %clr([%thread]){faint} %clr(%logger.%method:%line){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
+
+    logback:
+        rollingpolicy:
+            file-name-pattern: "${LOG_FILE}.%d{yyyy-MM-dd}_%i.log"
+
+    file:
+        name: /var/log/summer_mvc/summer.log
+        max-history: 20
+        max-size: 1MB
