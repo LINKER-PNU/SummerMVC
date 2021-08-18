@@ -145,7 +145,7 @@ Is the board assignment.
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/board/insert" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/board/edit" %}
 {% api-method-summary %}
 editBoard
 {% endapi-method-summary %}
