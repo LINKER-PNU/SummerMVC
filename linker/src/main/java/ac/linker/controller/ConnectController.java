@@ -43,7 +43,7 @@ public class ConnectController {
         final String userName = param.get("Nickname").toString();
         final String reqType = param.get("Type").toString();
 
-        logger.info("pathCrate :: {} :: {} :: {}({})", reqType, roomName, userName, userId);
+        logger.info("pathCreate :: {} :: {} :: {}({})", reqType, roomName, userName, userId);
 
         RoomDto roomDto = new RoomDto(roomName);
 
@@ -76,6 +76,7 @@ public class ConnectController {
 
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(roomDto);
+            System.out.println(connectService.getRoomPresent(roomDto));
             logger.info("User {} created and joined in {}.\n", userName, roomName);
             // join room
         }
@@ -83,6 +84,7 @@ public class ConnectController {
         if (reqType.equals("Load")) {
             // if room is recreated
             connectService.updateRoomJoin(roomDto);
+            System.out.println(connectService.getRoomPresent(roomDto));
             logger.info("User {} recreated and joined in {}.\n", userName, roomName);
         }
 
@@ -97,14 +99,17 @@ public class ConnectController {
 
         logger.info("pathJoin :: {} :: {}({})", roomName, userName, userId);
 
+        final RoomDto roomDto = new RoomDto(roomName);
         // user join
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
-            connectService.updateRoomNewJoin(new RoomDto(roomName));
-            logger.info("User {} joined in {}.\n", roomName, userName);
+            connectService.updateRoomNewJoin(roomDto);
+            System.out.println(connectService.getRoomPresent(roomDto));
+            logger.info("User {} joined in {}.\n", userName, roomName);
         } catch (DuplicateKeyException e) {
-            connectService.updateRoomJoin(new RoomDto(roomName));
-            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", roomName, userName);
+            connectService.updateRoomJoin(roomDto);
+            System.out.println(connectService.getRoomPresent(roomDto));
+            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
         }
 
         return responseService.getPhotonResponse(0);
@@ -118,7 +123,10 @@ public class ConnectController {
 
         logger.info("pathLeave :: {} :: {}({})", roomName, userName, userId);
 
-        connectService.updateRoomLeave(new RoomDto(roomName));
+        final RoomDto roomDto = new RoomDto(roomName);
+
+        connectService.updateRoomLeave(roomDto);
+        System.out.println(connectService.getRoomPresent(roomDto));
 
         logger.info("User {} leaved {}.\n", roomName, userName);
         return responseService.getPhotonResponse(0);

@@ -20,7 +20,7 @@
     FROM room
     WHERE room_name = #{roomName}
   </select>
-  
+
   <insert id="insertRoom" parameterType="ac.linker.dto.RoomDto" useGeneratedKeys="true" keyProperty="roomNo" keyColumn="global_room_no">
     INSERT INTO room(room_name,room_create_dt)
     VALUES (#{roomName},#{createDate})
@@ -61,6 +61,11 @@
     UPDATE room
     SET room_present = room_present-1
     WHERE room_name=#{roomName}
-      AND room_present > 0
   </update>
+
+  <select id="getRoomPresent" resultType="java.util.HashMap">
+    SELECT room_present
+    FROM room
+    WHERE room_name=#{roomName}
+  </select>
 </mapper>
