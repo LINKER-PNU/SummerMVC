@@ -61,5 +61,6 @@
     UPDATE room
     SET room_present = room_present-1
     WHERE room_name=#{roomName}
+      AND room_present > 0
   </update>
 </mapper>
