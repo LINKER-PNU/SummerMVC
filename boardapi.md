@@ -115,10 +115,11 @@ Title of the board.
 Content of the board.
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="boardDeadline" type="string" required=true %}
+{% api-method-parameter name="boardDeadline" type="string" required=false %}
 Deadline of the board if it is assignment.  
 Format : yyyy-MM-dd hh:mm:ss  
-2020-01-01 00:00:00
+2020-01-01 00:00:00  
+If the board doesn't need deadline, you don't have to send this field.
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="boardNotice" type="boolean" required=true %}
@@ -169,8 +170,11 @@ Title of the board.
 Content of the board.
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="boardDeadline" type="string" required=true %}
-Deadline of the board if it is assignment.
+{% api-method-parameter name="boardDeadline" type="string" required=false %}
+Deadline of the board if it is assignment.  
+Format : yyyy-MM-dd hh:mm:ss  
+2020-01-01 00:00:00  
+If the board doesn't need deadline, you don't have to send this field.
 {% endapi-method-parameter %}
 
 {% api-method-parameter name="boardNotice" type="boolean" required=true %}
@@ -203,7 +207,7 @@ deleteBoard
 {% endapi-method-summary %}
 
 {% api-method-description %}
-Delete board. In fact it just be invisible.
+Delete board. In fact, it just be invisible.
 {% endapi-method-description %}
 
 {% api-method-spec %}
