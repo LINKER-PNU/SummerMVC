@@ -1,7 +1,5 @@
 package ac.linker;
 
-import static org.mockito.ArgumentMatchers.isNull;
-
 import java.util.Optional;
 
 import com.google.gson.Gson;
@@ -54,8 +52,11 @@ public class ConnectionTests {
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
         UserVo userVo = new UserVo();
-        userVo.setAuthToken("authToken");
-        userVo.setDisplayName("displayName");
-        final UserDto userDto = modelMapper.map(userVo, UserDto.class);
+        userVo.setUserId("is");
+        userVo.setAuthToken("authToken3");
+
+        System.out.println(String.format("%s format", "args"));
+
+        // System.out.println(userDto.getUserNo());
     }
 }

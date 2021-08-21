@@ -1,5 +1,6 @@
 package ac.linker.controller;
 
+import java.text.Format;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,9 @@ public class HomeController {
     private Gson gson = new Gson();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private boolean resultStatus;
+    private String resultMessage;
+
     @Autowired
     HomeController(HomeService homeService, ResponseService responseService) {
         this.homeService = homeService;
@@ -49,27 +53,45 @@ public class HomeController {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
         logger.info("userLogin :: {}({}) :: {} :: {}", userVo.getDisplayName(), userVo.getUserId(),
-                (userVo.getSkinRole() == '\0' ? 'N' : userVo.getSkinColor()),
+                (userVo.getSkinRole() == '\0' ? 'N' : userVo.getSkinRole()),
                 (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer"));
 
-        if (userVo.getNewPlayer()) {
-            try {
-                // insert the informations, user registered
+        try {
+            if (userVo.getNewPlayer()) {
+                // User sign up. Insert user.
                 homeService.insertUser(userDto);
-                logger.info("User {} insert complete.\n", userVo.getDisplayName());
-            } catch (Exception e) {
-                logger.error("{} :: Errors on insert query :: insertUser\n", e.toString());
+
+                resultMessage = String.format("User %s insert complete.\n", userVo.getDisplayName());
+                logger.info(resultMessage);
             }
-        } else {
-            try {
-                // update token
+
+            else if (homeService.getUser(userDto).isEmpty()) {
+                // User doesn't exist in DB, but exists in gamesparks. Insert user.
+
+                userDto.setSkinRole('S'); // Skin role is set to student forcibily.
+                homeService.insertUser(userDto);
+
+                resultMessage = String.format("%s doesn't exist in DB... Insert complete.\n", userVo.getDisplayName());
+                logger.warn(resultMessage);
+
+            }
+
+            else {
+                // User exists in DB, user sign in, update token
                 homeService.updateToken(userDto);
-                logger.info("User {} login complete.\n", userVo.getDisplayName());
-            } catch (Exception e) {
-                logger.error("{} :: Errors on insert/update query :: updateToken\n", e.toString());
+
+                resultMessage = String.format("User %s login complete.\n", userVo.getDisplayName());
+                logger.info(resultMessage);
             }
+
+            resultStatus = true;
+        } catch (Exception e) {
+            resultMessage = String.format("%s :: Errors on insert query :: insertUser\n", e.toString());
+            resultStatus = false;
+            logger.error(resultMessage);
         }
-        return responseService.getResultResponse(true);
+
+        return responseService.getResultResponse(resultStatus, resultMessage);
         // send the result by json
     }
 
