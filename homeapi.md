@@ -82,7 +82,8 @@ Id of user.
   ],
   "user_id": "61029561de098611321319d7",
   "result_room": "success",
-  "user_skin_color": 0
+  "user_skin_color": "FFFFFFFF",
+  "user_skin_cloth": ""
 }
 ```
 {% endapi-method-response-example %}
