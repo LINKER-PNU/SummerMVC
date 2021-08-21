@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.TimerDto;
 import ac.linker.service.ResponseService;
 import ac.linker.service.TimerService;
 import ac.linker.vo.TimerVo;
 
+@RestController
 @RequestMapping(value = "/timer")
 public class TimerController {
     private TimerService timerService;
