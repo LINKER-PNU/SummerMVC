@@ -25,6 +25,12 @@
     WHERE user_id=#{userId}
   </update>
 
+  <update id="updateSkinCloth">
+    UPDATE user
+    SET user_skin_cloth=#{skinCloth}
+    WHERE user_id=#{userId}
+  </update>
+
   <select id="getUser" resultType="java.util.HashMap">
     SELECT user_name, user_skin_color, user_skin_role
     FROM user

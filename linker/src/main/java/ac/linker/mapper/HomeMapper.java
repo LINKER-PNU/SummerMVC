@@ -18,6 +18,8 @@ public interface HomeMapper {
 
     void updateSkinColor(UserDto user);
 
+    void updateSkinCloth(UserDto user);
+
     List<Map<String, Object>> getAllUser();
 
     List<Map<String, Object>> getUser(UserDto user);

@@ -14,6 +14,7 @@ public class UserDto {
 
     private String skinColor;
     private char skinRole;
+    private String skinCloth;
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
@@ -33,5 +34,9 @@ public class UserDto {
 
     public void setSkinRole(char skinRole) {
         this.skinRole = skinRole;
+    }
+
+    public void setSkinCloth(String skinCloth) {
+        this.skinCloth = skinCloth;
     }
 }

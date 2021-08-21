@@ -9,14 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import ac.linker.dto.TimerDto;
 import ac.linker.service.ResponseService;
 import ac.linker.service.TimerService;
 import ac.linker.vo.TimerVo;
 
-@RestController
 @RequestMapping(value = "/timer")
 public class TimerController {
     private TimerService timerService;
@@ -48,7 +46,7 @@ public class TimerController {
     // get timer list
     @PostMapping(value = "/list", produces = "application/json; charset=utf8")
     public String getTimers(@RequestBody TimerVo timerVo) {
-        logger.info("getTimers :: {} :: {}", timerVo.getTimerId(), timerVo.getTimerRoom());
+        logger.info("getTimers :: {} :: {}", timerVo.getTimerUser(), timerVo.getTimerRoom());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
 
         final String timers = gson.toJson(timerService.getTimers(timerDto));

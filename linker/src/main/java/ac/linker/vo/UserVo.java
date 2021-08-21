@@ -8,6 +8,7 @@ public class UserVo {
 
     private String skinColor;
     private char skinRole;
+    private String skinCloth;
 
     public String getAuthToken() {
         return this.authToken;
@@ -55,5 +56,13 @@ public class UserVo {
 
     public void setSkinRole(char skinRole) {
         this.skinRole = skinRole;
+    }
+
+    public String getSkinCloth() {
+        return skinCloth;
+    }
+
+    public void setSkinCloth(String skinCloth) {
+        this.skinCloth = skinCloth;
     }
 }
