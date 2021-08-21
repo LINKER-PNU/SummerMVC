@@ -102,11 +102,11 @@ updateSkinColor
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="userId" type="integer" required=true %}
-Id of the user to change skin.
+{% api-method-parameter name="userId" type="string" required=true %}
+Id of the user to change color.
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="skinColor" type="integer" required=true %}
+{% api-method-parameter name="skinColor" type="string" required=true %}
 Color you set.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
@@ -119,6 +119,42 @@ Color you set.
 {% endapi-method-response-example-description %}
 
 ```text
+{ "result" : true }
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/cloth" %}
+{% api-method-summary %}
+updateSkinCloth
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="userId" type="string" required=true %}
+Id of the user to change cloth
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="skinCloth" type="string" required=true %}
+Cloth you set.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
 { "result" : true }
 ```
 {% endapi-method-response-example %}
