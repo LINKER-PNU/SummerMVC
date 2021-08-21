@@ -33,7 +33,8 @@ public class TimerController {
     // add timer
     @PostMapping(value = "/add", produces = "application/json; charset=utf8")
     public String addTimer(@RequestBody TimerVo timerVo) {
-        logger.info("addTimer :: {} :: {} :: {}",timerVo.getTimerRoom(),timerVo.getTimerUser(),timerVo.getTimerSubject());
+        logger.info("addTimer :: {} :: {} :: {}", timerVo.getTimerRoom(), timerVo.getTimerUser(),
+                timerVo.getTimerSubject());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
 
         timerService.insertTimer(timerDto);
@@ -45,7 +46,7 @@ public class TimerController {
     // get timer list
     @PostMapping(value = "/list", produces = "application/json; charset=utf8")
     public String getTimers(@RequestBody TimerVo timerVo) {
-        logger.info("getTimers :: {} :: {}", timerVo.getTimerId(),timerVo.getTimerRoom());
+        logger.info("getTimers :: {} :: {}", timerVo.getTimerUser(), timerVo.getTimerRoom());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
 
         final String timers = gson.toJson(timerService.getTimers(timerDto));
