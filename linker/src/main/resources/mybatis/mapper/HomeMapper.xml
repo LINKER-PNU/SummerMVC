@@ -32,7 +32,7 @@
   </update>
 
   <select id="getUser" resultType="java.util.HashMap">
-    SELECT user_name, user_skin_color, user_skin_role
+    SELECT user_name, user_skin_color, user_skin_role, user_skin_cloth
     FROM user
     WHERE user_id=#{userId};
   </select>

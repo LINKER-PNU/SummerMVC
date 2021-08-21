@@ -94,6 +94,7 @@ public class HomeController {
             userInfo.put("user_name", userResult.get(0).get("user_name"));
             userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
             userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
+            userInfo.put("user_skin_cloth", userResult.get(0).get("user_skin_cloth"));
         } else {
             userInfo.put("result_user", "empty set");
         }
