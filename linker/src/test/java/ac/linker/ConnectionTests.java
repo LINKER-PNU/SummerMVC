@@ -53,6 +53,9 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        System.out.println(connectService.getRoomPresent(new RoomDto("1")));// .get(0).get("roomPresent"));
+        UserVo userVo = new UserVo();
+        userVo.setAuthToken("authToken");
+        userVo.setDisplayName("displayName");
+        final UserDto userDto = modelMapper.map(userVo, UserDto.class);
     }
 }

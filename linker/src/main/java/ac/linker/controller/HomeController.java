@@ -124,4 +124,15 @@ public class HomeController {
         logger.info("User skin color update complete.\n");
         return responseService.getResultResponse(true);
     }
+
+    @PostMapping(value = "/cloth", produces = "application/json; charset=utf8")
+    public String updateSkinCloth(@RequestBody UserVo userVo) {
+        final UserDto userDto = modelMapper.map(userVo, UserDto.class);
+
+        logger.info("updateSkinColor :: {} :: {}", userVo.getUserId(), userVo.getSkinCloth());
+        homeService.updateSkinCloth(userDto);
+
+        logger.info("User skin cloth update complete.\n");
+        return responseService.getResultResponse(true);
+    }
 }
