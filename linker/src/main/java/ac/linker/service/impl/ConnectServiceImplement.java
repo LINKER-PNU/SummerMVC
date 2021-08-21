@@ -55,4 +55,8 @@ public class ConnectServiceImplement implements ConnectService {
     public void updateRoomLeave(RoomDto room) {
         connectMapper.updateRoomLeave(room);
     }
+
+    public Map<String, Object> getRoomPresent(RoomDto room) {
+        return connectMapper.getRoomPresent(room);
+    }
 }

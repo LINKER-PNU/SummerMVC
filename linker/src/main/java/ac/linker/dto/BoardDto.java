@@ -14,7 +14,7 @@ public class BoardDto {
 
     private String boardWriteDt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     private String boardEditDt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-    private String boardDeadline;
+    private String boardDeadline = "0000-01-01 00:00:00";
 
     private boolean boardNotice;
     private boolean boardAssignment;

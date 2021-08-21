@@ -53,7 +53,6 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        BoardVo boardVo = new BoardVo();
-        BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
+        System.out.println(connectService.getRoomPresent(new RoomDto("1")));// .get(0).get("roomPresent"));
     }
 }

@@ -17,12 +17,9 @@ CREATE TABLE user(
     user_id NVARCHAR(50) NOT NULL DEFAULT "",
     user_skin_color VARCHAR(10) NOT NULL DEFAULT "FFFFFFFF",
     user_skin_role CHAR(1) NOT NULL DEFAULT "S",
+    user_skin_cloth VARCHAR(10) NOT NULL DEFAULT "",
     user_join_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00"
 );
-/*
-alter table user add user_skin_role CHAR(1) NOT NULL DEFAULT "S";
-alter table user add user_skin_color INT NOT NULL DEFAULT 0;
-*/
 
 CREATE TABLE room(
     global_room_no INT PRIMARY KEY AUTO_INCREMENT,
@@ -32,12 +29,8 @@ CREATE TABLE room(
     room_max INT NOT NULL DEFAULT 0,
     room_create_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
     room_agora_uid VARCHAR(20) NOT NULL DEFAULT "",
-    room_agora_token VARCHAR(139) NOT NULL DEFAULT ""
+    room_agora_token VARCHAR(140) NOT NULL DEFAULT ""
 );
-/*
-alter table room add room_agora_uid varchar(20) NOT NULL DEFAULT "";
-alter table room add room_agora_token varchar(140) NOT NULL DEFAULT "";
-*/
 
 CREATE TABLE joining( /*match user and room*/
     joining_user_no INT NOT NULL DEFAULT "0",
