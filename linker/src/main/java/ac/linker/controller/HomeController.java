@@ -1,6 +1,5 @@
 package ac.linker.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +7,6 @@ import java.util.Optional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;

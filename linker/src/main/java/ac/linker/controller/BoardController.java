@@ -67,7 +67,7 @@ public class BoardController {
         boardService.insertBoard(boardDto);
 
         logger.info("Board insert complete.\n");
-        return responseService.getResultResponse(true);
+        return responseService.getResultResponse(200);
     }
 
     // edit board
@@ -79,7 +79,7 @@ public class BoardController {
         boardService.editBoard(boardDto);
 
         logger.info("Board edit complete.\n");
-        return responseService.getResultResponse(true);
+        return responseService.getResultResponse(200);
     }
 
     // delete(deactivate) board
@@ -91,6 +91,6 @@ public class BoardController {
         boardService.invisibleBoard(boardDto);
 
         logger.info("Board deactivate complete.\n");
-        return responseService.getResultResponse(true);
+        return responseService.getResultResponse(200);
     }
 }
