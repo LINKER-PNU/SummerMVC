@@ -43,6 +43,7 @@ Sign up/in complete successfully.
 ```text
 { "result" : 200 }
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=500 %}
@@ -53,6 +54,7 @@ Something is wrong at requestion on DB.
 ```
 { "result" : 500 }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -96,6 +98,7 @@ Response existing user information successfully.
   "result": 200
 }
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=400 %}
@@ -109,6 +112,7 @@ Rest of all is fine, but there is no user client requests on DB.
     "result": 400
 }
 ```
+
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=500 %}
@@ -119,6 +123,7 @@ Something is wrong at requestion at DB.
 ```
 { "result" : 500 }
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -155,6 +160,18 @@ Update user's skin color successfully.
 ```text
 { "result" : 200 }
 ```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```
+{ "result" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -189,10 +206,21 @@ Cloth you set.
 {% endapi-method-response-example-description %}
 
 ```
-{ "result" : true }
+{ "result" : 200 }
 ```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```
+{ "result" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-
