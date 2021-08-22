@@ -1,11 +1,14 @@
 package ac.linker.controller;
 
-import java.text.Format;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -30,8 +33,7 @@ public class HomeController {
     private Gson gson = new Gson();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private boolean resultStatus;
-    private String resultMessage;
+    private int resultStatus;
 
     @Autowired
     HomeController(HomeService homeService, ResponseService responseService) {
@@ -61,8 +63,7 @@ public class HomeController {
                 // User sign up. Insert user.
                 homeService.insertUser(userDto);
 
-                resultMessage = String.format("User %s insert complete.\n", userVo.getDisplayName());
-                logger.info(resultMessage);
+                logger.info(String.format("User %s insert complete.\n", userVo.getDisplayName()));
             }
 
             else if (homeService.getUser(userDto).isEmpty()) {
@@ -71,27 +72,23 @@ public class HomeController {
                 userDto.setSkinRole('S'); // Skin role is set to student forcibily.
                 homeService.insertUser(userDto);
 
-                resultMessage = String.format("%s doesn't exist in DB... Insert complete.\n", userVo.getDisplayName());
-                logger.warn(resultMessage);
+                logger.warn(String.format("%s doesn't exist in DB... Insert complete.\n", userVo.getDisplayName()));
 
             }
 
             else {
                 // User exists in DB, user sign in, update token
                 homeService.updateToken(userDto);
-
-                resultMessage = String.format("User %s login complete.\n", userVo.getDisplayName());
-                logger.info(resultMessage);
+                logger.info(String.format("User %s login complete.\n", userVo.getDisplayName()));
             }
 
-            resultStatus = true;
+            resultStatus = 200;
         } catch (Exception e) {
-            resultMessage = String.format("%s :: Errors on insert query :: insertUser\n", e.toString());
-            resultStatus = false;
-            logger.error(resultMessage);
+            resultStatus = 500;
+            logger.error(String.format("%s :: Errors on insert query :: insertUser\n", e.toString()));
         }
 
-        return responseService.getResultResponse(resultStatus, resultMessage);
+        return responseService.getResultResponse(resultStatus);
         // send the result by json
     }
 
@@ -101,39 +98,40 @@ public class HomeController {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
         logger.info("getUserInfo :: {}", userVo.getUserId());
 
-        Map<String, Object> userInfo = new HashMap<String, Object>();
+        Optional<Map<String, Object>> userOptional;
+        List<Map<String, Object>> userRoomResult;
 
-        final List<Map<String, Object>> userResult;
         try {
-            userResult = homeService.getUser(userDto);
+            // select user name, skin
+            userOptional = Optional.ofNullable(homeService.getUser(userDto));
+            if (userOptional.isPresent()) {
+                resultStatus = 200;
+            } else {
+                // if there is not user client requests
+                resultStatus = 400;
+            }
         } catch (Exception e) {
-            logger.error("{} :: Errors on select query :: getUser\n", e.toString());
-            return responseService.getResultResponse(false);
+            logger.error(String.format("%s :: Errors on select query :: getUser\n", e.toString()));
+            resultStatus = 500;
+            return responseService.getResultResponse(resultStatus);
         }
 
-        if (!userResult.isEmpty()) {
-            userInfo.put("result_user", "success");
-            userInfo.put("user_name", userResult.get(0).get("user_name"));
-            userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
-            userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
-            userInfo.put("user_skin_cloth", userResult.get(0).get("user_skin_cloth"));
-        } else {
-            userInfo.put("result_user", "empty set");
+        try {
+            // select room list
+            userRoomResult = homeService.getRoom(userDto);
+        } catch (Exception e) {
+            logger.error(String.format("%s :: Errors on select query :: getRoom\n", e.toString()));
+            resultStatus = 500;
+            return responseService.getResultResponse(resultStatus);
         }
 
-        final List<Map<String, Object>> userRoomResult = homeService.getRoom(userDto);
-        if (!userRoomResult.isEmpty()) {
-            userInfo.put("result_room", "success");
-            userInfo.put("user_room", userRoomResult);
-        } else {
-            userInfo.put("result_room", "empty set");
-        }
-        // select username, skin, roomlists
+        // convert map result to json object
+        JsonObject userJsonObject = gson.toJsonTree(userOptional.orElse(new HashMap<>())).getAsJsonObject();
+        userJsonObject.add("user_room", gson.toJsonTree(userRoomResult).getAsJsonArray());
+        userJsonObject.addProperty("result", resultStatus);
 
-        final String userInfoJson = gson.toJson(userInfo); // need rewrite
-        logger.info("User {} select complete.\n", userInfo.get("user_name"));
-
-        return userInfoJson;
+        logger.info("User {} select complete.\n", userJsonObject.get("user_name"));
+        return userJsonObject.toString();
     }
 
     // update skin color and role
@@ -145,7 +143,7 @@ public class HomeController {
         homeService.updateSkinColor(userDto);
 
         logger.info("User skin color update complete.\n");
-        return responseService.getResultResponse(true);
+        return responseService.getResultResponse(200);
     }
 
     @PostMapping(value = "/cloth", produces = "application/json; charset=utf8")
@@ -156,6 +154,6 @@ public class HomeController {
         homeService.updateSkinCloth(userDto);
 
         logger.info("User skin cloth update complete.\n");
-        return responseService.getResultResponse(true);
+        return responseService.getResultResponse(200);
     }
 }

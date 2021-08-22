@@ -39,7 +39,7 @@ public class HomeServiceImplement implements HomeService {
         return homeMapper.getAllUser();
     }
 
-    public List<Map<String, Object>> getUser(UserDto user) {
+    public Map<String, Object> getUser(UserDto user) {
         return homeMapper.getUser(user);
     }
 

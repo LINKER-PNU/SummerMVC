@@ -17,7 +17,7 @@ public interface HomeService {
 
     List<Map<String, Object>> getAllUser();
 
-    List<Map<String, Object>> getUser(UserDto user);
+    Map<String, Object> getUser(UserDto user);
 
     List<Map<String, Object>> getSkin(UserDto user);
 

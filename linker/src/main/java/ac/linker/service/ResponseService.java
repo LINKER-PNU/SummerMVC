@@ -1,5 +1,6 @@
 package ac.linker.service;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import org.springframework.stereotype.Service;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ResponseService {
     private JsonObject jsonObject = new JsonObject();
+    private Gson gson = new Gson();
 
     public String getPhotonResponse(final int status) {
         jsonObject = new JsonObject();
@@ -18,12 +20,14 @@ public class ResponseService {
         return jsonObject.toString();
     }
 
-    public String getResultResponse(final boolean result, final String message) {
+    public String getResultResponse(final int result) {
         jsonObject = new JsonObject();
         jsonObject.addProperty("result", result);
-        jsonObject.addProperty("message", message);
+        /*
+         * 200 : OK 400 : Not found 500 : Server query error
+         */
 
-        return jsonObject.toString();
+        return gson.toJson(jsonObject);
     }
 
     // private String getMethodResponse(final String methodName){
