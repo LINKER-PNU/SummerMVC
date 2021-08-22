@@ -140,20 +140,34 @@ public class HomeController {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
         logger.info("updateSkinColor :: {} :: {}", userVo.getUserId(), userVo.getSkinColor());
-        homeService.updateSkinColor(userDto);
 
-        logger.info("User skin color update complete.\n");
-        return responseService.getResultResponse(200);
+        try {
+            homeService.updateSkinColor(userDto);
+            resultStatus = 200;
+            logger.info("User skin color update complete.\n");
+        } catch (Exception e) {
+            resultStatus = 500;
+            logger.error("{} :: Errors on select query :: updateSkinColor\n", e.toString());
+        }
+
+        return responseService.getResultResponse(resultStatus);
     }
 
     @PostMapping(value = "/cloth", produces = "application/json; charset=utf8")
     public String updateSkinCloth(@RequestBody UserVo userVo) {
-        final UserDto userDto = modelMapper.map(userVo, UserDto.class);
+        UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
         logger.info("updateSkinColor :: {} :: {}", userVo.getUserId(), userVo.getSkinCloth());
-        homeService.updateSkinCloth(userDto);
 
-        logger.info("User skin cloth update complete.\n");
-        return responseService.getResultResponse(200);
+        try {
+            homeService.updateSkinCloth(userDto);
+            resultStatus = 200;
+            logger.info("User skin cloth update complete.\n");
+        } catch (Exception e) {
+            resultStatus = 500;
+            logger.error("{} :: Errors on select query :: updateSkinCloth\n", e.toString());
+        }
+
+        return responseService.getResultResponse(resultStatus);
     }
 }
