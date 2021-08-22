@@ -62,16 +62,13 @@ public class HomeController {
             if (userVo.getNewPlayer()) {
                 // User sign up. Insert user.
                 homeService.insertUser(userDto);
-
                 logger.info(String.format("User %s insert complete.\n", userVo.getDisplayName()));
             }
 
             else if (homeService.getUser(userDto).isEmpty()) {
                 // User doesn't exist in DB, but exists in gamesparks. Insert user.
-
                 userDto.setSkinRole('S'); // Skin role is set to student forcibily.
                 homeService.insertUser(userDto);
-
                 logger.warn(String.format("%s doesn't exist in DB... Insert complete.\n", userVo.getDisplayName()));
 
             }
