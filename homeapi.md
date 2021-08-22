@@ -37,11 +37,21 @@ Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-Cake successfully retrieved.
+Sign up/in complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "result" : 200 }
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```
+{ "result" : 500 }
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
@@ -69,22 +79,45 @@ Id of user.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Response existing user information successfully.
 {% endapi-method-response-example-description %}
 
 ```text
 {
-  "result_user": "success",
   "user_skin_role": "S",
   "user_room": [
     { "room_present": 0, "room_max": 3, "room_name": "linker_test" },
     { "room_present": 0, "room_max": 1, "room_name": "새로운방" }
   ],
-  "user_id": "61029561de098611321319d7",
+  "user_name": "2TEST",
   "result_room": "success",
   "user_skin_color": "FFFFFFFF",
   "user_skin_cloth": ""
+  "result": 200
 }
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=400 %}
+{% api-method-response-example-description %}
+Rest of all is fine, but there is no user client requests on DB.
+{% endapi-method-response-example-description %}
+
+```
+{
+    "user_room": []
+    "result": 400
+}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion at DB.
+{% endapi-method-response-example-description %}
+
+```
+{ "result" : 500 }
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
@@ -116,11 +149,11 @@ Color you set.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Update user's skin color successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "result" : 200 }
 ```
 {% endapi-method-response-example %}
 {% endapi-method-response %}
