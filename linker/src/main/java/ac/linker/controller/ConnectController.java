@@ -66,7 +66,7 @@ public class ConnectController {
                     roomDto.setCode(roomCode);
 
                     connectService.updateRoomCode(roomDto);
-                    logger.info("Room code {} is set on room {}", roomCode, roomName);
+                    logger.info("Room code {} is set on room {}.", roomCode, roomName);
 
                     break;
                 } catch (DuplicateKeyException e) { // prevent duplicated code.
@@ -108,8 +108,11 @@ public class ConnectController {
             logger.info("User {} joined in {}.\n", userName, roomName);
         } catch (DuplicateKeyException e) {
             connectService.updateRoomJoin(roomDto);
-            System.out.println(connectService.getRoomPresent(roomDto));
+            // System.out.println(connectService.getRoomPresent(roomDto));
             logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
+        } catch (DataIntegrityViolationException s) {
+            logger.error("User {} is not in table user! Joining room is failed.\n", userName);
+            return responseService.getPhotonResponse(3);
         }
 
         return responseService.getPhotonResponse(0);

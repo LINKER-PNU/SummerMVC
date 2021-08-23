@@ -3,8 +3,10 @@ package ac.linker.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -29,6 +31,8 @@ public class HomeController {
     private Gson gson = new Gson();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private int resultCode;
+
     @Autowired
     HomeController(HomeService homeService, ResponseService responseService) {
         this.homeService = homeService;
@@ -49,27 +53,37 @@ public class HomeController {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
         logger.info("userLogin :: {}({}) :: {} :: {}", userVo.getDisplayName(), userVo.getUserId(),
-                (userVo.getSkinRole() == '\0' ? 'N' : userVo.getSkinColor()),
+                (userVo.getSkinRole() == '\0' ? 'N' : userVo.getSkinRole()),
                 (userVo.getNewPlayer() ? "newPlayer" : "oldPlayer"));
 
-        if (userVo.getNewPlayer()) {
-            try {
-                // insert the informations, user registered
+        try {
+            if (userVo.getNewPlayer()) {
+                // User sign up. Insert user.
                 homeService.insertUser(userDto);
                 logger.info("User {} insert complete.\n", userVo.getDisplayName());
-            } catch (Exception e) {
-                logger.error("{} :: Errors on insert query :: insertUser\n", e.toString());
             }
-        } else {
-            try {
-                // update token
+
+            else if (homeService.getUser(userDto).isEmpty()) {
+                // User doesn't exist in DB, but exists in gamesparks. Insert user.
+                userDto.setSkinRole('S'); // Skin role is set to student forcibily.
+                homeService.insertUser(userDto);
+                logger.warn("{} doesn't exist in DB... Insert complete.\n", userVo.getDisplayName());
+
+            }
+
+            else {
+                // User exists in DB, user sign in, update token
                 homeService.updateToken(userDto);
                 logger.info("User {} login complete.\n", userVo.getDisplayName());
-            } catch (Exception e) {
-                logger.error("{} :: Errors on insert/update query :: updateToken\n", e.toString());
             }
+
+            resultCode = 200;
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on insert query :: insertUser\n", e.toString());
         }
-        return responseService.getResultResponse(true);
+
+        return responseService.getResultResponse(resultCode);
         // send the result by json
     }
 
@@ -79,39 +93,40 @@ public class HomeController {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
         logger.info("getUserInfo :: {}", userVo.getUserId());
 
-        Map<String, Object> userInfo = new HashMap<String, Object>();
+        Optional<Map<String, Object>> userOptional;
+        List<Map<String, Object>> userRoomResult;
 
-        final List<Map<String, Object>> userResult;
         try {
-            userResult = homeService.getUser(userDto);
+            // select user name, skin
+            userOptional = Optional.ofNullable(homeService.getUser(userDto));
+            if (userOptional.isPresent()) {
+                resultCode = 200;
+            } else {
+                // if there is not user client requests
+                resultCode = 400;
+            }
         } catch (Exception e) {
             logger.error("{} :: Errors on select query :: getUser\n", e.toString());
-            return responseService.getResultResponse(false);
+            resultCode = 500;
+            return responseService.getResultResponse(resultCode);
         }
 
-        if (!userResult.isEmpty()) {
-            userInfo.put("result_user", "success");
-            userInfo.put("user_name", userResult.get(0).get("user_name"));
-            userInfo.put("user_skin_color", userResult.get(0).get("user_skin_color"));
-            userInfo.put("user_skin_role", userResult.get(0).get("user_skin_role"));
-            userInfo.put("user_skin_cloth", userResult.get(0).get("user_skin_cloth"));
-        } else {
-            userInfo.put("result_user", "empty set");
+        try {
+            // select room list
+            userRoomResult = homeService.getRoom(userDto);
+        } catch (Exception e) {
+            logger.error("{} :: Errors on select query :: getRoom\n", e.toString());
+            resultCode = 500;
+            return responseService.getResultResponse(resultCode);
         }
 
-        final List<Map<String, Object>> userRoomResult = homeService.getRoom(userDto);
-        if (!userRoomResult.isEmpty()) {
-            userInfo.put("result_room", "success");
-            userInfo.put("user_room", userRoomResult);
-        } else {
-            userInfo.put("result_room", "empty set");
-        }
-        // select username, skin, roomlists
+        // convert map result to json object
+        JsonObject userJsonObject = gson.toJsonTree(userOptional.orElse(new HashMap<>())).getAsJsonObject();
+        userJsonObject.add("user_room", gson.toJsonTree(userRoomResult).getAsJsonArray());
+        userJsonObject.addProperty("resultCode", resultCode);
 
-        final String userInfoJson = gson.toJson(userInfo); // need rewrite
-        logger.info("User {} select complete.\n", userInfo.get("user_name"));
-
-        return userInfoJson;
+        logger.info("User {} select complete.\n", userJsonObject.get("user_name"));
+        return userJsonObject.toString();
     }
 
     // update skin color and role
@@ -120,20 +135,34 @@ public class HomeController {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
         logger.info("updateSkinColor :: {} :: {}", userVo.getUserId(), userVo.getSkinColor());
-        homeService.updateSkinColor(userDto);
 
-        logger.info("User skin color update complete.\n");
-        return responseService.getResultResponse(true);
+        try {
+            homeService.updateSkinColor(userDto);
+            resultCode = 200;
+            logger.info("User skin color update complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on select query :: updateSkinColor\n", e.toString());
+        }
+
+        return responseService.getResultResponse(resultCode);
     }
 
     @PostMapping(value = "/cloth", produces = "application/json; charset=utf8")
     public String updateSkinCloth(@RequestBody UserVo userVo) {
-        final UserDto userDto = modelMapper.map(userVo, UserDto.class);
+        UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
         logger.info("updateSkinColor :: {} :: {}", userVo.getUserId(), userVo.getSkinCloth());
-        homeService.updateSkinCloth(userDto);
 
-        logger.info("User skin cloth update complete.\n");
-        return responseService.getResultResponse(true);
+        try {
+            homeService.updateSkinCloth(userDto);
+            resultCode = 200;
+            logger.info("User skin cloth update complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on select query :: updateSkinCloth\n", e.toString());
+        }
+
+        return responseService.getResultResponse(resultCode);
     }
 }
