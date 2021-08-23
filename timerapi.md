@@ -35,8 +35,8 @@ Timer insert complete successfully.
 ```text
 { "resultCode" : 200 }
 ```
-
 {% endapi-method-response-example %}
+
 {% api-method-response-example httpCode=500 %}
 {% api-method-response-example-description %}
 Something is wrong at requestion on DB.
@@ -45,7 +45,6 @@ Something is wrong at requestion on DB.
 ```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -85,7 +84,6 @@ Response timer information complete successfully.
   { "timerId": 4, "timerSubject": "timerSubject3", "timerStudyTime": 0 }
 ]
 ```
-
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=500 %}
@@ -96,7 +94,6 @@ Something is wrong at requestion on DB.
 ```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -133,8 +130,8 @@ Timer stopped successfully.
 ```text
 { "resultCode" : 200 }
 ```
-
 {% endapi-method-response-example %}
+
 {% api-method-response-example httpCode=500 %}
 {% api-method-response-example-description %}
 Something is wrong at requestion on DB.
@@ -143,7 +140,6 @@ Something is wrong at requestion on DB.
 ```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -174,14 +170,14 @@ Subject name to edit.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-Timer editting complete successfully.
+Timer edit complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
 { "resultCode" : 200 }
 ```
-
 {% endapi-method-response-example %}
+
 {% api-method-response-example httpCode=500 %}
 {% api-method-response-example-description %}
 Something is wrong at requestion on DB.
@@ -190,7 +186,6 @@ Something is wrong at requestion on DB.
 ```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -223,8 +218,8 @@ Timer remove complete successfully.
 ```text
 { "resultCode" : 200 }
 ```
-
 {% endapi-method-response-example %}
+
 {% api-method-response-example httpCode=500 %}
 {% api-method-response-example-description %}
 Something is wrong at requestion on DB.
@@ -233,8 +228,8 @@ Something is wrong at requestion on DB.
 ```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
