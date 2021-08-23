@@ -21,7 +21,7 @@ Room name, where the boards belong.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Response boards information complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
@@ -164,7 +164,7 @@ Is the board assignment.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-Board insertion complete successfully.
+Board insert complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
@@ -232,7 +232,7 @@ Is the board assignment.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-Board editing complete successfully.
+Board edit complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
@@ -276,7 +276,7 @@ Id of the board you deleted.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-Board deletion complete successfully.
+Board delete complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text

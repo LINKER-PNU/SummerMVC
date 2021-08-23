@@ -29,12 +29,23 @@ Subject name of this timer.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-Cake successfully retrieved.
+Timer insert complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
+{% endapi-method-response-example %}
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -65,7 +76,7 @@ Room where this user belongs to.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Response timer information complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
@@ -74,6 +85,18 @@ Room where this user belongs to.
   { "timerId": 4, "timerSubject": "timerSubject3", "timerStudyTime": 0 }
 ]
 ```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -104,12 +127,23 @@ Study time\(second\) at this moment.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Timer stopped successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
+{% endapi-method-response-example %}
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -140,12 +174,23 @@ Subject name to edit.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Timer editting complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
+{% endapi-method-response-example %}
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -172,14 +217,24 @@ ID of the timer to remove.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Timer remove complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
+{% endapi-method-response-example %}
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-
