@@ -48,8 +48,11 @@ Room name, where the boards belong.
     boardWriteDt: "2000-01-01 00:00:00"
     boardWriter: "name2"
     boardWriterId: "id2"
-}]}
+}],
+ resultCode : 200
+}
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -82,8 +85,34 @@ Response content as string, not json format.
 ```
 Hello world!
 ```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
+
+{% api-method-response-example httpCode=400 %}
+{% api-method-response-example-description %}
+Response content as string, not json format.
+{% endapi-method-response-example-description %}
+
+```
+WARN 400, there is no content or board. One of those is null.
+```
+
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Response content as string, not json format.
+{% endapi-method-response-example-description %}
+
+```
+ERROR 500, failed to request query to DB...
+```
+
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+
 {% endapi-method-spec %}
 {% endapi-method %}
 
@@ -135,13 +164,26 @@ Is the board assignment.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Board insertion complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
 {% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 500 }
+```
+
+{% endapi-method-response-example %}
+
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
@@ -190,12 +232,24 @@ Is the board assignment.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Board editing complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -222,14 +276,25 @@ Id of the board you deleted.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Board deletion complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-
