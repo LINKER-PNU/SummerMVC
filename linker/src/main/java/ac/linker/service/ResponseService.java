@@ -22,7 +22,7 @@ public class ResponseService {
 
     public String getResultResponse(final int result) {
         jsonObject = new JsonObject();
-        jsonObject.addProperty("result", result);
+        jsonObject.addProperty("resultCode", result);
         /*
          * 200 : OK 400 : Not found 500 : Server query error
          */

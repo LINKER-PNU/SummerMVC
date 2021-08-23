@@ -1,5 +1,7 @@
 package ac.linker.controller;
 
+import java.util.Optional;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -27,6 +29,8 @@ public class BoardController {
     private ModelMapper modelMapper = new ModelMapper();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private int resultCode;
+
     @Autowired
     BoardController(BoardService boardService, ResponseService responseService) {
         this.boardService = boardService;
@@ -39,12 +43,21 @@ public class BoardController {
         logger.info("getBoards :: {}", boardVo.getBoardRoom());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-        final JsonObject jsonObject = new JsonObject();
+        final JsonObject boardJsonObject = new JsonObject();
 
-        jsonObject.add("result", gson.toJsonTree(boardService.getBoards(boardDto)).getAsJsonArray());
-        logger.info("Boards select complete.\n");
+        try {
+            boardJsonObject.add("result", gson.toJsonTree(boardService.getBoards(boardDto)).getAsJsonArray());
+            resultCode = 200;
+            logger.info("Boards select complete.\n");
+        } catch (Exception e) {
+            logger.error("{} :: Errors on select query :: getBoards\n", e.toString());
+            resultCode = 500;
+            return responseService.getResultResponse(resultCode);
+        }
 
-        return jsonObject.toString();
+        boardJsonObject.addProperty("resultCode", resultCode);
+
+        return boardJsonObject.toString();
     }
 
     // click board
@@ -53,8 +66,25 @@ public class BoardController {
         logger.info("getBoardContent :: {}", boardVo.getBoardId());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-        logger.info("Content select complete.\n");
-        return boardService.getBoardContent(boardDto).getBoardContent();
+        String boardContent;
+
+        try {
+            boardContent = boardService.getBoardContent(boardDto).getBoardContent();
+
+        } catch (Exception e) {
+            boardContent = "ERROR 500, failed to request query to DB...";
+            logger.error("{} :: Errors on select query :: getBoardContent\n", e.toString());
+        }
+
+        Optional<String> contentOptional = Optional.ofNullable(boardContent);
+
+        if (contentOptional.isPresent()) {
+            logger.info("Content select complete.\n");
+        } else {
+            logger.warn("Board id or content client requests is not exist!");
+        }
+
+        return contentOptional.orElse("WARN 400, there is no content or board. One of those is null.");
     }
 
     // write board
@@ -64,10 +94,16 @@ public class BoardController {
                 boardVo.getBoardWriterId());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-        boardService.insertBoard(boardDto);
+        try {
+            boardService.insertBoard(boardDto);
+            resultCode = 200;
+            logger.info("Board insert complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on insert query :: insertBoard\n", e.toString());
+        }
 
-        logger.info("Board insert complete.\n");
-        return responseService.getResultResponse(200);
+        return responseService.getResultResponse(resultCode);
     }
 
     // edit board
@@ -76,10 +112,17 @@ public class BoardController {
         logger.info("editBoard :: {}", boardVo.getBoardId());
 
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
-        boardService.editBoard(boardDto);
 
-        logger.info("Board edit complete.\n");
-        return responseService.getResultResponse(200);
+        try {
+            boardService.editBoard(boardDto);
+            resultCode = 200;
+            logger.info("Board edit complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on update query :: editBoard\n", e.toString());
+        }
+
+        return responseService.getResultResponse(resultCode);
     }
 
     // delete(deactivate) board
@@ -88,9 +131,15 @@ public class BoardController {
         logger.info("deleteBoard :: {}", boardVo.getBoardId());
         BoardDto boardDto = modelMapper.map(boardVo, BoardDto.class);
 
-        boardService.invisibleBoard(boardDto);
+        try {
+            boardService.invisibleBoard(boardDto);
+            resultCode = 200;
+            logger.info("Board deactivate complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on update query :: deleteBoard\n", e.toString());
+        }
 
-        logger.info("Board deactivate complete.\n");
-        return responseService.getResultResponse(200);
+        return responseService.getResultResponse(resultCode);
     }
 }
