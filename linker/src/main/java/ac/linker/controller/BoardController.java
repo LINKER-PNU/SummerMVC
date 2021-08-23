@@ -52,7 +52,6 @@ public class BoardController {
         } catch (Exception e) {
             logger.error("{} :: Errors on select query :: getBoards\n", e.toString());
             resultCode = 500;
-            return responseService.getResultResponse(resultCode);
         }
 
         boardJsonObject.addProperty("resultCode", resultCode);

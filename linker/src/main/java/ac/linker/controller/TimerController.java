@@ -26,6 +26,8 @@ public class TimerController {
     private ModelMapper modelMapper = new ModelMapper();
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    private int resultCode;
+
     @Autowired
     TimerController(TimerService timerService, ResponseService responseService) {
         this.timerService = timerService;
@@ -39,10 +41,16 @@ public class TimerController {
                 timerVo.getTimerSubject());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
 
-        timerService.insertTimer(timerDto);
+        try {
+            timerService.insertTimer(timerDto);
+            resultCode = 200;
+            logger.info("Timer subject insert complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on insert query :: addTimer\n", e.toString());
+        }
 
-        logger.info("Timer subject insert complete.\n");
-        return responseService.getResultResponse(true);
+        return responseService.getResultResponse(resultCode);
     }
 
     // get timer list
@@ -50,9 +58,17 @@ public class TimerController {
     public String getTimers(@RequestBody TimerVo timerVo) {
         logger.info("getTimers :: {} :: {}", timerVo.getTimerUser(), timerVo.getTimerRoom());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
+        final String timers;
 
-        final String timers = gson.toJson(timerService.getTimers(timerDto));
-        logger.info("Timers select complete.\n");
+        try {
+            timers = gson.toJson(timerService.getTimers(timerDto));
+            logger.info("Timers select complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on select query :: getTimers\n", e.toString());
+            return responseService.getResultResponse(resultCode);
+        }
+
         return timers;
     }
 
@@ -62,10 +78,16 @@ public class TimerController {
         logger.info("stopTimer :: {}", timerVo.getTimerId());
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
 
-        timerService.accumTimer(timerDto);
-        logger.info("Timer stopped and update complete.\n");
+        try {
+            timerService.accumTimer(timerDto);
+            resultCode = 200;
+            logger.info("Timer stopped and update complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on update query :: stopTimer\n", e.toString());
+        }
 
-        return responseService.getResultResponse(true);
+        return responseService.getResultResponse(resultCode);
     }
 
     // edit timer
@@ -74,10 +96,16 @@ public class TimerController {
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
         logger.info("editTimer :: {}", timerVo.getTimerId());
 
-        timerService.editTimer(timerDto);
-        logger.info("Timer subject edit complete.\n");
+        try {
+            timerService.editTimer(timerDto);
+            resultCode = 200;
+            logger.info("Timer subject edit complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on update query :: editTimer\n", e.toString());
+        }
 
-        return responseService.getResultResponse(true);
+        return responseService.getResultResponse(resultCode);
     }
 
     // delete timer
@@ -86,9 +114,14 @@ public class TimerController {
         TimerDto timerDto = modelMapper.map(timerVo, TimerDto.class);
         logger.info("removeTimer :: {}", timerVo.getTimerId());
 
-        timerService.deleteTimer(timerDto);
-        logger.info("Timer delete complete.\n");
-
-        return responseService.getResultResponse(true);
+        try {
+            timerService.deleteTimer(timerDto);
+            resultCode = 200;
+            logger.info("Timer delete complete.\n");
+        } catch (Exception e) {
+            resultCode = 500;
+            logger.error("{} :: Errors on delete query :: removeTimer\n", e.toString());
+        }
+        return responseService.getResultResponse(resultCode);
     }
 }
