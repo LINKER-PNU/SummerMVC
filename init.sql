@@ -17,8 +17,8 @@ CREATE TABLE user(
     user_id NVARCHAR(50) NOT NULL DEFAULT "",
     user_skin_color VARCHAR(10) NOT NULL DEFAULT "FFFFFFFF",
     user_skin_role CHAR(1) NOT NULL DEFAULT "S",
-    user_skin_cloth VARCHAR(20) NOT NULL DEFAULT "",
-    user_join_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00"
+    user_skin_cloth VARCHAR(20) NOT NULL DEFAULT "Uniform_blue",
+    user_join_dt DATETIME NOT NULL DEFAULT "0000-01-01 00:00:00"
 );
 
 CREATE TABLE room(
@@ -27,7 +27,7 @@ CREATE TABLE room(
     room_code VARCHAR(6) NOT NULL DEFAULT "" UNIQUE,
     room_present INT NOT NULL DEFAULT 0,
     room_max INT NOT NULL DEFAULT 0,
-    room_create_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
+    room_create_dt DATETIME NOT NULL DEFAULT "0000-01-01 00:00:00",
     room_agora_uid VARCHAR(20) NOT NULL DEFAULT "",
     room_agora_token VARCHAR(140) NOT NULL DEFAULT ""
 );
@@ -58,9 +58,9 @@ CREATE TABLE board(
     FOREIGN KEY (board_room_no) REFERENCES room (global_room_no),
     board_title NVARCHAR(50) NOT NULL DEFAULT "",
     board_content TEXT NOT NULL,
-    board_write_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
-    board_edit_dt DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
-    board_deadline DATETIME NOT NULL DEFAULT "2000-01-01 00:00:00",
+    board_write_dt DATETIME NOT NULL DEFAULT "0000-01-01 00:00:00",
+    board_edit_dt DATETIME NOT NULL DEFAULT "0000-01-01 00:00:00",
+    board_deadline DATETIME NOT NULL DEFAULT "0000-01-01 00:00:00",
     board_notice BOOLEAN NOT NULL DEFAULT 0,
     board_assignment BOOLEAN NOT NULL DEFAULT 0,
     board_visible BOOLEAN NOT NULL DEFAULT 1
