@@ -63,13 +63,6 @@ public class ConnectionTests {
 
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
-        JsonObject userJsonObject = gson
-                .toJsonTree(Optional.ofNullable(homeService.getUser(userDto)).orElse(new HashMap<>()))
-                .getAsJsonObject();
-
-        userJsonObject.add("user_room", gson.toJsonTree(homeService.getRoom(userDto)).getAsJsonArray());
-        userJsonObject.addProperty("result", 200);
-
-        System.out.println(userJsonObject.toString());
+        System.out.println(!Optional.ofNullable(homeService.getUser(userDto)).isPresent());
     }
 }

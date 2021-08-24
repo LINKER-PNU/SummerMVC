@@ -61,23 +61,24 @@ public class HomeController {
                 // User sign up. Insert user.
                 homeService.insertUser(userDto);
                 logger.info("User {} insert complete.\n", userVo.getDisplayName());
+                resultCode = 200;
             }
 
-            else if (homeService.getUser(userDto).isEmpty()) {
+            else if (!Optional.ofNullable(homeService.getUser(userDto)).isPresent()) {
                 // User doesn't exist in DB, but exists in gamesparks. Insert user.
                 userDto.setSkinRole('S'); // Skin role is set to student forcibily.
                 homeService.insertUser(userDto);
                 logger.warn("{} doesn't exist in DB... Insert complete.\n", userVo.getDisplayName());
-
+                resultCode = 400;
             }
 
             else {
                 // User exists in DB, user sign in, update token
                 homeService.updateToken(userDto);
                 logger.info("User {} login complete.\n", userVo.getDisplayName());
+                resultCode = 200;
             }
 
-            resultCode = 200;
         } catch (Exception e) {
             resultCode = 500;
             logger.error("{} :: Errors on insert query :: insertUser\n", e.toString());
