@@ -3,6 +3,7 @@ var dataMap = {
     displayName: "display_name1",
     userId: "user_id1",
     newPlayer: "true",
+    skinRole: "T"
 };
 
 var jsonString = JSON.stringify(dataMap);

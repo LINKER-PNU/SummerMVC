@@ -1,6 +1,6 @@
 # HomeAPI
 
-{% api-method method="post" host="https://api.cakes.com" path="/login" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/login" %}
 {% api-method-summary %}
 login
 {% endapi-method-summary %}
@@ -27,24 +27,40 @@ Uid from GameSparks
 {% api-method-parameter name="newPlayer" type="boolean" required=true %}
 New player or not
 {% endapi-method-parameter %}
+
+{% api-method-parameter name="skinRole" type="string" required=false %}
+Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher'. You don't have to write it at sign in.
+{% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
 
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-Cake successfully retrieved.
+Sign up/in complete successfully.
 {% endapi-method-response-example-description %}
 
 ```text
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/user" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/user" %}
 {% api-method-summary %}
 getUserInfo
 {% endapi-method-summary %}
@@ -65,30 +81,57 @@ Id of user.
 {% api-method-response %}
 {% api-method-response-example httpCode=200 %}
 {% api-method-response-example-description %}
-
+Response existing user information successfully.
 {% endapi-method-response-example-description %}
 
-```
+```text
 {
-  "result_user": "success",
   "user_skin_role": "S",
   "user_room": [
     { "room_present": 0, "room_max": 3, "room_name": "linker_test" },
     { "room_present": 0, "room_max": 1, "room_name": "새로운방" }
   ],
-  "user_id": "61029561de098611321319d7",
+  "user_name": "2TEST",
   "result_room": "success",
-  "user_skin_color": 0
+  "user_skin_color": "FFFFFFFF",
+  "user_skin_cloth": ""
+  "resultCode": 200
 }
 ```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=400 %}
+{% api-method-response-example-description %}
+Rest of all is fine, but there is no user client requests on DB.
+{% endapi-method-response-example-description %}
+
+```
+{
+    "user_room": []
+    "resultCode": 400
+}
+```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion at DB.
+{% endapi-method-response-example-description %}
+
+```
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
 
-{% api-method method="post" host="" path="/skin" %}
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/skin" %}
 {% api-method-summary %}
-updateSkin
+updateSkinColor
 {% endapi-method-summary %}
 
 {% api-method-description %}
@@ -98,16 +141,60 @@ updateSkin
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="userId" type="integer" required=true %}
-Id of the user to change skin.
+{% api-method-parameter name="userId" type="string" required=true %}
+Id of the user to change color.
 {% endapi-method-parameter %}
 
-{% api-method-parameter name="skinColor" type="integer" required=true %}
+{% api-method-parameter name="skinColor" type="string" required=true %}
 Color you set.
 {% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
 
-{% api-method-parameter name="skinRole" type="string" required=true %}
-Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher'.
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+Update user's skin color successfully.
+{% endapi-method-response-example-description %}
+
+```text
+{ "resultCode" : 200 }
+```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```
+{ "resultCode" : 500 }
+```
+
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
+{% api-method method="post" host="http://eggcation.linker.ac:8080" path="/cloth" %}
+{% api-method-summary %}
+updateSkinCloth
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="userId" type="string" required=true %}
+Id of the user to change cloth
+{% endapi-method-parameter %}
+
+{% api-method-parameter name="skinCloth" type="string" required=true %}
+Cloth you set.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
 {% endapi-method-request %}
@@ -119,10 +206,21 @@ Set role. It must be **char** type 'S' or 'T' which means 'Student' and 'Teacher
 {% endapi-method-response-example-description %}
 
 ```
-{ "result" : true }
+{ "resultCode" : 200 }
 ```
+
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=500 %}
+{% api-method-response-example-description %}
+Something is wrong at requestion on DB.
+{% endapi-method-response-example-description %}
+
+```
+{ "resultCode" : 500 }
+```
+
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
-

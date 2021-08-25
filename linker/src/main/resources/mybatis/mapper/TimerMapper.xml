@@ -39,7 +39,7 @@
 
     <update id="accumTimer">
         UPDATE timer
-        SET timer_acc_time = timer_acc_time + #{timerStudyTime}
+        SET timer_acc_time=#{timerStudyTime}
         WHERE global_timer_no=#{timerId}
     </update>
 

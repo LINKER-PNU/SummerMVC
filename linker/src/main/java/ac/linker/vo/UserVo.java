@@ -6,8 +6,9 @@ public class UserVo {
     private String userId;
     private boolean newPlayer;
 
-    private int skinColor;
+    private String skinColor;
     private char skinRole;
+    private String skinCloth;
 
     public String getAuthToken() {
         return this.authToken;
@@ -41,11 +42,11 @@ public class UserVo {
         this.newPlayer = newPlayer;
     }
 
-    public int getSkinColor() {
+    public String getSkinColor() {
         return this.skinColor;
     }
 
-    public void setSkinColor(int skinColor) {
+    public void setSkinColor(String skinColor) {
         this.skinColor = skinColor;
     }
 
@@ -55,5 +56,13 @@ public class UserVo {
 
     public void setSkinRole(char skinRole) {
         this.skinRole = skinRole;
+    }
+
+    public String getSkinCloth() {
+        return skinCloth;
+    }
+
+    public void setSkinCloth(String skinCloth) {
+        this.skinCloth = skinCloth;
     }
 }

@@ -1,12 +1,19 @@
 package ac.linker;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import org.apache.catalina.startup.HomesUserDatabase;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,8 +25,10 @@ import ac.linker.service.AgoraService;
 import ac.linker.service.BoardService;
 import ac.linker.service.ConnectService;
 import ac.linker.service.HomeService;
+import ac.linker.service.ResponseService;
 import ac.linker.service.TimerService;
 import ac.linker.vo.BoardVo;
+import ac.linker.vo.UserVo;
 
 @SpringBootTest
 public class ConnectionTests {
@@ -29,41 +38,31 @@ public class ConnectionTests {
     private HomeService homeService;
     private BoardService boardService;
     private TimerService timerService;
+    private ResponseService responseService;
 
     ModelMapper modelMapper = new ModelMapper();
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    Marker marker;
 
     @Autowired
     ConnectionTests(ConnectService connectService, AgoraService agoraService, HomeService homeService,
-            BoardService boardService, TimerService timerService) {
+            BoardService boardService, TimerService timerService, ResponseService responseService) {
         this.connectService = connectService;
         this.agoraService = agoraService;
         this.homeService = homeService;
         this.boardService = boardService;
         this.timerService = timerService;
+        this.responseService = responseService;
     }
 
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        TimerDto timerDto = new TimerDto(1, "id", "10", "timerSubject5", 20);
+        UserVo userVo = new UserVo();
+        userVo.setUserId("is");
 
-        BoardDto boardDto = new BoardDto("id", "1", "boardTitleIns", "boardContentIns1", "2021-01-01 01:02:00", true,
-                false);
-        boardDto.setBoardId(1);
+        UserDto userDto = modelMapper.map(userVo, UserDto.class);
 
-        // System.out.println(gson.toJson(boardService.getBoards(boardDto)));
-        // boardService.editBoard(boardDto);
-        // boardService.invisibleBoard(boardDto);
-        boardService.insertBoard(boardDto);
-        // timerService.insertTimer(timerDto);
-
-        // System.out.println(gson.toJson(timerService.getTimers(timerDto)));
-
-        // timerService.accumTimer(timerDto);
-
-        // timerService.editTimer(timerDto);
-
-        // timerService.deleteTimer(timerDto);
-
+        System.out.println(!Optional.ofNullable(homeService.getUser(userDto)).isPresent());
     }
 }

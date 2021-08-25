@@ -11,11 +11,13 @@ public interface HomeService {
 
     void updateToken(UserDto user);
 
-    void updateSkin(UserDto user);
+    void updateSkinColor(UserDto user);
+
+    void updateSkinCloth(UserDto user);
 
     List<Map<String, Object>> getAllUser();
 
-    List<Map<String, Object>> getUser(UserDto user);
+    Map<String, Object> getUser(UserDto user);
 
     List<Map<String, Object>> getSkin(UserDto user);
 

@@ -24,4 +24,6 @@ public interface ConnectService {
     void updateRoomNewJoin(RoomDto room);
 
     void updateRoomLeave(RoomDto room);
+
+    Map<String, Object> getRoomPresent(RoomDto room);
 }
