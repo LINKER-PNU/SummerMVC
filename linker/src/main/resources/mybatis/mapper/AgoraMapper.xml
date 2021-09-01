@@ -4,7 +4,7 @@
 
 <mapper namespace="ac.linker.mapper.AgoraMapper">
   <select id="getAgoraToken" resultType="java.util.HashMap">
-    SELECT room_agora_token
+    SELECT room_agora_token, global_room_no
     FROM room
     WHERE room_name=#{roomName}
   </select>

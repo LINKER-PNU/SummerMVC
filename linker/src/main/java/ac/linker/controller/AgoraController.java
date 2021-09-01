@@ -40,7 +40,9 @@ public class AgoraController {
         final RoomDto roomDto = new RoomDto(channelName);
 
         final List<Map<String, Object>> queryResult = agoraService.getAgoraToken(roomDto);
+
         String agoraToken = queryResult.get(0).get("room_agora_token").toString();
+        final String channelNo = (String) queryResult.get(0).get("global_room_no");
 
         if (!agoraToken.isEmpty()) {
             // token exist
@@ -53,7 +55,7 @@ public class AgoraController {
 
                 int timestamp = (int) (System.currentTimeMillis() / 1000 + expirationTimeInSeconds);
 
-                agoraToken = token.buildTokenWithUid(appId, appCertificate, channelName, 0, Role.Role_Publisher,
+                agoraToken = token.buildTokenWithUid(appId, appCertificate, channelNo, 0, Role.Role_Publisher,
                         timestamp);
                 roomDto.setAgoraToken(agoraToken);
                 agoraService.updateAgoraToken(roomDto);
