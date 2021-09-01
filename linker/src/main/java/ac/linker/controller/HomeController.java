@@ -171,7 +171,7 @@ public class HomeController {
     @PostMapping(value = "/member", produces = "application/json; charset=utf8")
     public String getMemberInfo(@RequestBody UserVo userVo) {
         UserDto userDto = modelMapper.map(userVo, UserDto.class);
-        logger.info("getUserInfo :: {}", userVo.getDisplayName());
+        logger.info("getMemberInfo :: {}", userVo.getDisplayName());
 
         Optional<Map<String, Object>> userOptional;
 
@@ -195,7 +195,7 @@ public class HomeController {
 
         userJsonObject.addProperty("resultCode", resultCode);
 
-        logger.info("Member {} select complete.\n", userJsonObject.get("user_name"));
+        logger.info("Member {} select complete.\n", userVo.getDisplayName());
         return userJsonObject.toString();
     }
 }
