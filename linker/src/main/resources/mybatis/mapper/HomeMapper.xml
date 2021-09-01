@@ -51,7 +51,7 @@
   </select>
 
   <select id="getUserByName" resultType="java.util.HashMap">
-    SELECT user_id, user_skin_color, user_skin_role
+    SELECT user_skin_color, user_skin_cloth, user_skin_role
     FROM user
     WHERE user_name=#{displayName};
   </select>
