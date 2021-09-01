@@ -43,7 +43,6 @@ Sign up/in complete successfully.
 ```text
 { "resultCode" : 200 }
 ```
-
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=500 %}
@@ -51,10 +50,9 @@ Sign up/in complete successfully.
 Something is wrong at requestion on DB.
 {% endapi-method-response-example-description %}
 
-```
+```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -98,7 +96,6 @@ Response existing user information successfully.
   "resultCode": 200
 }
 ```
-
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=400 %}
@@ -106,13 +103,12 @@ Response existing user information successfully.
 Rest of all is fine, but there is no user client requests on DB.
 {% endapi-method-response-example-description %}
 
-```
+```text
 {
     "user_room": []
     "resultCode": 400
 }
 ```
-
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=500 %}
@@ -120,10 +116,9 @@ Rest of all is fine, but there is no user client requests on DB.
 Something is wrong at requestion at DB.
 {% endapi-method-response-example-description %}
 
-```
+```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -160,7 +155,6 @@ Update user's skin color successfully.
 ```text
 { "resultCode" : 200 }
 ```
-
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=500 %}
@@ -168,10 +162,9 @@ Update user's skin color successfully.
 Something is wrong at requestion on DB.
 {% endapi-method-response-example-description %}
 
-```
+```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
@@ -205,10 +198,9 @@ Cloth you set.
 
 {% endapi-method-response-example-description %}
 
-```
+```text
 { "resultCode" : 200 }
 ```
-
 {% endapi-method-response-example %}
 
 {% api-method-response-example httpCode=500 %}
@@ -216,11 +208,60 @@ Cloth you set.
 Something is wrong at requestion on DB.
 {% endapi-method-response-example-description %}
 
-```
+```text
 { "resultCode" : 500 }
 ```
-
 {% endapi-method-response-example %}
 {% endapi-method-response %}
 {% endapi-method-spec %}
 {% endapi-method %}
+
+{% api-method method="post" host="" path="/member" %}
+{% api-method-summary %}
+getMemberInfo
+{% endapi-method-summary %}
+
+{% api-method-description %}
+
+{% endapi-method-description %}
+
+{% api-method-spec %}
+{% api-method-request %}
+{% api-method-body-parameters %}
+{% api-method-parameter name="displayName" type="string" required=true %}
+User's nickname.
+{% endapi-method-parameter %}
+{% endapi-method-body-parameters %}
+{% endapi-method-request %}
+
+{% api-method-response %}
+{% api-method-response-example httpCode=200 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+{
+    user_skin_role: "S",
+    user_skin_cloth: "Uniform_blue",
+    user_skin_color: "FFFFFFFF",
+    resultCode: 200
+}
+```
+{% endapi-method-response-example %}
+
+{% api-method-response-example httpCode=400 %}
+{% api-method-response-example-description %}
+
+{% endapi-method-response-example-description %}
+
+```
+{
+    resultCode: 400
+}
+```
+{% endapi-method-response-example %}
+{% endapi-method-response %}
+{% endapi-method-spec %}
+{% endapi-method %}
+
