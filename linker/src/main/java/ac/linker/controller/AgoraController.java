@@ -42,7 +42,7 @@ public class AgoraController {
         final List<Map<String, Object>> queryResult = agoraService.getAgoraToken(roomDto);
 
         String agoraToken = queryResult.get(0).get("room_agora_token").toString();
-        final String channelNo = (String) queryResult.get(0).get("global_room_no");
+        final String channelNo = queryResult.get(0).get("global_room_no").toString();
 
         if (!agoraToken.isEmpty()) {
             // token exist
