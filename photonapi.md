@@ -188,7 +188,7 @@ authRoom
 {% api-method-spec %}
 {% api-method-request %}
 {% api-method-body-parameters %}
-{% api-method-parameter name="roomCode" type="string" required=true %}
+{% api-method-parameter name="joinCode" type="string" required=true %}
 Invite code of the room to get name.
 {% endapi-method-parameter %}
 {% endapi-method-body-parameters %}
