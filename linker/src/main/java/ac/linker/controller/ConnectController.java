@@ -76,16 +76,24 @@ public class ConnectController {
 
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(roomDto);
-            System.out.println(connectService.getRoomPresent(roomDto));
             logger.info("User {} created and joined in {}.\n", userName, roomName);
             // join room
         }
 
         if (reqType.equals("Load")) {
             // if room is recreated
-            connectService.updateRoomJoin(roomDto);
-            System.out.println(connectService.getRoomPresent(roomDto));
-            logger.info("User {} recreated and joined in {}.\n", userName, roomName);
+
+            try {
+                connectService.insertJoin(new JoinDto(userId, roomName));
+                connectService.updateRoomNewJoin(roomDto);
+                logger.info("User {} recreated and joined in {}.\n", userName, roomName);
+            } catch (DuplicateKeyException e) {
+                connectService.updateRoomJoin(roomDto);
+                logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
+            } catch (DataIntegrityViolationException s) {
+                logger.error("User {} is not in table user! Joining room is failed.\n", userName);
+                return responseService.getPhotonResponse(3);
+            }
         }
 
         return responseService.getPhotonResponse(0);
@@ -104,11 +112,9 @@ public class ConnectController {
         try {
             connectService.insertJoin(new JoinDto(userId, roomName));
             connectService.updateRoomNewJoin(roomDto);
-            System.out.println(connectService.getRoomPresent(roomDto));
             logger.info("User {} joined in {}.\n", userName, roomName);
         } catch (DuplicateKeyException e) {
             connectService.updateRoomJoin(roomDto);
-            // System.out.println(connectService.getRoomPresent(roomDto));
             logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
         } catch (DataIntegrityViolationException s) {
             logger.error("User {} is not in table user! Joining room is failed.\n", userName);
@@ -129,7 +135,6 @@ public class ConnectController {
         final RoomDto roomDto = new RoomDto(roomName);
 
         connectService.updateRoomLeave(roomDto);
-        // System.out.println(connectService.getRoomPresent(roomDto));
 
         logger.info("User {} leaved {}.\n", roomName, userName);
         return responseService.getPhotonResponse(0);
