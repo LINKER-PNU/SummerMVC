@@ -74,9 +74,15 @@ public class ConnectController {
                 }
             }
 
-            connectService.insertJoin(new JoinDto(userId, roomName));
-            connectService.updateRoomNewJoin(roomDto);
-            logger.info("User {} created and joined in {}.\n", userName, roomName);
+            try {
+                connectService.insertJoin(new JoinDto(userId, roomName));
+                connectService.updateRoomNewJoin(roomDto);
+                logger.info("User {} created and joined in {}.\n", userName, roomName);
+            } catch (DataIntegrityViolationException s) {
+                logger.error("User {} is not in table user! Joining room is failed.\n", userName);
+                return responseService.getPhotonResponse(3);
+            }
+
             // join room
         }
 

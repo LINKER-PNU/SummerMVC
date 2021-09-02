@@ -16,8 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 
 import ac.linker.dto.BoardDto;
+import ac.linker.dto.JoinDto;
 import ac.linker.dto.RoomDto;
 import ac.linker.dto.TimerDto;
 import ac.linker.dto.UserDto;
@@ -58,11 +61,19 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        UserVo userVo = new UserVo();
-        userVo.setUserId("is");
 
-        UserDto userDto = modelMapper.map(userVo, UserDto.class);
+        RoomDto roomDto = new RoomDto("AAAAAAAAAAAAAAAAAAAAA");
 
-        System.out.println(!Optional.ofNullable(homeService.getUser(userDto)).isPresent());
+        try {
+            connectService.insertJoin(new JoinDto(null, "1"));
+            connectService.updateRoomNewJoin(roomDto);
+            logger.info("User {} recreated and joined in {}.\n");
+        } catch (DuplicateKeyException e) {
+            connectService.updateRoomJoin(roomDto);
+            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n");
+        } catch (DataIntegrityViolationException s) {
+            logger.error("User {} is not in table user! Joining room is failed.\n");
+
+        }
     }
 }
