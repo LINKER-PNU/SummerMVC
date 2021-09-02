@@ -36,7 +36,8 @@ CREATE TABLE joining( /*match user and room*/
     joining_user_no INT NOT NULL DEFAULT "0",
     FOREIGN KEY (joining_user_no) REFERENCES user (global_user_no),
     joining_room_no INT NOT NULL DEFAULT "0",
-    FOREIGN KEY (joining_room_no) REFERENCES room (global_room_no)
+    FOREIGN KEY (joining_room_no) REFERENCES room (global_room_no),
+    joining_recent_dt DATETIME NOT NULL DEFAULT "0000-01-01 00:00:00"
 );
 ALTER TABLE joining ADD PRIMARY KEY (joining_room_no,joining_user_no);/*prevent duplicated pair*/
 

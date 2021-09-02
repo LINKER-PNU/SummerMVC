@@ -33,7 +33,8 @@
       WHERE user_id = #{userId}),(
       SELECT global_room_no 
       FROM room 
-      WHERE room_name = #{roomName})
+      WHERE room_name = #{roomName}),
+      NOW()
     )
   </insert>
 
@@ -45,16 +46,36 @@
   </update>
 
   <update id="updateRoomJoin">
-    UPDATE room
-    SET room_present = room_present+1
-    WHERE room_name=#{roomName}
+    UPDATE room, joining
+    SET room.room_present = room.room_present+1,
+    joining.joining_recent_dt = NOW()
+    WHERE room.room_name=#{roomName}
+    AND joining.joining_user_no=(
+      SELECT global_user_no 
+      FROM user 
+      WHERE user_id = #{userId})
+    AND joining.joining_room_no=(
+      SELECT global_room_no
+      FROM room 
+      WHERE room_name = #{roomName}
+    );
   </update>
 
   <update id="updateRoomNewJoin">
-    UPDATE room
-    SET room_present = room_present+1,
-    room_max = room_max+1
-    WHERE room_name=#{roomName};
+    UPDATE room, joining
+    SET room.room_present = room.room_present+1,
+    room.room_max = room.room_max+1,
+    joining.joining_recent_dt = NOW()
+    WHERE room.room_name=#{roomName}
+    AND joining.joining_user_no=(SELECT joining_user_no FROM
+      (SELECT global_user_no AS joining_user_no
+      FROM user 
+      WHERE user_id = #{userId}) temp)
+    AND joining.joining_room_no=(SELECT joining_room_no FROM
+      (SELECT global_room_no AS joining_room_no
+      FROM room 
+      WHERE room_name = #{roomName}) temp2
+    );
   </update>
 
   <update id="updateRoomLeave">

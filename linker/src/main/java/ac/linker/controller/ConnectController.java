@@ -36,6 +36,24 @@ public class ConnectController {
         this.responseService = responseService;
     }
 
+    private int joinRoom(final String userId, final String roomName, final String userName) {
+        final JoinDto joinDto = new JoinDto(userId, roomName);
+
+        try {
+            connectService.insertJoin(joinDto);
+            connectService.updateRoomNewJoin(joinDto);
+            logger.info("User {} recreated and joined in {}.\n", userName, roomName);
+            return 0;
+        } catch (DuplicateKeyException e) {
+            connectService.updateRoomJoin(joinDto);
+            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
+            return 1;
+        } catch (DataIntegrityViolationException s) {
+            logger.error("User {} is not in table user! Joining room is failed.\n", userName);
+            return 3;
+        }
+    }
+
     @PostMapping(value = "/create", produces = "application/json; charset=utf8")
     public String pathCreate(@RequestBody Map<String, Object> param) {
         final String roomName = param.get("GameId").toString();

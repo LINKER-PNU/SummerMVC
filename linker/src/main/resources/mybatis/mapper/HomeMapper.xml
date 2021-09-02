@@ -45,7 +45,8 @@
       FROM joining 
       WHERE joining_user_no = (
         SELECT global_user_no 
-        FROM user 
+        FROM user
+        ORDER BY joining_recent_dt DESC
         WHERE user_id = #{userId})
       ) group by global_room_no;
   </select>

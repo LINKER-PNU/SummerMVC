@@ -62,18 +62,11 @@ public class ConnectionTests {
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
 
-        RoomDto roomDto = new RoomDto("AAAAAAAAAAAAAAAAAAAAA");
+        JoinDto joinDto = new JoinDto("id", "10");
 
-        try {
-            connectService.insertJoin(new JoinDto(null, "1"));
-            connectService.updateRoomNewJoin(roomDto);
-            logger.info("User {} recreated and joined in {}.\n");
-        } catch (DuplicateKeyException e) {
-            connectService.updateRoomJoin(roomDto);
-            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n");
-        } catch (DataIntegrityViolationException s) {
-            logger.error("User {} is not in table user! Joining room is failed.\n");
+        connectService.updateRoomNewJoin(joinDto);
 
-        }
+        // connectService.updateRoomJoin(joinDto);
+
     }
 }
