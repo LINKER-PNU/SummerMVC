@@ -3,6 +3,8 @@ package ac.linker.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonObject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +49,6 @@ public class AgoraController {
         if (!agoraToken.isEmpty()) {
             // token exist
             logger.info("Token exist!\n");
-            return agoraToken;
         } else {
             // token not exist
             logger.info("Token not exist! Generate token.\n");
@@ -60,12 +61,15 @@ public class AgoraController {
                 roomDto.setAgoraToken(agoraToken);
                 agoraService.updateAgoraToken(roomDto);
 
-                return agoraToken;
-
             } catch (Exception e) {
                 return "-1";
             }
         }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("agoraToken", agoraToken);
+        jsonObject.addProperty("roomId", channelNo);
+
+        return jsonObject.toString();
     }
 
     @PostMapping(value = "/check_class_exist", produces = "application/json; charset=utf8")
