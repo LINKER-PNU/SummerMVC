@@ -22,7 +22,7 @@ import ac.linker.vo.AgoraVo;
 public class AgoraController {
     static String appId = "ee7508ef6b2042e7b6dd141a6a11895a";
     static String appCertificate = "c6903f1bcc1e4097abbb1352a8fed7d7";
-    static int expirationTimeInSeconds = 100;
+    static int expirationTimeInSeconds = 1000;
     RtcTokenBuilder token = new RtcTokenBuilder();
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
