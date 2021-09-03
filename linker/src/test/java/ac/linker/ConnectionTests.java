@@ -62,27 +62,18 @@ public class ConnectionTests {
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
 
-        // JoinDto joinDto = new JoinDto("id", "10");
+        final JoinDto joinDto = new JoinDto("id", "2"); // 1 2 5 10 15 new 5 2
 
-        // connectService.updateRoomNewJoin(joinDto);
-        // connectService.updateRoomJoin(joinDto);
-
-        // UserDto userDto = new UserDto();
-        // userDto.setUserId("id");
-
-        // JsonObject userJsonObject = new JsonObject();
-        // userJsonObject.add("user_room",
-        // gson.toJsonTree(homeService.getRoom(userDto)).getAsJsonArray());
-
-        // System.out.println(userJsonObject.toString());
-
-        BoardDto boardDto = new BoardDto();
-        boardDto.setBoardRoom("1");
-
-        final JsonObject boardJsonObject = new JsonObject();
-
-        boardJsonObject.add("result", gson.toJsonTree(boardService.getBoards(boardDto)).getAsJsonArray());
-
-        System.out.println(boardJsonObject.toString());
+        try {
+            connectService.insertJoin(joinDto);
+            connectService.updateRoomNewJoin(joinDto);
+            connectService.updateJoiningRecentDt(joinDto);
+        } catch (DuplicateKeyException e) {
+            System.out.println("x");
+            connectService.updateRoomJoin(joinDto);
+            connectService.updateJoiningRecentDt(joinDto);
+        } catch (DataIntegrityViolationException s) {
+            System.out.println("a");
+        }
     }
 }

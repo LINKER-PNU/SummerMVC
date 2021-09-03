@@ -29,6 +29,8 @@ public interface ConnectMapper {
 
     void updateRoomNewJoin(JoinDto join);
 
+    void updateJoiningRecentDt(JoinDto join);
+
     void updateRoomLeave(RoomDto room);
 
     Map<String, Object> getRoomPresent(RoomDto room);

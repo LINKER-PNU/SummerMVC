@@ -42,10 +42,12 @@ public class ConnectController {
         try {
             connectService.insertJoin(joinDto);
             connectService.updateRoomNewJoin(joinDto);
+            connectService.updateJoiningRecentDt(joinDto);
             logger.info("User {} joined in room {}.\n", userName, roomName);
             return 0;
         } catch (DuplicateKeyException e) {
             connectService.updateRoomJoin(joinDto);
+            connectService.updateJoiningRecentDt(joinDto);
             logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
             return 1;
         } catch (DataIntegrityViolationException s) {

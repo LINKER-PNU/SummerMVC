@@ -52,6 +52,10 @@ public class ConnectServiceImplement implements ConnectService {
         connectMapper.updateRoomNewJoin(join);
     }
 
+    public void updateJoiningRecentDt(JoinDto join) {
+        connectMapper.updateJoiningRecentDt(join);
+    }
+
     public void updateRoomLeave(RoomDto room) {
         connectMapper.updateRoomLeave(room);
     }
