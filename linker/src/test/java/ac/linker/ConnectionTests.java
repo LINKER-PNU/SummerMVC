@@ -62,11 +62,27 @@ public class ConnectionTests {
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
 
-        JoinDto joinDto = new JoinDto("id", "10");
+        // JoinDto joinDto = new JoinDto("id", "10");
 
-        connectService.updateRoomNewJoin(joinDto);
-
+        // connectService.updateRoomNewJoin(joinDto);
         // connectService.updateRoomJoin(joinDto);
 
+        // UserDto userDto = new UserDto();
+        // userDto.setUserId("id");
+
+        // JsonObject userJsonObject = new JsonObject();
+        // userJsonObject.add("user_room",
+        // gson.toJsonTree(homeService.getRoom(userDto)).getAsJsonArray());
+
+        // System.out.println(userJsonObject.toString());
+
+        BoardDto boardDto = new BoardDto();
+        boardDto.setBoardRoom("1");
+
+        final JsonObject boardJsonObject = new JsonObject();
+
+        boardJsonObject.add("result", gson.toJsonTree(boardService.getBoards(boardDto)).getAsJsonArray());
+
+        System.out.println(boardJsonObject.toString());
     }
 }
