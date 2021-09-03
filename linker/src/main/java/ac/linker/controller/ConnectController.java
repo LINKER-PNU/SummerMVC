@@ -142,7 +142,7 @@ public class ConnectController {
 
         connectService.updateRoomLeave(roomDto);
 
-        logger.info("User {} leaved {}.\n", roomName, userName);
+        logger.info("User {} leaved {}.\n", userName, roomName);
         return responseService.getPhotonResponse(0);
     }
 
