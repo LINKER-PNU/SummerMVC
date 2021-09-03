@@ -49,7 +49,7 @@ public class ConnectController {
             connectService.updateRoomJoin(joinDto);
             connectService.updateJoiningRecentDt(joinDto);
             logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
-            return 1;
+            return 0;
         } catch (DataIntegrityViolationException s) {
             logger.error("User {} is not in table user! Joining room is failed.\n", userName);
             return 3;
