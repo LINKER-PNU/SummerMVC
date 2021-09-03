@@ -27,7 +27,8 @@
         SELECT global_room_no
         FROM room
         WHERE room_name=#{boardRoom})
-    AND board_visible=true 
+    AND board_visible=true
+    ORDER BY board_write_dt DESC
   </select>
 
   <select id="getBoardContent" resultType="ac.linker.vo.BoardVo">

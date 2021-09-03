@@ -38,16 +38,14 @@
   </select>
 
   <select id="getRoom" resultType="java.util.HashMap">
-    SELECT room_name, room_present, room_max
-    FROM room 
-    WHERE global_room_no in (
-      SELECT joining_room_no 
-      FROM joining 
-      WHERE joining_user_no = (
-        SELECT global_user_no 
-        FROM user 
-        WHERE user_id = #{userId})
-      ) group by global_room_no;
+    SELECT room.room_name, room.room_max, room.room_present
+    FROM joining
+    LEFT JOIN room ON room.global_room_no = joining.joining_room_no
+    WHERE joining_user_no = (
+      SELECT global_user_no 
+      FROM user
+      WHERE user_id = #{userId})
+    ORDER BY joining_recent_dt DESC;
   </select>
 
   <select id="getUserByName" resultType="java.util.HashMap">
