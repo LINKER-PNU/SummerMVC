@@ -19,9 +19,11 @@ public interface ConnectService {
 
     void updateRoomCode(RoomDto room);
 
-    void updateRoomJoin(RoomDto room);
+    void updateRoomJoin(JoinDto join);
 
-    void updateRoomNewJoin(RoomDto room);
+    void updateRoomNewJoin(JoinDto join);
+
+    void updateJoiningRecentDt(JoinDto join);
 
     void updateRoomLeave(RoomDto room);
 

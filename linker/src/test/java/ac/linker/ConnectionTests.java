@@ -16,8 +16,11 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.DuplicateKeyException;
 
 import ac.linker.dto.BoardDto;
+import ac.linker.dto.JoinDto;
 import ac.linker.dto.RoomDto;
 import ac.linker.dto.TimerDto;
 import ac.linker.dto.UserDto;
@@ -58,11 +61,19 @@ public class ConnectionTests {
     @Test
     public void connectionTest() {
         System.out.println("###############ConnectionTest##############");
-        UserVo userVo = new UserVo();
-        userVo.setUserId("is");
 
-        UserDto userDto = modelMapper.map(userVo, UserDto.class);
+        final JoinDto joinDto = new JoinDto("id", "2"); // 1 2 5 10 15 new 5 2
 
-        System.out.println(!Optional.ofNullable(homeService.getUser(userDto)).isPresent());
+        try {
+            connectService.insertJoin(joinDto);
+            connectService.updateRoomNewJoin(joinDto);
+            connectService.updateJoiningRecentDt(joinDto);
+        } catch (DuplicateKeyException e) {
+            System.out.println("x");
+            connectService.updateRoomJoin(joinDto);
+            connectService.updateJoiningRecentDt(joinDto);
+        } catch (DataIntegrityViolationException s) {
+            System.out.println("a");
+        }
     }
 }

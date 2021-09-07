@@ -25,7 +25,10 @@ Cake successfully retrieved.
 {% endapi-method-response-example-description %}
 
 ```text
-
+{
+    "agoraToken" : "006ee7508ef6b2042e7b6dd141a6a11895aIADa8B09gdmuktCBune0hxyI17VZvcaq91eDeuKTEmRc6DuyHY0AAAAAIgCWQ0xQJzYyYQQAAQAL5TBhAgAL5TBhAwAL5TBhBAAL5TBh",
+    "roomId" : "15"
+}
 ```
 {% endapi-method-response-example %}
 

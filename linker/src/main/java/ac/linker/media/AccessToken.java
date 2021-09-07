@@ -1,3 +1,8 @@
+/**
+* Original Code
+* https://github.com/AgoraIO/Tools/blob/master/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora/media/AccessToken.java
+*/
+
 package ac.linker.media;
 
 import java.io.ByteArrayOutputStream;

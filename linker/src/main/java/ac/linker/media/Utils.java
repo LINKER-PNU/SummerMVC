@@ -1,3 +1,8 @@
+/**
+* Original Code
+* https://github.com/AgoraIO/Tools/blob/master/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora/media/Utils.java
+*/
+
 package ac.linker.media;
 
 import javax.crypto.Mac;

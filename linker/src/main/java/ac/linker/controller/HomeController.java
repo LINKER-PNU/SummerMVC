@@ -166,4 +166,36 @@ public class HomeController {
 
         return responseService.getResultResponse(resultCode);
     }
+
+    // get user informaiton by id
+    @PostMapping(value = "/member", produces = "application/json; charset=utf8")
+    public String getMemberInfo(@RequestBody UserVo userVo) {
+        UserDto userDto = modelMapper.map(userVo, UserDto.class);
+        logger.info("getMemberInfo :: {}", userVo.getDisplayName());
+
+        Optional<Map<String, Object>> userOptional;
+
+        try {
+            // select user name, skin
+            userOptional = Optional.ofNullable(homeService.getUserByName(userDto).get(0));
+            if (userOptional.isPresent()) {
+                resultCode = 200;
+            } else {
+                // if there is not user client requests
+                resultCode = 400;
+            }
+        } catch (Exception e) {
+            logger.error("{} :: Errors on select query :: getUserByName\n", e.toString());
+            resultCode = 500;
+            return responseService.getResultResponse(resultCode);
+        }
+
+        // convert map result to json object
+        JsonObject userJsonObject = gson.toJsonTree(userOptional.orElse(new HashMap<>())).getAsJsonObject();
+
+        userJsonObject.addProperty("resultCode", resultCode);
+
+        logger.info("Member {} select complete.\n", userVo.getDisplayName());
+        return userJsonObject.toString();
+    }
 }

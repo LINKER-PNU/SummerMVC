@@ -36,6 +36,26 @@ public class ConnectController {
         this.responseService = responseService;
     }
 
+    private int joinRoom(final String userId, final String roomName, final String userName) {
+        final JoinDto joinDto = new JoinDto(userId, roomName);
+
+        try {
+            connectService.insertJoin(joinDto);
+            connectService.updateRoomNewJoin(joinDto);
+            connectService.updateJoiningRecentDt(joinDto);
+            logger.info("User {} joined in room {}.\n", userName, roomName);
+            return 0;
+        } catch (DuplicateKeyException e) {
+            connectService.updateRoomJoin(joinDto);
+            connectService.updateJoiningRecentDt(joinDto);
+            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
+            return 0;
+        } catch (DataIntegrityViolationException s) {
+            logger.error("User {} is not in table user! Joining room is failed.\n", userName);
+            return 3;
+        }
+    }
+
     @PostMapping(value = "/create", produces = "application/json; charset=utf8")
     public String pathCreate(@RequestBody Map<String, Object> param) {
         final String roomName = param.get("GameId").toString();
@@ -74,21 +94,19 @@ public class ConnectController {
                 }
             }
 
-            connectService.insertJoin(new JoinDto(userId, roomName));
-            connectService.updateRoomNewJoin(roomDto);
-            System.out.println(connectService.getRoomPresent(roomDto));
-            logger.info("User {} created and joined in {}.\n", userName, roomName);
+            logger.info("User {} try to create and join in room {}.\n", userName, roomName);
+            return responseService.getPhotonResponse(joinRoom(userId, roomName, userName));
             // join room
         }
 
         if (reqType.equals("Load")) {
             // if room is recreated
-            connectService.updateRoomJoin(roomDto);
-            System.out.println(connectService.getRoomPresent(roomDto));
-            logger.info("User {} recreated and joined in {}.\n", userName, roomName);
+            logger.info("User {} try to recreate and join in room {}.\n", userName, roomName);
+            return responseService.getPhotonResponse(joinRoom(userId, roomName, userName));
         }
 
-        return responseService.getPhotonResponse(0);
+        // Type is not available.
+        return "-1";
     }
 
     @PostMapping(value = "/join", produces = "application/json; charset=utf8")
@@ -99,23 +117,9 @@ public class ConnectController {
 
         logger.info("pathJoin :: {} :: {}({})", roomName, userName, userId);
 
-        final RoomDto roomDto = new RoomDto(roomName);
         // user join
-        try {
-            connectService.insertJoin(new JoinDto(userId, roomName));
-            connectService.updateRoomNewJoin(roomDto);
-            System.out.println(connectService.getRoomPresent(roomDto));
-            logger.info("User {} joined in {}.\n", userName, roomName);
-        } catch (DuplicateKeyException e) {
-            connectService.updateRoomJoin(roomDto);
-            // System.out.println(connectService.getRoomPresent(roomDto));
-            logger.info("User {} is already in room {}! Duplicated pair is prevented.\n", userName, roomName);
-        } catch (DataIntegrityViolationException s) {
-            logger.error("User {} is not in table user! Joining room is failed.\n", userName);
-            return responseService.getPhotonResponse(3);
-        }
-
-        return responseService.getPhotonResponse(0);
+        logger.info("User {} try to join in room {}.\n", userName, roomName);
+        return responseService.getPhotonResponse(joinRoom(userId, roomName, userName));
     }
 
     @PostMapping(value = "/leave", produces = "application/json; charset=utf8")
@@ -129,9 +133,8 @@ public class ConnectController {
         final RoomDto roomDto = new RoomDto(roomName);
 
         connectService.updateRoomLeave(roomDto);
-        // System.out.println(connectService.getRoomPresent(roomDto));
 
-        logger.info("User {} leaved {}.\n", roomName, userName);
+        logger.info("User {} leaved {}.\n", userName, roomName);
         return responseService.getPhotonResponse(0);
     }
 

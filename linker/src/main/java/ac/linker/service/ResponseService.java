@@ -15,7 +15,7 @@ public class ResponseService {
         jsonObject.addProperty("State", "");
         jsonObject.addProperty("ResultCode", status);
         /*
-         * 0 : OK 1 : Duplicated 2 : Over the max length 3 : User is not in table
+         * 0 : OK 1 : Duplicated 2 : Over the max length 3 : Data is not in table
          */
         return jsonObject.toString();
     }

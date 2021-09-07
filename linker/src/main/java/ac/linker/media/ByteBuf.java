@@ -1,3 +1,8 @@
+/**
+* Original Code
+* https://github.com/AgoraIO/Tools/blob/master/DynamicKey/AgoraDynamicKey/java/src/main/java/io/agora/media/ByteBuf.java
+*/
+
 package ac.linker.media;
 
 import java.nio.ByteBuffer;
